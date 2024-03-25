@@ -17,13 +17,10 @@ struct KPSection<T: Decodable>: Decodable, Hashable where T: Hashable {
         case id
     }
     
-    init(items: [T] = []) {
-        self.items = items
-        if let T = T.self as? Movie.Type {
-            type = "Popular films"
-        } else {
-            type = "Collections"
-        }
-        id = type
+    init(from decoder: Decoder) throws {
+        let container: KeyedDecodingContainer<KPSection<T>.CodingKeys> = try decoder.container(keyedBy: KPSection<T>.CodingKeys.self)
+        self.items = try container.decode([T].self, forKey: KPSection<T>.CodingKeys.items)
+        self.type = T.self is KPCollection.Type ? "Collections" : "Popular films"
+        self.id = type
     }
 }

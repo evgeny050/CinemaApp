@@ -11,6 +11,7 @@
 		4A17033C2BAD9EE90012CF46 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4A17033B2BAD9EE90012CF46 /* SnapKit-Dynamic */; };
 		4A17033E2BADD19A0012CF46 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17033D2BADD19A0012CF46 /* Enums.swift */; };
 		4A1703402BADEA2F0012CF46 /* KPSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17033F2BADEA2F0012CF46 /* KPSection.swift */; };
+		4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703412BAF1C530012CF46 /* DataManager.swift */; };
 		4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F452BA1E5310019C505 /* AppDelegate.swift */; };
 		4A943F482BA1E5310019C505 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F472BA1E5310019C505 /* SceneDelegate.swift */; };
 		4A943F4A2BA1E5310019C505 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F492BA1E5310019C505 /* HomeViewController.swift */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		4A17033D2BADD19A0012CF46 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		4A17033F2BADEA2F0012CF46 /* KPSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSection.swift; sourceTree = "<group>"; };
+		4A1703412BAF1C530012CF46 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A943F422BA1E5310019C505 /* KinopoiskListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KinopoiskListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A943F452BA1E5310019C505 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A943F472BA1E5310019C505 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			children = (
 				4A943F652BA6F8D80019C505 /* NetworkingManager.swift */,
 				4AA6672A2BAAFFD900F093FF /* ImageCacheManager.swift */,
+				4A1703412BAF1C530012CF46 /* DataManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				4A943F4A2BA1E5310019C505 /* HomeViewController.swift in Sources */,
 				4A1703402BADEA2F0012CF46 /* KPSection.swift in Sources */,
 				4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */,
+				4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */,
 				4AA6672B2BAAFFD900F093FF /* ImageCacheManager.swift in Sources */,
 				4AA667332BAC901A00F093FF /* KPCollection.swift in Sources */,
 				4AA667292BAAF9B800F093FF /* HomeCell.swift in Sources */,
