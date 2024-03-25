@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.9725490196, blue: 0.9921568627, alpha: 1)
         view.addSubview(collectionView)
-        //collectionView.delegate = self
+        collectionView.delegate = self
         collectionView.register(HomeCell.self, forCellWithReuseIdentifier: HomeCell.reuseId)
     }
     
@@ -86,19 +86,19 @@ class HomeViewController: UIViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-//extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        <#code#>
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        <#code#>
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        reloadData()
-//    }
-//}
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        reloadData()
+    }
+}
 
 // MARK: - Networking
 extension HomeViewController {
@@ -106,7 +106,7 @@ extension HomeViewController {
         NetworkingManager.shared.fetchData(KPSection<KPCollection>.self) { [weak self] result in
             switch result {
             case .success(let collectionList):
-                //self?.kpSectionList.append(collectionList)
+                self?.kpSectionList.append(collectionList)
                 //self?.collectionView.reloadSections(IndexSet(integer: 1))
                 self?.reloadData()
             case .failure(let error):

@@ -50,4 +50,8 @@ extension KPSectionEnum: Decodable {
 enum KPItemEnum: Hashable, Decodable {
     case collection(KPCollection)
     case movie(Movie)
+    
+    func getCollection() {
+        
+    }
 }
