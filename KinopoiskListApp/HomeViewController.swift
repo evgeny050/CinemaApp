@@ -13,6 +13,7 @@ class HomeViewController: UIViewController {
     
     private var collectionView: UICollectionView!
     private var kpSectionList: [String: Any] = [:]
+    private var kpList: [KPItems] = []
     //private var dataSource: UICollectionViewDiffableDataSource<KPSection<KPCollection>, KPCollection>?
     private let sectionHeaderView = SectionHeaderView()
 
