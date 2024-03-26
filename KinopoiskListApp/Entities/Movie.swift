@@ -5,7 +5,7 @@
 //  Created by Флоранс on 17.03.2024.
 //
 
-struct Movie: Decodable, Hashable {
+struct Movie: Decodable {
     let rating: Rating?
     let votes: Vote?
     let backdrop: UrlToImage
@@ -23,21 +23,21 @@ struct Movie: Decodable, Hashable {
     let top250: Int?
 }
 
-struct Rating: Decodable, Hashable {
+struct Rating: Decodable {
     let kp: Double
     let imdb: Double
 }
 
-struct Vote: Decodable, Hashable {
+struct Vote: Decodable {
     let kp: Int
     let imdb: Int
 }
 
-struct UrlToImage: Decodable, Hashable {
+struct UrlToImage: Decodable {
     let url: String
     let previewUrl: String
 }
 
-struct GenreOrCountry: Decodable, Hashable {
+struct GenreOrCountry: Decodable {
     let name: String
 }

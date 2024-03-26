@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct KPMoviesSection: Decodable, Hashable {
+struct KPMoviesSection: Decodable {
     let movies: [Movie]
     
     enum CodingKeys: String, CodingKey {
@@ -14,10 +14,23 @@ struct KPMoviesSection: Decodable, Hashable {
     }
 }
 
-struct KPCollectionsSection: Decodable, Hashable {
-    let collections: [KPCollection]
+struct KPCollectionsSection: Decodable {
+    let collections: [Collection]
     
     enum CodingKeys: String, CodingKey {
         case collections = "docs"
     }
 }
+
+struct KPPersonsSection: Decodable {
+    let persons: [Collection]
+    
+    enum CodingKeys: String, CodingKey {
+        case persons = "docs"
+    }
+}
+
+struct Person: Decodable {
+    
+}
+

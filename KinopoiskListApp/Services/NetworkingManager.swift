@@ -7,20 +7,7 @@
 
 import Foundation
 import Alamofire
-//import AlamofireImage
 import UIKit
-
-enum NetworkingError: Error {
-    case decodingError
-    case invalidURL
-    case noData
-}
-
-enum EnumLinks: String {
-    case baseUrl = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10"
-    case getMovieByIdUrl = "https://api.kinopoisk.dev/v1.4/movie/random"
-    case getCollectionsUrl = "https://api.kinopoisk.dev/v1.4/list?page=1&limit=20&notNullFields=cover.url&sortField=createdAt&sortType=-1"
-}
 
 class NetworkingManager {
     static let shared = NetworkingManager()
@@ -62,10 +49,10 @@ class NetworkingManager {
 //    }
     
     // MARK: - Alamofire with GCD
-    func fetchData<T: Decodable>(_ type: T.Type, completion: @escaping(Result<KPSectionEnum, AFError>) -> Void) {
+    func fetchData(completion: @escaping(Result<KPCollectionsSection, AFError>) -> Void) {
         AF.request(EnumLinks.getCollectionsUrl.rawValue, headers: headers)
             .validate()
-            .responseDecodable(of: KPSectionEnum.self, decoder: decoder) { dataResponse in
+            .responseDecodable(of: KPCollectionsSection.self, decoder: decoder) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
                     completion(.success(value))

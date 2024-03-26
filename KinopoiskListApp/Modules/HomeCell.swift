@@ -63,7 +63,7 @@ class HomeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with collection: KPCollection) {
+    func configure(with collection: Collection) {
         guard let imageURL = URL(string: collection.cover.url) else { return }
         movieImageView.kf.indicatorType = .activity
         movieImageView.kf.setImage(

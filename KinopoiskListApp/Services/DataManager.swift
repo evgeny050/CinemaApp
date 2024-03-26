@@ -8,5 +8,21 @@
 import Foundation
 
 class DataManager {
-    //static var 
+    static let shared = DataManager()
+    
+    private init() {}
+    
+    func getCategories() -> [String] {
+        return [
+            "Фильмы",
+            "Онлайн-кинотеатр",
+            "Жанры",
+            "Страны",
+            "Годы",
+            "Сериалы",
+            "Сборы",
+            "Премии",
+            "Направления"
+        ]
+    }
 }

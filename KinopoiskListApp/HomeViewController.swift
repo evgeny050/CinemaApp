@@ -12,18 +12,14 @@ import AlamofireImage
 class HomeViewController: UIViewController {
     
     private var collectionView: UICollectionView!
-    private var kpSectionList: [KPSection<KPCollection>] = []
-    private var dataSource: UICollectionViewDiffableDataSource<KPSection<KPCollection>, KPCollection>?
-    
+    private var kpSectionList: [String: Any] = [:]
+    //private var dataSource: UICollectionViewDiffableDataSource<KPSection<KPCollection>, KPCollection>?
+    private let sectionHeaderView = SectionHeaderView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
-        
         setupCollectionView()
-        createDataSource()
-        reloadData()
-        
         fetchData()
     }
     
@@ -33,37 +29,40 @@ class HomeViewController: UIViewController {
         collectionView.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.9725490196, blue: 0.9921568627, alpha: 1)
         view.addSubview(collectionView)
         collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.register(HomeCell.self, forCellWithReuseIdentifier: HomeCell.reuseId)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseId)
     }
     
     // MARK: - Manage the data in UICV
-    private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<KPSection<KPCollection>,
-            KPCollection>(collectionView: collectionView, cellProvider: { (collectionView,
-               indexPath, item) -> UICollectionViewCell? in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCell.reuseId, for: indexPath) as? HomeCell
-                cell?.configure(with: item)
-                return cell
-            })
-    }
-    
-    private func reloadData() {
-        var snapshot = NSDiffableDataSourceSnapshot<KPSection<KPCollection>, KPCollection>()
-        snapshot.appendSections(kpSectionList)
-        
-        for section in kpSectionList {
-            snapshot.appendItems(section.items, toSection: section)
-        }
-        
-        dataSource?.apply(snapshot)
-    }
+//    private func createDataSource() {
+//        dataSource = UICollectionViewDiffableDataSource<KPSection<KPCollection>,
+//            KPCollection>(collectionView: collectionView, cellProvider: { (collectionView,
+//               indexPath, item) -> UICollectionViewCell? in
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCell.reuseId, for: indexPath) as? HomeCell
+//                cell?.configure(with: item)
+//                return cell
+//            })
+//    }
+//    
+//    private func reloadData() {
+//        var snapshot = NSDiffableDataSourceSnapshot<KPSection<KPCollection>, KPCollection>()
+//        snapshot.appendSections(kpSectionList)
+//        
+//        for section in kpSectionList {
+//            snapshot.appendItems(section.items, toSection: section)
+//        }
+//        
+//        dataSource?.apply(snapshot)
+//    }
     
     // MARK: - Setup layout
-    private func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) 
+    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment)
             -> NSCollectionLayoutSection? in
             return self.createFirstSection()
         }
+    
         return layout
     }
     
@@ -78,7 +77,12 @@ class HomeViewController: UIViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 10, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(20))
+        let headerElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        headerElement.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
+        section.boundarySupplementaryItems = [headerElement]
         
         return section
     }
@@ -88,27 +92,52 @@ class HomeViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        switch section {
+        default:
+            guard let collections = kpSectionList["collections"] as? [Collection] else { return 0 }
+            return collections.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        guard let collections = kpSectionList["collections"] as? [Collection],
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCell.reuseId,
+            for: indexPath) as? HomeCell
+        else {
+            return UICollectionViewCell()
+        }
+        cell.configure(with: collections[indexPath.item])
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        reloadData()
+        collectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.reuseId,
+            for: indexPath
+        ) as? SectionHeaderView else {
+            return UICollectionReusableView()
+        }
+        
+        sectionHeaderView.title.text = "Советуем посмотреть"
+        
+        return sectionHeaderView
     }
 }
 
 // MARK: - Networking
 extension HomeViewController {
     private func fetchData() {
-        NetworkingManager.shared.fetchData(KPSection<KPCollection>.self) { [weak self] result in
+        NetworkingManager.shared.fetchData { [weak self] result in
             switch result {
             case .success(let collectionList):
-                self?.kpSectionList.append(collectionList)
+                self?.kpSectionList["collections"] = collectionList.collections
                 //self?.collectionView.reloadSections(IndexSet(integer: 1))
-                self?.reloadData()
+                self?.collectionView.reloadData()
             case .failure(let error):
                 print(error)
             }

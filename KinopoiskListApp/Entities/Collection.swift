@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct KPCollection: Decodable, Hashable {
+struct Collection: Decodable {
     let category: String
     let name: String
     let slug: String
