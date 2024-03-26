@@ -93,20 +93,26 @@ class HomeViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        default:
-            guard let collections = kpSectionList["collections"] as? [Collection] else { return 0 }
-            return collections.count
+        if kpList.count > 0 {
+            return kpList[section].collections?.count ?? (kpList[section].movies?.count ?? 0)
         }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let collections = kpSectionList["collections"] as? [Collection],
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCell.reuseId,
-            for: indexPath) as? HomeCell
+//        guard let collections = kpList["collections"] as? [Collection],
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCell.reuseId,
+//            for: indexPath) as? HomeCell
+//        else {
+//            return UICollectionViewCell()
+//        }
+        guard let collections = kpList.first?.collections,
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCell.reuseId,
+          for: indexPath) as? HomeCell
         else {
             return UICollectionViewCell()
         }
+        
         cell.configure(with: collections[indexPath.item])
         return cell
     }
@@ -135,9 +141,12 @@ extension HomeViewController {
     private func fetchData() {
         NetworkingManager.shared.fetchData { [weak self] result in
             switch result {
-            case .success(let collectionList):
-                self?.kpSectionList["collections"] = collectionList.collections
+            case .success(let value):
+                //self?.kpSectionList["collections"] = collectionList.collections
                 //self?.collectionView.reloadSections(IndexSet(integer: 1))
+                if let value =  value.kpItems {
+                    self?.kpList.append(value)
+                }
                 self?.collectionView.reloadData()
             case .failure(let error):
                 print(error)

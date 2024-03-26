@@ -49,10 +49,10 @@ class NetworkingManager {
 //    }
     
     // MARK: - Alamofire with GCD
-    func fetchData(completion: @escaping(Result<KPCollectionsSection, AFError>) -> Void) {
+    func fetchData(completion: @escaping(Result<KPSectionEnum, AFError>) -> Void) {
         AF.request(EnumLinks.getCollectionsUrl.rawValue, headers: headers)
             .validate()
-            .responseDecodable(of: KPCollectionsSection.self, decoder: decoder) { dataResponse in
+            .responseDecodable(of: KPSectionEnum.self, decoder: decoder) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
                     completion(.success(value))
