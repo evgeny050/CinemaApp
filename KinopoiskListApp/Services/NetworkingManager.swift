@@ -25,32 +25,60 @@ class NetworkingManager {
         return ""
     }
     
-    // MARK: - URLSession with GCD
-//    func fetchData(completion: @escaping(Result<Data, NetworkingError>) -> Void) {
-//        guard let url = URL(string: EnumLinks.allMoviesByFilterParamsUrl.rawValue) else {
-//            completion(.failure(.invalidURL))
-//            print("invalidURL")
-//            return
-//        }
-//        
-//        let request = NSMutableURLRequest(url: url,
-//                                          cachePolicy: .useProtocolCachePolicy,
-//                                            timeoutInterval: 10.0)
-//        request.httpMethod = "GET"
-//        request.allHTTPHeaderFields = [
-//            "accept": "application/json",
-//            "X-API-KEY": "0DRDXYH-D2CM4R4-GEY083Z-N090K66"
-//          ]
-//
-//        URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
-//            
-//            
-//        }.resume()
-//    }
+    private func sortPersonsByBirthday() {
+        
+    }
     
-    // MARK: - Alamofire with GCD
+    // MARK: - Alamofire request
     func fetchData(completion: @escaping(Result<KPSectionEnum, AFError>) -> Void) {
-        AF.request(EnumLinks.getCollectionsUrl.rawValue, headers: headers)
+        var kpSectionEnum: Result<KPSectionEnum, AFError>!
+        let group = DispatchGroup()
+        
+        group.enter()
+        print("Fetching collections started")
+        requestAPI(with: EnumLinks.getCollectionsUrl.rawValue) { result in
+            switch result {
+            case .success(let value):
+                completion(.success(value))
+            case .failure(let error):
+                print("Fetching collections failed")
+                print(error)
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        print("Fetching persons started")
+        requestAPI(with: "https://api.kinopoisk.dev/v1.4/person?page=1&limit=250&selectFields=name&selectFields=photo" +
+                   "&selectFields=birthday&notNullFields=photo&notNullFields=birthday") { result in
+            switch result {
+            case .success(let value):
+                completion(.success(value))
+            case .failure(let error):
+                print("Fetching collections failed")
+                print(error)
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: .main) { // once all the groups perform leave(), notify will be triggered and you can perform the needed actions
+            completion(kpSectionEnum)
+        }
+        
+//        AF.request(EnumLinks.getCollectionsUrl.rawValue, headers: headers)
+//            .validate()
+//            .responseDecodable(of: KPSectionEnum.self, decoder: decoder) { dataResponse in
+//                switch dataResponse.result {
+//                case .success(let value):
+//                    completion(.success(value))
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
+    }
+    
+    func requestAPI(with url: String, completion: @escaping(Result<KPSectionEnum, AFError>) -> Void) {
+        AF.request(url, headers: headers)
             .validate()
             .responseDecodable(of: KPSectionEnum.self, decoder: decoder) { dataResponse in
                 switch dataResponse.result {
@@ -67,45 +95,5 @@ class NetworkingManager {
         guard let imageData = try? Data(contentsOf: url) else { return nil }
         return imageData
     }
-    
-//    func fetchImage(from url: URL, completion: @escaping(Result<Data, AFError>) -> Void) {
-//        AF.request(url)
-//            .validate()
-//            .responseData { dataResponse in
-//                switch dataResponse.result {
-//                case .success(let imageData):
-//                    completion(.success(imageData))
-//                case .failure(let error):
-//                    print(error)
-//                    completion(.failure(error))
-//                }
-//            }
-//    }
-    
-//    func fetchImage(from url: String, completion: @escaping(Result<UIImage, AFError>) -> Void) {
-//        AF.request(url)
-//            .responseImage { response in
-//                switch response.result {
-//                case .success(let image):
-//                    completion(.success(image))
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
-//    }
-//    
-//    func fetchImage(from url: String) async throws -> UIImage {
-//        let image: UIImage
-//        
-//        AF.request(url)
-//            .responseImage { [weak self] response in
-//                switch response.result {
-//                case .success(let image):
-//                    image = image
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
-//    }
     
 }

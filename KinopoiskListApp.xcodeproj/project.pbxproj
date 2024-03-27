@@ -14,6 +14,8 @@
 		4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703412BAF1C530012CF46 /* DataManager.swift */; };
 		4A1703462BB1A9490012CF46 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */; };
 		4A1703482BB1D93E0012CF46 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703472BB1D93E0012CF46 /* Genre.swift */; };
+		4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703492BB3150E0012CF46 /* CategoryCell.swift */; };
+		4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17034B2BB32C9B0012CF46 /* Person.swift */; };
 		4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F452BA1E5310019C505 /* AppDelegate.swift */; };
 		4A943F482BA1E5310019C505 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F472BA1E5310019C505 /* SceneDelegate.swift */; };
 		4A943F4A2BA1E5310019C505 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F492BA1E5310019C505 /* HomeViewController.swift */; };
@@ -25,11 +27,11 @@
 		4A943F692BA70A000019C505 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4A943F682BA70A000019C505 /* Alamofire */; };
 		4A943F6B2BA70A000019C505 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4A943F6A2BA70A000019C505 /* AlamofireDynamic */; };
 		4A943F702BA726600019C505 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F6F2BA726600019C505 /* Movie.swift */; };
-		4AA667292BAAF9B800F093FF /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667282BAAF9B800F093FF /* HomeCell.swift */; };
+		4AA667292BAAF9B800F093FF /* KPSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667282BAAF9B800F093FF /* KPSearchCell.swift */; };
 		4AA6672B2BAAFFD900F093FF /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672A2BAAFFD900F093FF /* ImageCacheManager.swift */; };
 		4AA6672E2BAB2E0D00F093FF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672D2BAB2E0D00F093FF /* Extensions.swift */; };
 		4AA667312BAC30DB00F093FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA667302BAC30DB00F093FF /* Kingfisher */; };
-		4AA667332BAC901A00F093FF /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667322BAC901A00F093FF /* Collection.swift */; };
+		4AA667332BAC901A00F093FF /* KPList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667322BAC901A00F093FF /* KPList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		4A1703412BAF1C530012CF46 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		4A1703472BB1D93E0012CF46 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
+		4A1703492BB3150E0012CF46 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		4A17034B2BB32C9B0012CF46 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		4A943F422BA1E5310019C505 /* KinopoiskListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KinopoiskListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A943F452BA1E5310019C505 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A943F472BA1E5310019C505 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,10 +53,10 @@
 		4A943F632BA48DF40019C505 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4A943F652BA6F8D80019C505 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		4A943F6F2BA726600019C505 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
-		4AA667282BAAF9B800F093FF /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
+		4AA667282BAAF9B800F093FF /* KPSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSearchCell.swift; sourceTree = "<group>"; };
 		4AA6672A2BAAFFD900F093FF /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		4AA6672D2BAB2E0D00F093FF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		4AA667322BAC901A00F093FF /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		4AA667322BAC901A00F093FF /* KPList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +99,6 @@
 				4A943F5E2BA2058A0019C505 /* Services */,
 				4A943F5D2BA2057E0019C505 /* Entities */,
 				4A943F602BA205BB0019C505 /* Modules */,
-				4A943F492BA1E5310019C505 /* HomeViewController.swift */,
-				4A943F612BA4874A0019C505 /* MainTabBarController.swift */,
-				4A943F632BA48DF40019C505 /* ProfileViewController.swift */,
 				4A943F5A2BA1EA1E0019C505 /* Resourses */,
 			);
 			path = KinopoiskListApp;
@@ -127,8 +128,9 @@
 			children = (
 				4A17033F2BADEA2F0012CF46 /* KPSections.swift */,
 				4A943F6F2BA726600019C505 /* Movie.swift */,
-				4AA667322BAC901A00F093FF /* Collection.swift */,
+				4AA667322BAC901A00F093FF /* KPList.swift */,
 				4A1703472BB1D93E0012CF46 /* Genre.swift */,
+				4A17034B2BB32C9B0012CF46 /* Person.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -143,19 +145,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		4A943F5F2BA205950019C505 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
 		4A943F602BA205BB0019C505 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4A943F5F2BA205950019C505 /* Profile */,
-				4AA667282BAAF9B800F093FF /* HomeCell.swift */,
+				4A943F612BA4874A0019C505 /* MainTabBarController.swift */,
+				4AA667282BAAF9B800F093FF /* KPSearchCell.swift */,
 				4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */,
+				4A943F492BA1E5310019C505 /* HomeViewController.swift */,
+				4A943F632BA48DF40019C505 /* ProfileViewController.swift */,
+				4A1703492BB3150E0012CF46 /* CategoryCell.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -256,8 +254,10 @@
 				4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */,
 				4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */,
 				4AA6672B2BAAFFD900F093FF /* ImageCacheManager.swift in Sources */,
-				4AA667332BAC901A00F093FF /* Collection.swift in Sources */,
-				4AA667292BAAF9B800F093FF /* HomeCell.swift in Sources */,
+				4AA667332BAC901A00F093FF /* KPList.swift in Sources */,
+				4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */,
+				4AA667292BAAF9B800F093FF /* KPSearchCell.swift in Sources */,
+				4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */,
 				4A1703482BB1D93E0012CF46 /* Genre.swift in Sources */,
 				4A1703462BB1A9490012CF46 /* SectionHeaderView.swift in Sources */,
 				4A943F642BA48DF40019C505 /* ProfileViewController.swift in Sources */,

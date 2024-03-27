@@ -9,12 +9,13 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class HomeCell: UICollectionViewCell {
-    static let reuseId = "HomeCell"
+class KPSearchCell: UICollectionViewCell {
+    static let reuseId = "KPSearchCell"
     
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        //imageView.backgroundColor = .green
         return imageView
     }()
     
@@ -23,6 +24,7 @@ class HomeCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.font = UIFont(name: Font.helveticaBold.rawValue, size: 13)
         label.sizeToFit()
+        //label.backgroundColor = .orange
         return label
     }()
     
@@ -37,6 +39,7 @@ class HomeCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        //backgroundColor = .red
         commonInit()
     }
     
@@ -63,8 +66,16 @@ class HomeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with collection: Collection) {
-        guard let imageURL = URL(string: collection.cover.url) else { return }
+    func configure<T>(with item: T) {
+        var imageURL: URL?
+        if let collection = item as? KPList {
+            guard let imageURL = URL(string: collection.cover.url) else { return }
+            movieNameLabel.text = collection.name
+        } else if let person = item as? Person {
+            guard let imageURL = URL(string: person.photo) else { return }
+            movieNameLabel.text = person.name
+        }
+        
         movieImageView.kf.indicatorType = .activity
         movieImageView.kf.setImage(
             with: imageURL,
@@ -73,6 +84,5 @@ class HomeCell: UICollectionViewCell {
                 .cacheOriginalImage
             ]
         )
-        movieNameLabel.text = collection.name
     }
 }
