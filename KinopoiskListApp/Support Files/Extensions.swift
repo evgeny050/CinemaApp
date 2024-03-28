@@ -18,7 +18,7 @@ extension UIView {
 extension Date {
     func formatString() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "MM-dd"
         return formatter.string(from: self)
     }
 }

@@ -31,7 +31,7 @@
 		4AA6672B2BAAFFD900F093FF /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672A2BAAFFD900F093FF /* ImageCacheManager.swift */; };
 		4AA6672E2BAB2E0D00F093FF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672D2BAB2E0D00F093FF /* Extensions.swift */; };
 		4AA667312BAC30DB00F093FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA667302BAC30DB00F093FF /* Kingfisher */; };
-		4AA667332BAC901A00F093FF /* KPList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667322BAC901A00F093FF /* KPList.swift */; };
+		4AA667332BAC901A00F093FF /* KPCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667322BAC901A00F093FF /* KPCollection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,7 +56,7 @@
 		4AA667282BAAF9B800F093FF /* KPSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSearchCell.swift; sourceTree = "<group>"; };
 		4AA6672A2BAAFFD900F093FF /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		4AA6672D2BAB2E0D00F093FF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		4AA667322BAC901A00F093FF /* KPList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPList.swift; sourceTree = "<group>"; };
+		4AA667322BAC901A00F093FF /* KPCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPCollection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +128,7 @@
 			children = (
 				4A17033F2BADEA2F0012CF46 /* KPSections.swift */,
 				4A943F6F2BA726600019C505 /* Movie.swift */,
-				4AA667322BAC901A00F093FF /* KPList.swift */,
+				4AA667322BAC901A00F093FF /* KPCollection.swift */,
 				4A1703472BB1D93E0012CF46 /* Genre.swift */,
 				4A17034B2BB32C9B0012CF46 /* Person.swift */,
 			);
@@ -254,7 +254,7 @@
 				4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */,
 				4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */,
 				4AA6672B2BAAFFD900F093FF /* ImageCacheManager.swift in Sources */,
-				4AA667332BAC901A00F093FF /* KPList.swift in Sources */,
+				4AA667332BAC901A00F093FF /* KPCollection.swift in Sources */,
 				4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */,
 				4AA667292BAAF9B800F093FF /* KPSearchCell.swift in Sources */,
 				4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */,

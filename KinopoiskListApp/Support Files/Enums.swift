@@ -21,6 +21,8 @@ enum EnumLinks: String {
     case baseUrl = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10"
     case getMovieByIdUrl = "https://api.kinopoisk.dev/v1.4/movie/random"
     case getCollectionsUrl = "https://api.kinopoisk.dev/v1.4/list?page=1&limit=20&notNullFields=cover.url&sortField=createdAt&sortType=-1"
+    case getPersonsURL = "https://api.kinopoisk.dev/v1.4/person?page=1&limit=250&selectFields=name&selectFields=photo&selectFields=birthday&selectFields=countAwards&selectFields=death&notNullFields=photo&notNullFields=birthday&notNullFields=countAwards&sortField=countAwards&sortType=-1&birthday=01.01.1950-01.01.2002"
+    case getURL = "https://api.kinopoisk.dev/v1.4/person?page=1&limit=10&notNullFields=photo"
 }
 
 enum SectionKind: Int, CaseIterable {

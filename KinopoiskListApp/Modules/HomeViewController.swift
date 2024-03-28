@@ -12,11 +12,9 @@ import AlamofireImage
 class HomeViewController: UIViewController {
     
     private var collectionView: UICollectionView!
-    private var kpSections: [KPItems] = []
+    private var kpCollections: [KPCollection] = []
     private var persons: [Person] = []
-    private var categoryList: [String] {
-        return DataManager.shared.getCategories()
-    }
+    private var categoryList: [String] = []
     private let sectionHeaderView = SectionHeaderView()
 
     override func viewDidLoad() {
@@ -50,18 +48,18 @@ extension HomeViewController {
             -> NSCollectionLayoutSection? in
             switch sectionIndex {
             case 0:
-                return self.createSectionForListsOrPersons()
+                return self.createSectionForKPCollections()
             case 1:
-                return self.createCategoriesSection()
+                return self.createSectionForCategories()
             default:
-                return self.createSectionForListsOrPersons()
+                return self.createSectionForPersons()
             }
         }
     
         return layout
     }
     
-    private func createSectionForListsOrPersons() -> NSCollectionLayoutSection {
+    private func createSectionForKPCollections() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -74,13 +72,14 @@ extension HomeViewController {
         section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 10, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(20))
-        let headerElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        let headerElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, 
+                                                                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         section.boundarySupplementaryItems = [headerElement]
         
         return section
     }
     
-    private func createCategoriesSection() -> NSCollectionLayoutSection {
+    private func createSectionForCategories() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(30), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -88,7 +87,7 @@ extension HomeViewController {
         let innerGroup = NSCollectionLayoutGroup.horizontal(layoutSize: innerGroupSize, subitems: [item])
         innerGroup.interItemSpacing = .fixed(10)
        
-        let nestedGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let nestedGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(90))
         let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: nestedGroupSize, subitems: [innerGroup])
         nestedGroup.interItemSpacing = .fixed(10)
         
@@ -102,37 +101,58 @@ extension HomeViewController {
         
         return section
     }
+    
+    private func createSectionForPersons() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(135), heightDimension: .absolute(150))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 10
+        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 10, trailing: 10)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(20))
+        let headerElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        section.boundarySupplementaryItems = [headerElement]
+        
+        return section
+    }
 }
 
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return kpCollections.isEmpty ? 0 : 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            if kpSections.isEmpty {
-                return 0
-            }
-            return kpSections[section].collections?.count ?? 0
-        default:
+            return kpCollections.count
+        case 1:
             return categoryList.count
+        default:
+            return persons.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 2 {
+            print("yes")
+        }
         switch indexPath.section {
         case 0:
-            guard let collections = kpSections.first?.collections,
-                  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchCell.reuseId,
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchCell.reuseId,
               for: indexPath) as? KPSearchCell
             else {
                 return UICollectionViewCell()
             }
-            cell.configure(with: collections[indexPath.item])
+            cell.configure(with: kpCollections[indexPath.item])
             
             return cell
         case 1:
@@ -182,28 +202,53 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 // MARK: - Networking
 extension HomeViewController {
+    private func getBirthdayPersons(of persons: [Person]) -> [Person] {
+        let personBirthdayList = persons.filter({ person in
+            person.birthdayInFormat == Date().formatString() &&
+                !(person.photo.contains("https:https")) &&
+            person.death == nil
+        })
+        return Array(personBirthdayList.shuffled().prefix(10))
+    }
+    
     private func fetchData() {
-        let dispatchGroup = DispatchGroup()
+        //let dispatchGroup = DispatchGroup()
 
-        dispatchGroup.enter()
-        NetworkingManager.shared.fetchData { [weak self] result in
+        //dispatchGroup.enter()
+        print("GetCollections starting...")
+        NetworkingManager.shared.fetchData(type: KPCollection.self, url: EnumLinks.getCollectionsUrl.rawValue) { [unowned self] result in
             switch result {
             case .success(let value):
-                if let value = value.kpItems {
-                    if let persons = value.persons {
-                        self?.persons = persons.filter({ person in
-                            person.birthday.prefix(10) == Date().formatString()
-                        })
-                    } else {
-                        self?.kpSections.append(value)
-                    }
-                }
-                self?.collectionView.isHidden = false
-                self?.collectionView.reloadData()
+                self.kpCollections = value
+                print("Collections fetched")
             case .failure(let error):
                 print(error)
             }
+            //dispatchGroup.leave()
+            print("GetCollections finishing...")
         }
+        
+        //dispatchGroup.wait()
+        //dispatchGroup.enter()
+        print("GetPersons starting...")
+        NetworkingManager.shared.fetchData(type: Person.self, url: EnumLinks.getPersonsURL.rawValue) { [unowned self] result in
+            switch result {
+            case .success(let value):
+                self.persons = self.getBirthdayPersons(of: value)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            //dispatchGroup.leave()
+            print("GetPersons finishing...")
+        }
+        
+//        print("Notify starting...")
+//        dispatchGroup.notify(queue: .main) { [weak self] in
+//            self?.categoryList = DataManager.shared.getCategories()
+//            self?.collectionView.isHidden = false
+//            self?.collectionView.reloadData()
+//            print("Notify finishing...")
+//        }
     }
 }
 

@@ -15,7 +15,8 @@ class KPSearchCell: UICollectionViewCell {
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        //imageView.backgroundColor = .green
+        //imageView.clipsToBounds = true
+        imageView.backgroundColor = .green
         return imageView
     }()
     
@@ -24,7 +25,7 @@ class KPSearchCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.font = UIFont(name: Font.helveticaBold.rawValue, size: 13)
         label.sizeToFit()
-        //label.backgroundColor = .orange
+        label.backgroundColor = .orange
         return label
     }()
     
@@ -39,7 +40,7 @@ class KPSearchCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //backgroundColor = .red
+        backgroundColor = .red
         commonInit()
     }
     
@@ -68,11 +69,11 @@ class KPSearchCell: UICollectionViewCell {
     
     func configure<T>(with item: T) {
         var imageURL: URL?
-        if let collection = item as? KPList {
-            guard let imageURL = URL(string: collection.cover.url) else { return }
+        if let collection = item as? KPCollection {
+            imageURL = URL(string: collection.cover.url)
             movieNameLabel.text = collection.name
         } else if let person = item as? Person {
-            guard let imageURL = URL(string: person.photo) else { return }
+            imageURL = URL(string: person.photo)
             movieNameLabel.text = person.name
         }
         

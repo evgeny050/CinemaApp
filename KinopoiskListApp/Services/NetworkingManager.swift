@@ -30,60 +30,24 @@ class NetworkingManager {
     }
     
     // MARK: - Alamofire request
-    func fetchData(completion: @escaping(Result<KPSectionEnum, AFError>) -> Void) {
-        var kpSectionEnum: Result<KPSectionEnum, AFError>!
-        let group = DispatchGroup()
-        
-        group.enter()
-        print("Fetching collections started")
-        requestAPI(with: EnumLinks.getCollectionsUrl.rawValue) { result in
-            switch result {
-            case .success(let value):
-                completion(.success(value))
-            case .failure(let error):
-                print("Fetching collections failed")
-                print(error)
-            }
-            group.leave()
-        }
-        
-        group.enter()
-        print("Fetching persons started")
-        requestAPI(with: "https://api.kinopoisk.dev/v1.4/person?page=1&limit=250&selectFields=name&selectFields=photo" +
-                   "&selectFields=birthday&notNullFields=photo&notNullFields=birthday") { result in
-            switch result {
-            case .success(let value):
-                completion(.success(value))
-            case .failure(let error):
-                print("Fetching collections failed")
-                print(error)
-            }
-            group.leave()
-        }
-        
-        group.notify(queue: .main) { // once all the groups perform leave(), notify will be triggered and you can perform the needed actions
-            completion(kpSectionEnum)
-        }
-        
-//        AF.request(EnumLinks.getCollectionsUrl.rawValue, headers: headers)
-//            .validate()
-//            .responseDecodable(of: KPSectionEnum.self, decoder: decoder) { dataResponse in
-//                switch dataResponse.result {
-//                case .success(let value):
-//                    completion(.success(value))
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
-    }
-    
-    func requestAPI(with url: String, completion: @escaping(Result<KPSectionEnum, AFError>) -> Void) {
+    func fetchData<T: Decodable>(type: T.Type, url: String, completion: @escaping(Result<[T], AFError>) -> Void) {
+        guard let url = URL(string: url) else { return }
         AF.request(url, headers: headers)
             .validate()
-            .responseDecodable(of: KPSectionEnum.self, decoder: decoder) { dataResponse in
+            .responseDecodable(of: KPSection.self, decoder: decoder) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
-                    completion(.success(value))
+                    guard let items = value.kpItems else {
+                        return
+                    }
+                    switch type {
+                    case is KPCollection.Type:
+                        guard let kpCollections = items.collections else { return }
+                        completion(.success((kpCollections as? [T])!))
+                    default:
+                        guard let persons = items.persons else { return }
+                        completion(.success((persons as? [T])!))
+                    }
                 case .failure(let error):
                     completion(.failure(error))
                 }

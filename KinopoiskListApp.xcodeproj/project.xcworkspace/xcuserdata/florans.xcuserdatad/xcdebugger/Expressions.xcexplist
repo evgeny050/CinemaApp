@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "KPSearchCell.configure&lt;&#x3c4;_0_0&gt;(with:):KPSearchCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "HomeViewController.collectionView(_:cellForItemAt:):HomeViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.section">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in NetworkingManager.fetchData&lt;&#x3c4;_0_0&gt;(type:url:completion:):NetworkingManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Date().formatString">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HomeViewController.collectionView(_:numberOfItemsInSection:):HomeViewController.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
