@@ -18,6 +18,7 @@ class SectionHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         customizeElements()
         setupConstraints()
+        backgroundColor = .red
     }
     
     required init?(coder: NSCoder) {
@@ -29,7 +30,7 @@ class SectionHeaderView: UICollectionReusableView {
 extension SectionHeaderView {
     private func customizeElements() {
         title.textColor = .black
-        title.font = UIFont(name: Font.helveticaBold.rawValue, size: 16)
+        title.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         title.translatesAutoresizingMaskIntoConstraints = false
     }
     

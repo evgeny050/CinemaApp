@@ -7,11 +7,20 @@
 import Foundation
 
 struct Person: Decodable {
+    let id: Int
     let name: String
+    let enName: String?
     let photo: String
     let birthday: String
-    let countAwards: Int
     let death: String?
+    let age: Int
+    let growth: Int
+    let profession: [Profession]
+    let facts: [Profession]
+    
+    var fullName: String {
+        return name.replacingOccurrences(of: " ", with: "\n")
+    }
     
     var birthdayInFormat: String {
         let formatter = DateFormatter()
@@ -20,4 +29,8 @@ struct Person: Decodable {
             from: formatter.date(from: birthday) ?? Date()
         )
     }
+}
+
+struct Profession: Decodable {
+    let value: String
 }

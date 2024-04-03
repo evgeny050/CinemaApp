@@ -6,19 +6,19 @@
 //
 
 struct Movie: Decodable {
-    let rating: Rating?
-    let votes: Vote?
-    let backdrop: UrlToImage
-    let movieLength: Int
     let id: Int
-    let type: String
+    //let rating: Rating?
+    //let votes: Vote?
+    //let movieLength: Int
+    //let type: String
     let name: String
     let poster: UrlToImage
-    let description: String
-    let year: Int
-    let genres: [GenreOrCountry]
-    let shortDescription: String
-    let ticketsOnSale: Bool
+    //let backdrop: UrlToImage
+    //let description: String
+    //let year: Int
+    //let genres: [GenreOrCountry]
+    //let shortDescription: String
+    //let ticketsOnSale: Bool
     let top10: Int?
     let top250: Int?
 }

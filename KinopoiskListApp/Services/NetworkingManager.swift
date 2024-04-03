@@ -14,7 +14,7 @@ class NetworkingManager {
     
     private let headers: HTTPHeaders = [
       "accept": "application/json",
-      "X-API-KEY": "0DRDXYH-D2CM4R4-GEY083Z-N090K66"
+      "X-API-KEY": "H2BEHR2-ZP9MHW2-Q168Q5V-ARA0EGX"//"H2BEHR2-ZP9MHW2-Q168Q5V-ARA0EGX"//"0DRDXYH-D2CM4R4-GEY083Z-N090K66"
     ]
     
     private let decoder = JSONDecoder()
@@ -25,10 +25,6 @@ class NetworkingManager {
         return ""
     }
     
-    private func sortPersonsByBirthday() {
-        
-    }
-    
     // MARK: - Alamofire request
     func fetchData<T: Decodable>(type: T.Type, url: String, completion: @escaping(Result<[T], AFError>) -> Void) {
         guard let url = URL(string: url) else { return }
@@ -37,27 +33,21 @@ class NetworkingManager {
             .responseDecodable(of: KPSection.self, decoder: decoder) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
-                    guard let items = value.kpItems else {
-                        return
-                    }
                     switch type {
                     case is KPCollection.Type:
-                        guard let kpCollections = items.collections else { return }
+                        guard let kpCollections = value.items.collections else { return }
                         completion(.success((kpCollections as? [T])!))
+                    case is Movie.Type:
+                        guard let movies = value.items.movies else { return }
+                        completion(.success((movies as? [T])!))
                     default:
-                        guard let persons = items.persons else { return }
+                        guard let persons = value.items.persons else { return }
                         completion(.success((persons as? [T])!))
                     }
                 case .failure(let error):
                     completion(.failure(error))
                 }
             }
-    }
-    
-    func fetchImageData(from url: String) -> Data? {
-        guard let url = URL(string: url) else { return nil }
-        guard let imageData = try? Data(contentsOf: url) else { return nil }
-        return imageData
     }
     
 }

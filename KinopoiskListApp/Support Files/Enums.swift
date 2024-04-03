@@ -7,55 +7,46 @@
 
 import UIKit
 
-enum Font: String {
-    case helveticaBold = "HelveticaNeue-Bold"
-}
-
 enum NetworkingError: Error {
     case decodingError
     case invalidURL
     case noData
 }
 
-enum EnumLinks: String {
-    case baseUrl = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10"
-    case getMovieByIdUrl = "https://api.kinopoisk.dev/v1.4/movie/random"
-    case getCollectionsUrl = "https://api.kinopoisk.dev/v1.4/list?page=1&limit=20&notNullFields=cover.url&sortField=createdAt&sortType=-1"
-    case getPersonsURL = "https://api.kinopoisk.dev/v1.4/person?page=1&limit=250&selectFields=name&selectFields=photo&selectFields=birthday&selectFields=countAwards&selectFields=death&notNullFields=photo&notNullFields=birthday&notNullFields=countAwards&sortField=countAwards&sortType=-1&birthday=01.01.1950-01.01.2002"
-    case getURL = "https://api.kinopoisk.dev/v1.4/person?page=1&limit=10&notNullFields=photo"
+enum Links: String {
+    case baseUrl = "https://api.kinopoisk.dev/v1.4/"
+    case getMovieByPersonIdUrl = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&persons.id=1"
+    case getCollectionsUrl = "https://api.kinopoisk.dev/v1.4/list?page=1&limit=20&notNullFields=cover.url&sortField=updatedAt&sortType=-1"
+    case getPersonsURL = "https://api.kinopoisk.dev/v1.4/person?page=1&limit=10&selectFields=id&selectFields=name&selectFields=enName&selectFields=photo&selectFields=growth&selectFields=birthday&selectFields=death&selectFields=age&selectFields=countAwards&selectFields=profession&selectFields=facts&selectFields=movies&notNullFields=id&notNullFields=name&notNullFields=enName&notNullFields=photo&notNullFields=growth&notNullFields=age&notNullFields=countAwards&notNullFields=profession.value&notNullFields=facts.value&notNullFields=movies.id&notNullFields=birthday"
+    case moviesByPersonUrl = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&selectFields=&notNullFields=name&notNullFields=poster.url&sortField=rating.kp&sortType=-1&persons.id="
+    case moviesByCollectionUrl = "https://api.kinopoisk.dev/v1.4/movie?page=1&limit=250&lists="
 }
 
 enum SectionKind: Int, CaseIterable {
-  case first
-  case second
-  case third
+    case collections
+    case persons
+    case categories
+    case facts
 
-  var itemCount: Int {
-    switch self {
-    case .first:
-      return 2
-    default:
-      return 1
+    var groupHeight: NSCollectionLayoutDimension {
+        switch self {
+        case .collections:
+            return .absolute(180)
+        default:
+            return .absolute(235)
+        }
     }
-  }
-
-  var innerGroupHeight: NSCollectionLayoutDimension {
-    switch self {
-    case .first:
-      return .fractionalWidth(0.90)
-    default:
-      return .fractionalWidth(0.45)
+    
+    var imageHeight: Int {
+        switch self {
+        case .collections:
+            return 125
+        default:
+            return 180
+        }
     }
-  }
-
-  var orthogonalBehaviour: UICollectionLayoutSectionOrthogonalScrollingBehavior {
-    switch self {
-    case .first:
-      return .continuous
-    case .second:
-      return .groupPaging
-    case .third:
-      return .groupPagingCentered
+    
+    var isClipped: Bool {
+        self == .persons
     }
-  }
 }

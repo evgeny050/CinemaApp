@@ -22,27 +22,25 @@ extension KPSection: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         if let collections = try? values.decode([KPCollection].self, forKey: .items) {
             self.items = KPItems(collections: collections)
-            //self = .items(KPItems(collections: collections))
             return
         }
-        if let movies = try? values.decode([Movie].self, forKey: .items) {
-            //self = .items(KPItems(movies: movies))
-            self.items = KPItems(movies: movies)
-            return
-        }
+//        if let movies = try? values.decode([Movie].self, forKey: .items) {
+//            self.items = KPItems(movies: movies)
+//            return
+//        }
         if let persons = try? values.decode([Person].self, forKey: .items) {
-            //self = .items(KPItems(persons: persons))
             self.items = KPItems(persons: persons)
             return
         }
-        //return
-        throw CodingError.decoding("Decoding Error: \(dump(values))")
+        do {
+            let movies = try values.decode([Movie].self, forKey: .items)
+            self.items = KPItems(movies: movies)
+            return
+        } catch(let error) {
+            print(error)
+        }
+        throw CodingError.decoding("Decoding Error")
     }
-    
-//    var kpItems: KPItems? {
-//        guard case let .items(value) = self else { return nil }
-//        return value
-//    }
 }
 
 struct KPItems: Decodable {
