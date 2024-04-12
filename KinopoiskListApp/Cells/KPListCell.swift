@@ -9,40 +9,28 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class KPCollectionCell: UICollectionViewCell {
-    static let reuseId = "KPCollectionCell"
+class KPListCell: UICollectionViewCell {
+    // MARK: - Properties
+    static let reuseId = "KPListCell"
     
     private let collectionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        //imageView.clipsToBounds = true
-        imageView.backgroundColor = .green
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     private let collectionNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 3
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 13)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
         label.sizeToFit()
-        label.backgroundColor = .orange
         return label
-    }()
-    
-    private let stackView: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .fill
-        stack.axis = .vertical
-        stack.spacing = 8
-        stack.backgroundColor = .green
-        return stack
     }()
     
     //MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         commonInit()
     }
     
@@ -52,21 +40,27 @@ class KPCollectionCell: UICollectionViewCell {
     
     // MARK: - Setup Layout
     private func commonInit() {
-        addSubview(stackView)
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fill
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        
         stackView.addArrangedSubview(collectionImageView)
         stackView.addArrangedSubview(collectionNameLabel)
+        contentView.addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(self)
+            make.edges.equalTo(contentView)
         }
         
         collectionImageView.snp.makeConstraints { make in
-            make.height.equalTo(125)
+            make.height.equalTo(130)
         }
     }
     
-    // MARK: - Configure with model object
-    func configure(with collection: KPCollection) {
+    // MARK: - Configure UI Data with KPList
+    func configure(with collection: KPList) {
         guard let imageURL = URL(string: collection.cover.url) else { return }
         collectionImageView.kf.indicatorType = .activity
         collectionImageView.kf.setImage(
@@ -77,19 +71,6 @@ class KPCollectionCell: UICollectionViewCell {
             ]
         )
         collectionNameLabel.text = collection.name
-    }
-    
-    func configure(with movie: Movie) {
-        guard let imageURL = URL(string: movie.poster.url) else { return }
-        collectionImageView.kf.indicatorType = .activity
-        collectionImageView.kf.setImage(
-            with: imageURL,
-            options: [
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ]
-        )
-        collectionNameLabel.text = movie.name
     }
     
 }

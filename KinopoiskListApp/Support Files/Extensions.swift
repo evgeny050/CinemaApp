@@ -18,7 +18,36 @@ extension UIView {
 extension Date {
     func formatString() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd"
+        formatter.dateFormat = "MM"
         return formatter.string(from: self)
     }
 }
+
+extension UITableView {
+    func updateHeaderViewHeight() {
+        if let header = self.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(CGSize(width: self.bounds.width, height: 0))
+            header.frame.size.height = newSize.height + 3
+        }
+    }
+}
+
+extension UILabel {
+    var maxNumberOfLines: Int {
+        let maxSize = CGSize(
+            width: (superview?.bounds.width ?? UIScreen.main.bounds.width) - 20,
+            height: CGFloat(MAXFLOAT)
+        )
+        let text = (self.text ?? "") as NSString
+        let textHeight = text.boundingRect(
+            with: maxSize,
+            options: .usesLineFragmentOrigin,
+            attributes: [.font: font],
+            context: nil
+        ).height
+        let lineHeight = font.lineHeight
+        return Int(ceil(textHeight / lineHeight))
+    }
+}
+
+

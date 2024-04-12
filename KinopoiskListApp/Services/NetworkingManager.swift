@@ -14,7 +14,7 @@ class NetworkingManager {
     
     private let headers: HTTPHeaders = [
       "accept": "application/json",
-      "X-API-KEY": "H2BEHR2-ZP9MHW2-Q168Q5V-ARA0EGX"//"H2BEHR2-ZP9MHW2-Q168Q5V-ARA0EGX"//"0DRDXYH-D2CM4R4-GEY083Z-N090K66"
+      "X-API-KEY": "0DRDXYH-D2CM4R4-GEY083Z-N090K66"//"H2BEHR2-ZP9MHW2-Q168Q5V-ARA0EGX"//"0DRDXYH-D2CM4R4-GEY083Z-N090K66"
     ]
     
     private let decoder = JSONDecoder()
@@ -34,7 +34,7 @@ class NetworkingManager {
                 switch dataResponse.result {
                 case .success(let value):
                     switch type {
-                    case is KPCollection.Type:
+                    case is KPList.Type:
                         guard let kpCollections = value.items.collections else { return }
                         completion(.success((kpCollections as? [T])!))
                     case is Movie.Type:

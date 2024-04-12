@@ -20,18 +20,28 @@ extension KPSection: Decodable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        if let collections = try? values.decode([KPCollection].self, forKey: .items) {
-            self.items = KPItems(collections: collections)
-            return
-        }
 //        if let movies = try? values.decode([Movie].self, forKey: .items) {
 //            self.items = KPItems(movies: movies)
 //            return
 //        }
+        if let collections = try? values.decode([KPList].self, forKey: .items) {
+            self.items = KPItems(collections: collections)
+            return
+        }
+        
+//        do {
+//            let persons = try values.decode([Person].self, forKey: .items)
+//            self.items = KPItems(persons: persons)
+//            return
+//        } catch(let error) {
+//            print(error)
+//        }
+        
         if let persons = try? values.decode([Person].self, forKey: .items) {
             self.items = KPItems(persons: persons)
             return
         }
+        
         do {
             let movies = try values.decode([Movie].self, forKey: .items)
             self.items = KPItems(movies: movies)
@@ -44,11 +54,11 @@ extension KPSection: Decodable {
 }
 
 struct KPItems: Decodable {
-    let collections: [KPCollection]?
+    let collections: [KPList]?
     let movies: [Movie]?
     let persons: [Person]?
     
-    init(collections: [KPCollection]? = nil, movies: [Movie]? = nil, persons: [Person]? = nil) {
+    init(collections: [KPList]? = nil, movies: [Movie]? = nil, persons: [Person]? = nil) {
         self.collections = collections
         self.movies = movies
         self.persons = persons

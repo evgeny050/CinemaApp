@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class MainTabBarController: UITabBarController {
     
@@ -18,7 +19,6 @@ class MainTabBarController: UITabBarController {
             homeVC,
             profileVC
         ]
-        
         setupTabBar()
     }
     
