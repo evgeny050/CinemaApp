@@ -20,48 +20,60 @@ extension KPSection: Decodable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-//        if let movies = try? values.decode([Movie].self, forKey: .items) {
-//            self.items = KPItems(movies: movies)
-//            return
-//        }
-        if let collections = try? values.decode([KPList].self, forKey: .items) {
-            self.items = KPItems(collections: collections)
-            return
-        }
-        
-//        do {
-//            let persons = try values.decode([Person].self, forKey: .items)
-//            self.items = KPItems(persons: persons)
-//            return
-//        } catch(let error) {
-//            print(error)
-//        }
         
         if let persons = try? values.decode([Person].self, forKey: .items) {
             self.items = KPItems(persons: persons)
             return
         }
         
-        do {
-            let movies = try values.decode([Movie].self, forKey: .items)
+        if let movies = try? values.decode([Movie].self, forKey: .items) {
             self.items = KPItems(movies: movies)
             return
-        } catch(let error) {
-            print(error)
         }
+        if let kpLists = try? values.decode([KPList].self, forKey: .items) {
+            self.items = KPItems(kpLists: kpLists)
+            return 
+        }
+//        do {
+//            let kpLists = try values.decode([KPList].self, forKey: .items)
+//            self.items = KPItems(kpLists: kpLists)
+//            return
+//        } catch(let error) {
+//            print(error)
+//        }
+        
         throw CodingError.decoding("Decoding Error")
     }
 }
 
 struct KPItems: Decodable {
-    let collections: [KPList]?
+    let kpLists: [KPList]?
     let movies: [Movie]?
     let persons: [Person]?
     
-    init(collections: [KPList]? = nil, movies: [Movie]? = nil, persons: [Person]? = nil) {
-        self.collections = collections
+    init(kpLists: [KPList]? = nil, movies: [Movie]? = nil,
+         persons: [Person]? = nil) {
+        self.kpLists = kpLists
         self.movies = movies
         self.persons = persons
     }
+}
+
+protocol SectionType: Decodable {
+    associatedtype T: Decodable
+    
+    var docs: [T] { get }
+}
+
+struct KPListSection: SectionType {
+    let docs: [KPList]
+}
+
+struct KPPersonSection: SectionType {
+    let docs: [Person]
+}
+
+struct KPMovieSection: SectionType {
+    let docs: [Movie]
 }
 

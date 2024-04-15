@@ -77,6 +77,10 @@ class MovieTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        movieImageView.hideSkeleton()
+    }
+    
     // MARK: - Setup Layout
     private func commonInit() {
         let innerStackView = UIStackView(arrangedSubviews: [rUNameLabel, enNameAndPeriodLabel, countryAndGenreLabel])
@@ -112,38 +116,15 @@ class MovieTableViewCell: UITableViewCell {
         }
         
         movieImageView.snp.makeConstraints { make in
-            make.width.equalTo(80)//0.3 * self.frame.width)
+            make.width.equalTo(80)
         }
     
     }
     
-    func configure(with movie: Movie/*, completion: @escaping(String) -> UITableViewCell*/) {
-//        let concurrentQueue = DispatchQueue(label: "ru.denisegaluev.concurrent-queue", attributes: .concurrent)
-//
-//        // Помечаем асинхронный вызов флагом .barrier
-//        concurrentQueue.async(flags: .barrier) {
-//            // ...
-//        }
-        movieImageView.showSkeleton()
+    func configure(with movie: Movie) {
         guard let imageURL = URL(string: movie.poster.url) else { return }
-        //movieImageView.kf.indicatorType = .activity
-        
-//        let workItem = DispatchWorkItem { [unowned self] in
-//            movieImageView.kf.setImage(
-//                with: imageURL,
-//                options: [
-//                    .transition(.fade(1)),
-//                    .cacheOriginalImage
-//                ])
-//        }
-//        DispatchQueue(label: "ru.iakovlev.serial-queue").async(execute: workItem)
-        
-//        if let cachedImage =  self.imageCache.object(forKey: imageURL.lastPathComponent as AnyObject) {
-//            self.movieImageView.image = cachedImage
-//            debugPrint("image from cache")
-//        }
-        
         let processor = DownsamplingImageProcessor(size: CGSize(width: 80, height: self.bounds.height))
+        movieImageView.kf.indicatorType = .activity
         movieImageView.kf.setImage(
             with: imageURL,
             options: [
@@ -152,42 +133,20 @@ class MovieTableViewCell: UITableViewCell {
                 .transition(.fade(1)),
                 .cacheOriginalImage
             ])
-        { [unowned self]
+        { //[unowned self]
             result in
             switch result {
             case .success(_):
-                movieImageView.hideSkeleton()
-                //break
+                break
                 //completion("Image loaded succesfullly")
                 //print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            case .failure(let error):
+            case .failure(_):
                 break
                 //print(error)
                 //completion("Image loading failed")
-                //print("Job failed: \(error.localizedDescription)")
+                //print("Job failed")
             }
-//            rUNameLabel.text = movie.name
-//            enNameAndPeriodLabel.text = "\(movie.enName ?? ""), \(movie.year)"
-//            let countries = movie.countries.map { country in
-//                return country.name
-//            }
-//            let genres = movie.genres.map { genre in
-//                return genre.name
-//            }
-//            countryAndGenreLabel.text = "\(countries.joined(separator: " ")) - \(genres.joined(separator: " "))"
         }
-        
-//        workItem.notify(queue: DispatchQueue.main) { [unowned self] in
-//            rUNameLabel.text = movie.name
-//            enNameAndPeriodLabel.text = "\(movie.enName ?? ""), \(movie.year)"
-//            let countries = movie.countries.map { country in
-//                return country.name
-//            }
-//            let genres = movie.genres.map { genre in
-//                return genre.name
-//            }
-//            countryAndGenreLabel.text = "\(countries.joined(separator: " ")) - \(genres.joined(separator: " "))"
-//        }
         
         rUNameLabel.text = movie.name
         enNameAndPeriodLabel.text = "\(movie.year)"

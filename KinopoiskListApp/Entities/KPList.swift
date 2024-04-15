@@ -10,7 +10,7 @@ struct KPList: Decodable {
     let category: String
     let name: String
     let slug: String
-    let moviesCount: Int
+    //let moviesCount: Int
     let cover: UrlToImage
-    let id: String
+    //let id: String
 }

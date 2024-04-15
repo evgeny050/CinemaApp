@@ -128,7 +128,7 @@ class PersonInfoCell: UICollectionViewCell {
         }
         
         avatarImageView.snp.makeConstraints { make in
-            make.width.equalTo(130)//0.3 * self.frame.width)
+            make.width.equalTo(130)
             make.height.equalTo(contentView)
         }
     }

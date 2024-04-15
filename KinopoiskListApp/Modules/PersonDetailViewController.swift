@@ -30,8 +30,10 @@ final class PersonDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Overrided methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     // MARK: - Skeleton View
@@ -74,13 +76,8 @@ extension PersonDetailViewController {
                 return self.createSectionForPersonInfo()
             case 1:
                 return self.createSectionForMoviesOfPerson()
-            case 2:
-                return self.createSectionForFacts()
-            //case 3:
-               // return self.createSectionForProfessions()
             default:
                 return self.createSectionForFacts()
-                //return self.createSectionForFilmography()
             }
         }
         //layout.collectionView?.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0)
@@ -88,7 +85,7 @@ extension PersonDetailViewController {
         return layout
     }
     
-    func createSectionForPersonInfo() -> NSCollectionLayoutSection {
+    private func createSectionForPersonInfo() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -101,7 +98,7 @@ extension PersonDetailViewController {
         return section
     }
     
-    func createSectionForMoviesOfPerson() -> NSCollectionLayoutSection {
+    private func createSectionForMoviesOfPerson() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(180))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -124,7 +121,7 @@ extension PersonDetailViewController {
         return section
     }
     
-    func createSectionForFacts() -> NSCollectionLayoutSection {
+    private func createSectionForFacts() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -146,40 +143,6 @@ extension PersonDetailViewController {
         
         return section
     }
-    
-//    func createSectionForProfessions() -> NSCollectionLayoutSection {
-//        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(30), heightDimension: .fractionalHeight(1.0))
-//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//        
-//        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(35))
-//        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//        group.interItemSpacing = .fixed(10)
-//        
-//        let section = NSCollectionLayoutSection(group: group)
-//        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 10, trailing: 10)
-//        
-//        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(20))
-//        let headerElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-//                                                                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-//        section.boundarySupplementaryItems = [headerElement]
-//        
-//        return section
-//    }
-//    
-//    func createSectionForFilmography() -> NSCollectionLayoutSection {
-//        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(140))
-//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//        
-//        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-//        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-//        
-//        let section = NSCollectionLayoutSection(group: group)
-//        section.orthogonalScrollingBehavior = .continuous
-//        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 10, trailing: 10)
-//        
-//        return section
-//    }
-    
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -222,7 +185,6 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
         supplementaryViewIdentifierOfKind: String,
         at indexPath: IndexPath
     ) -> ReusableCellIdentifier? {
-        
         return SectionHeaderView.reuseId
     }
     
@@ -306,19 +268,20 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
 
 // MARK: - Networking
 extension PersonDetailViewController {
-    func setupPersonInfo(with person: Person) {
+    func fetchMoviesOfPerson(with person: Person) {
         self.person = person
         
-        NetworkingManager.shared.fetchData(
-            type: Movie.self,
-            url: Links.moviesByPersonUrl.rawValue + "\(person.id)"
+        NetworkingManager.shared.fetchDataFaster(
+            type: KPMovieSection.self,
+            url: Links.moviesByPersonUrl.rawValue,
+            parameters: ["notNullFields": ["poster.url"],
+                "persons.id" : ["\(person.id)"]]
         ) { [weak self] result in
             switch result {
             case .success(let value):
-                self?.movies = value
+                self?.movies = value.docs
                 self?.collectionView.stopSkeletonAnimation()
                 self?.collectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-                //self?.collectionView.reloadData()
             case .failure(let error):
                 print(error)
             }

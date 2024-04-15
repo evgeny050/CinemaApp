@@ -9,9 +9,9 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class KPListCell: UICollectionViewCell {
+class KPListCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
-    static let reuseId = "KPListCell"
+    static let reuseId = "KPListCollectionViewCell"
     
     private let collectionImageView: UIImageView = {
         let imageView = UIImageView()
@@ -20,7 +20,7 @@ class KPListCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let collectionNameLabel: UILabel = {
+    private let kpListNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 3
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
@@ -41,13 +41,12 @@ class KPListCell: UICollectionViewCell {
     // MARK: - Setup Layout
     private func commonInit() {
         let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.spacing = 8
-        
         stackView.addArrangedSubview(collectionImageView)
-        stackView.addArrangedSubview(collectionNameLabel)
+        stackView.addArrangedSubview(kpListNameLabel)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
@@ -70,7 +69,6 @@ class KPListCell: UICollectionViewCell {
                 .cacheOriginalImage
             ]
         )
-        collectionNameLabel.text = collection.name
+        kpListNameLabel.text = collection.name
     }
-    
 }

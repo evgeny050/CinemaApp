@@ -9,12 +9,25 @@ import UIKit
 import AlamofireImage
 import SkeletonView
 
-final class SearchViewController: UIViewController {
+// ViewInputProtocol (VC conforms, Presenter contains)
+protocol HomeInfoViewInputProtocol: AnyObject {
+    func reloadData()
+}
+
+// ViewOutputProtocol (Presenter conforms, VC contains
+protocol HomeInfoViewOutputProtocol: AnyObject {
+    init(view: HomeInfoViewInputProtocol)
+    func viewDidLoad()
+    func didTapCell(at indexPath: IndexPath)
+}
+
+final class HomeInfoViewController: UIViewController {
     
     // MARK: - Properties
     private var collectionView: UICollectionView!
-    private let sectionHeaderView = SectionHeaderView()
+    var presenter: HomeInfoViewOutputProtocol!
     
+    private let sectionHeaderView = SectionHeaderView()
     private var searchController: UISearchController!
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
@@ -23,11 +36,12 @@ final class SearchViewController: UIViewController {
     private var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
-    
-    private var kpCollections: [KPList] = []
+    //Model Lists
+    private var kpLists: [KPList] = []
     private var persons: [Person] = []
     private var categoryList: [String] = []
     
+    // MARK: - Overrided Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -36,7 +50,10 @@ final class SearchViewController: UIViewController {
         addSkeletonAnimation()
         fetchData()
     }
-    
+}
+
+// MARK: - Private Methodds
+extension HomeInfoViewController {
     // MARK: - Setup the Collection View
     private func setupCollectionView() {
         collectionView = UICollectionView(
@@ -50,8 +67,8 @@ final class SearchViewController: UIViewController {
         collectionView.dataSource = self
         
         collectionView.register(
-            KPListCell.self,
-            forCellWithReuseIdentifier: KPListCell.reuseId
+            KPListCollectionViewCell.self,
+            forCellWithReuseIdentifier: KPListCollectionViewCell.reuseId
         )
         collectionView.register(
             KPItemCell.self,
@@ -82,7 +99,10 @@ final class SearchViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        searchController.searchBar.scopeButtonTitles = ["Все результаты", "Онлайн-кинотеатр"]
+        searchController.searchBar.scopeButtonTitles = [
+            "Все результаты",
+            "Онлайн-кинотеатр"
+        ]
         searchController.searchBar.delegate = self
     }
     
@@ -101,17 +121,17 @@ final class SearchViewController: UIViewController {
 }
 
 // MARK: - Setup UICVCompositionalLayout
-extension SearchViewController {
+extension HomeInfoViewController {
     private func createCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment)
             -> NSCollectionLayoutSection? in
             switch sectionIndex {
             case 0:
-                return self.createSectionForKPCollectionsOrPersons()
+                return self.createSectionForkpListsOrPersons()
             case 1:
                 return self.createSectionForCategories()
             default:
-                return self.createSectionForKPCollectionsOrPersons()
+                return self.createSectionForkpListsOrPersons()
             }
         }
         //layout.collectionView?.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
@@ -119,7 +139,7 @@ extension SearchViewController {
         return layout
     }
     
-    func createSectionForKPCollectionsOrPersons() -> NSCollectionLayoutSection {
+    func createSectionForkpListsOrPersons() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(190))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -168,24 +188,33 @@ extension SearchViewController {
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-extension SearchViewController: SkeletonCollectionViewDataSource, SkeletonCollectionViewDelegate {
+extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonCollectionViewDelegate {
     func numSections(in collectionSkeletonView: UICollectionView) -> Int {
         return 3
     }
     
-    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionSkeletonView(
+        _ skeletonView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return 10
     }
     
-    func collectionSkeletonView(_ skeletonView: UICollectionView, prepareCellForSkeleton cell: UICollectionViewCell, at indexPath: IndexPath) {
+    func collectionSkeletonView(
+        _ skeletonView: UICollectionView,
+        prepareCellForSkeleton cell: UICollectionViewCell,
+        at indexPath: IndexPath
+    ) {
         cell.isSkeletonable = true
     }
     
-    func collectionSkeletonView(_ skeletonView: UICollectionView,
-        cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+    func collectionSkeletonView(
+        _ skeletonView: UICollectionView,
+        cellIdentifierForItemAt indexPath: IndexPath
+    ) -> SkeletonView.ReusableCellIdentifier {
         switch indexPath.section {
         case 0:
-            return KPListCell.reuseId
+            return KPListCollectionViewCell.reuseId
         case 1:
             return CategoryCell.reuseId
         default:
@@ -198,7 +227,6 @@ extension SearchViewController: SkeletonCollectionViewDataSource, SkeletonCollec
         supplementaryViewIdentifierOfKind: String,
         at indexPath: IndexPath
     ) -> ReusableCellIdentifier? {
-        
         return SectionHeaderView.reuseId
     }
     
@@ -209,7 +237,7 @@ extension SearchViewController: SkeletonCollectionViewDataSource, SkeletonCollec
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return kpCollections.count
+            return kpLists.count
         case 1:
             return categoryList.count
         default:
@@ -221,15 +249,14 @@ extension SearchViewController: SkeletonCollectionViewDataSource, SkeletonCollec
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: KPListCell.reuseId,
+                withReuseIdentifier: KPListCollectionViewCell.reuseId,
               for: indexPath
-            ) as? KPListCell
+            ) as? KPListCollectionViewCell
             else {
                 return UICollectionViewCell()
             }
-            //cell.sectionKind = SectionKind.collections
             cell.hideSkeleton()
-            cell.configure(with: kpCollections[indexPath.item])
+            cell.configure(with: kpLists[indexPath.item])
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(
@@ -247,7 +274,6 @@ extension SearchViewController: SkeletonCollectionViewDataSource, SkeletonCollec
             else {
                 return UICollectionViewCell()
             }
-            //cell.sectionKind = SectionKind.persons
             cell.hideSkeleton()
             cell.configure(with: persons[indexPath.item])
             return cell
@@ -280,38 +306,38 @@ extension SearchViewController: SkeletonCollectionViewDataSource, SkeletonCollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            //let vc = TestSkeletonViewController()
             let vc = MoviesByKPListViewController()
-            //let vc = MoviesTableViewController()
-            vc.fetchMovies(from: kpCollections[indexPath.item])
+            vc.fetchMovies(from: kpLists[indexPath.item])
             navigationController?.pushViewController(vc, animated: false)
-        case 2:
-            let vc = PersonDetailViewController()
-            vc.setupPersonInfo(with: persons[indexPath.item])
+        case 1:
+            let vc = KPListsViewController()
+            vc.fetchKPListsByCategory(with: categoryList[indexPath.item])
             navigationController?.pushViewController(vc, animated: false)
         default:
-            break
+            let vc = PersonDetailViewController()
+            vc.fetchMoviesOfPerson(with: persons[indexPath.item])
+            navigationController?.pushViewController(vc, animated: false)
         }
     }
 }
 
 
 // MARK: - UISearchResultsUpdating
-extension SearchViewController: UISearchResultsUpdating {
+extension HomeInfoViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         print("search started")
     }
 }
 
 // MARK: - UISearchBarDelegate
-extension SearchViewController: UISearchBarDelegate {
+extension HomeInfoViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         print("scope selection started")
     }
 }
 
 // MARK: - Networking
-extension SearchViewController {
+extension HomeInfoViewController {
     private func getBirthdayPersons(of persons: [Person]) -> [Person] {
         let personBirthdayList = persons.filter({ person in
             person.birthdayInFormat == Date().formatString() && person.death == nil
@@ -323,11 +349,20 @@ extension SearchViewController {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter()
+        let startDate = Date()
         print("GetCollections starting...")
-        NetworkingManager.shared.fetchData(type: KPList.self, url: Links.getCollectionsUrl.rawValue) { [unowned self] result in
+        NetworkingManager.shared.fetchDataFaster(
+            type: KPListSection.self,
+            url: Links.baseUrl.rawValue + "list?",
+            parameters: [
+                "page": ["1"],
+                "limit": ["20"],
+                "notNullFields" : ["cover.url"]
+            ]
+        ) { [unowned self] result in
             switch result {
             case .success(let value):
-                self.kpCollections = value
+                kpLists = value.docs
                 print("Collections fetched")
             case .failure(let error):
                 print(error)
@@ -338,10 +373,26 @@ extension SearchViewController {
         
         dispatchGroup.enter()
         print("GetPersons starting...")
-        NetworkingManager.shared.fetchData(type: Person.self, url: Links.getPersonsURL.rawValue) { [unowned self] result in
+        NetworkingManager.shared.fetchDataFaster(
+            type: KPPersonSection.self,
+            url: Links.personsURL.rawValue,
+            parameters: [
+                "selectFields": [
+                    "id", "name", "enName", "photo",
+                    "birthday","death", "age",
+                    "profession", "facts"
+                ],
+                "notNullFields": [
+                    "birthday", "photo", "age",
+                    "name", "countAwards", "facts.value"
+                ],
+                "sortField": ["countAwards"],
+                "sortType": ["-1"]
+            ]
+        ) { [unowned self] result in
             switch result {
             case .success(let value):
-                persons = getBirthdayPersons(of: value)
+                persons = getBirthdayPersons(of: value.docs)
                 print("Persons fetched")
             case .failure(let error):
                 print(error)
@@ -352,9 +403,13 @@ extension SearchViewController {
         
         print("Notify starting...")
         dispatchGroup.notify(queue: .main) { [weak self] in
+            print(Date().timeIntervalSince(startDate))
             self?.categoryList = DataManager.shared.getCategories()
             self?.collectionView.stopSkeletonAnimation()
-            self?.collectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+            self?.collectionView.hideSkeleton(
+                reloadDataAfter: true,
+                transition: .crossDissolve(0.25)
+            )
             print("Notify finishing...")
         }
         

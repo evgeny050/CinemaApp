@@ -14,7 +14,7 @@ struct Person: Decodable {
     let birthday: String
     let death: String?
     let age: Int
-    let growth: Int
+    //let growth: Int?
     let profession: [Profession]
     let facts: [Profession]
     
@@ -69,7 +69,7 @@ struct Person: Decodable {
         self.birthday = try container.decode(String.self, forKey: .birthday)
         self.death = try container.decodeIfPresent(String.self, forKey: .death)
         self.age = try container.decode(Int.self, forKey: .age)
-        self.growth = try container.decode(Int.self, forKey: .growth)
+        //self.growth = try container.decode(Int.self, forKey: .growth)
         self.profession = try container.decode([Profession].self, forKey: .profession)
         self.facts = try container.decode([Profession].self, forKey: .facts)
     }

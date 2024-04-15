@@ -13,19 +13,18 @@
 		4A1703402BADEA2F0012CF46 /* KPSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17033F2BADEA2F0012CF46 /* KPSection.swift */; };
 		4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703412BAF1C530012CF46 /* DataManager.swift */; };
 		4A1703462BB1A9490012CF46 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */; };
-		4A1703482BB1D93E0012CF46 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703472BB1D93E0012CF46 /* Genre.swift */; };
 		4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703492BB3150E0012CF46 /* CategoryCell.swift */; };
 		4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17034B2BB32C9B0012CF46 /* Person.swift */; };
 		4A17034E2BB5C2130012CF46 /* KPItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17034D2BB5C2130012CF46 /* KPItemCell.swift */; };
-		4A7AE2782BBAF62800632F8A /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE2772BBAF62800632F8A /* MovieDetailViewController.swift */; };
 		4A7AE27C2BBB126F00632F8A /* MoviesByKPListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE27B2BBB126F00632F8A /* MoviesByKPListViewController.swift */; };
 		4A7AE27E2BBD871800632F8A /* CellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE27D2BBD871800632F8A /* CellFactory.swift */; };
 		4A7AE2812BBEBED300632F8A /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE2802BBEBED300632F8A /* MovieTableViewCell.swift */; };
-		4A7AE2832BBEC2F000632F8A /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE2822BBEC2F000632F8A /* MoviesTableViewController.swift */; };
 		4A7AE2862BBF06B800632F8A /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 4A7AE2852BBF06B800632F8A /* SkeletonView */; };
+		4A7AE28A2BC950A100632F8A /* KPListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE2892BC950A000632F8A /* KPListsViewController.swift */; };
+		4A7AE28C2BC95EC200632F8A /* KPListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE28B2BC95EC200632F8A /* KPListTableViewCell.swift */; };
 		4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F452BA1E5310019C505 /* AppDelegate.swift */; };
 		4A943F482BA1E5310019C505 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F472BA1E5310019C505 /* SceneDelegate.swift */; };
-		4A943F4A2BA1E5310019C505 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F492BA1E5310019C505 /* SearchViewController.swift */; };
+		4A943F4A2BA1E5310019C505 /* HomeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F492BA1E5310019C505 /* HomeInfoViewController.swift */; };
 		4A943F4F2BA1E5400019C505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A943F4E2BA1E5400019C505 /* Assets.xcassets */; };
 		4A943F5C2BA1ED340019C505 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A943F5B2BA1ED340019C505 /* LaunchScreen.storyboard */; };
 		4A943F622BA4874B0019C505 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F612BA4874A0019C505 /* MainTabBarController.swift */; };
@@ -34,11 +33,14 @@
 		4A943F692BA70A000019C505 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4A943F682BA70A000019C505 /* Alamofire */; };
 		4A943F6B2BA70A000019C505 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4A943F6A2BA70A000019C505 /* AlamofireDynamic */; };
 		4A943F702BA726600019C505 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F6F2BA726600019C505 /* Movie.swift */; };
-		4AA667292BAAF9B800F093FF /* KPListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667282BAAF9B800F093FF /* KPListCell.swift */; };
+		4AA667292BAAF9B800F093FF /* KPListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */; };
 		4AA6672B2BAAFFD900F093FF /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672A2BAAFFD900F093FF /* ImageCacheManager.swift */; };
 		4AA6672E2BAB2E0D00F093FF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672D2BAB2E0D00F093FF /* Extensions.swift */; };
 		4AA667312BAC30DB00F093FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA667302BAC30DB00F093FF /* Kingfisher */; };
 		4AA667332BAC901A00F093FF /* KPList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667322BAC901A00F093FF /* KPList.swift */; };
+		4AAC06F02BCD7C2300858F2F /* HomeInfoContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC06EF2BCD7C2300858F2F /* HomeInfoContract.swift */; };
+		4AAC06F22BCD82F600858F2F /* HomeInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC06F12BCD82F600858F2F /* HomeInfoPresenter.swift */; };
+		4AAC06F42BCD878000858F2F /* HomeInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC06F32BCD878000858F2F /* HomeInfoInteractor.swift */; };
 		4AEBC8C92BB6E13D0035D46C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC8C82BB6E13D0035D46C /* Constants.swift */; };
 		4AEBC8CD2BB85CF60035D46C /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC8CC2BB85CF60035D46C /* PersonDetailViewController.swift */; };
 		4AEBC8CF2BBAC15B0035D46C /* PersonInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC8CE2BBAC15B0035D46C /* PersonInfoCell.swift */; };
@@ -49,19 +51,18 @@
 		4A17033F2BADEA2F0012CF46 /* KPSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSection.swift; sourceTree = "<group>"; };
 		4A1703412BAF1C530012CF46 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
-		4A1703472BB1D93E0012CF46 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		4A1703492BB3150E0012CF46 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		4A17034B2BB32C9B0012CF46 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		4A17034D2BB5C2130012CF46 /* KPItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPItemCell.swift; sourceTree = "<group>"; };
-		4A7AE2772BBAF62800632F8A /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		4A7AE27B2BBB126F00632F8A /* MoviesByKPListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesByKPListViewController.swift; sourceTree = "<group>"; };
 		4A7AE27D2BBD871800632F8A /* CellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellFactory.swift; sourceTree = "<group>"; };
 		4A7AE2802BBEBED300632F8A /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
-		4A7AE2822BBEC2F000632F8A /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
+		4A7AE2892BC950A000632F8A /* KPListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListsViewController.swift; sourceTree = "<group>"; };
+		4A7AE28B2BC95EC200632F8A /* KPListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListTableViewCell.swift; sourceTree = "<group>"; };
 		4A943F422BA1E5310019C505 /* KinopoiskListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KinopoiskListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A943F452BA1E5310019C505 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A943F472BA1E5310019C505 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4A943F492BA1E5310019C505 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		4A943F492BA1E5310019C505 /* HomeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoViewController.swift; sourceTree = "<group>"; };
 		4A943F4E2BA1E5400019C505 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A943F532BA1E5400019C505 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A943F5B2BA1ED340019C505 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -69,10 +70,13 @@
 		4A943F632BA48DF40019C505 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4A943F652BA6F8D80019C505 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		4A943F6F2BA726600019C505 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
-		4AA667282BAAF9B800F093FF /* KPListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListCell.swift; sourceTree = "<group>"; };
+		4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA6672A2BAAFFD900F093FF /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		4AA6672D2BAB2E0D00F093FF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4AA667322BAC901A00F093FF /* KPList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPList.swift; sourceTree = "<group>"; };
+		4AAC06EF2BCD7C2300858F2F /* HomeInfoContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoContract.swift; sourceTree = "<group>"; };
+		4AAC06F12BCD82F600858F2F /* HomeInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoPresenter.swift; sourceTree = "<group>"; };
+		4AAC06F32BCD878000858F2F /* HomeInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoInteractor.swift; sourceTree = "<group>"; };
 		4AEBC8C82BB6E13D0035D46C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4AEBC8CC2BB85CF60035D46C /* PersonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
 		4AEBC8CE2BBAC15B0035D46C /* PersonInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfoCell.swift; sourceTree = "<group>"; };
@@ -158,7 +162,6 @@
 				4A17033F2BADEA2F0012CF46 /* KPSection.swift */,
 				4A943F6F2BA726600019C505 /* Movie.swift */,
 				4AA667322BAC901A00F093FF /* KPList.swift */,
-				4A1703472BB1D93E0012CF46 /* Genre.swift */,
 				4A17034B2BB32C9B0012CF46 /* Person.swift */,
 			);
 			path = Entities;
@@ -181,9 +184,8 @@
 				4A943F632BA48DF40019C505 /* ProfileViewController.swift */,
 				4AEBC8CA2BB85C3C0035D46C /* Search */,
 				4AEBC8CC2BB85CF60035D46C /* PersonDetailViewController.swift */,
-				4A7AE2772BBAF62800632F8A /* MovieDetailViewController.swift */,
 				4A7AE27B2BBB126F00632F8A /* MoviesByKPListViewController.swift */,
-				4A7AE2822BBEC2F000632F8A /* MoviesTableViewController.swift */,
+				4A7AE2892BC950A000632F8A /* KPListsViewController.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -202,7 +204,10 @@
 		4AEBC8CA2BB85C3C0035D46C /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				4A943F492BA1E5310019C505 /* SearchViewController.swift */,
+				4A943F492BA1E5310019C505 /* HomeInfoViewController.swift */,
+				4AAC06EF2BCD7C2300858F2F /* HomeInfoContract.swift */,
+				4AAC06F12BCD82F600858F2F /* HomeInfoPresenter.swift */,
+				4AAC06F32BCD878000858F2F /* HomeInfoInteractor.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -211,11 +216,12 @@
 			isa = PBXGroup;
 			children = (
 				4A17034D2BB5C2130012CF46 /* KPItemCell.swift */,
-				4AA667282BAAF9B800F093FF /* KPListCell.swift */,
+				4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */,
 				4A1703492BB3150E0012CF46 /* CategoryCell.swift */,
 				4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */,
 				4AEBC8CE2BBAC15B0035D46C /* PersonInfoCell.swift */,
 				4A7AE2802BBEBED300632F8A /* MovieTableViewCell.swift */,
+				4A7AE28B2BC95EC200632F8A /* KPListTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -304,32 +310,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A7AE2832BBEC2F000632F8A /* MoviesTableViewController.swift in Sources */,
-				4A943F4A2BA1E5310019C505 /* SearchViewController.swift in Sources */,
+				4A943F4A2BA1E5310019C505 /* HomeInfoViewController.swift in Sources */,
 				4A7AE2812BBEBED300632F8A /* MovieTableViewCell.swift in Sources */,
 				4A1703402BADEA2F0012CF46 /* KPSection.swift in Sources */,
 				4A17034E2BB5C2130012CF46 /* KPItemCell.swift in Sources */,
-				4A7AE2782BBAF62800632F8A /* MovieDetailViewController.swift in Sources */,
 				4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */,
 				4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */,
 				4AA6672B2BAAFFD900F093FF /* ImageCacheManager.swift in Sources */,
 				4AA667332BAC901A00F093FF /* KPList.swift in Sources */,
 				4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */,
 				4AEBC8CF2BBAC15B0035D46C /* PersonInfoCell.swift in Sources */,
-				4AA667292BAAF9B800F093FF /* KPListCell.swift in Sources */,
+				4AA667292BAAF9B800F093FF /* KPListCollectionViewCell.swift in Sources */,
 				4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */,
 				4AEBC8CD2BB85CF60035D46C /* PersonDetailViewController.swift in Sources */,
 				4AEBC8C92BB6E13D0035D46C /* Constants.swift in Sources */,
-				4A1703482BB1D93E0012CF46 /* Genre.swift in Sources */,
 				4A1703462BB1A9490012CF46 /* SectionHeaderView.swift in Sources */,
 				4A943F642BA48DF40019C505 /* ProfileViewController.swift in Sources */,
+				4AAC06F02BCD7C2300858F2F /* HomeInfoContract.swift in Sources */,
+				4A7AE28C2BC95EC200632F8A /* KPListTableViewCell.swift in Sources */,
+				4A7AE28A2BC950A100632F8A /* KPListsViewController.swift in Sources */,
 				4AA6672E2BAB2E0D00F093FF /* Extensions.swift in Sources */,
 				4A943F662BA6F8D80019C505 /* NetworkingManager.swift in Sources */,
 				4A943F622BA4874B0019C505 /* MainTabBarController.swift in Sources */,
 				4A943F482BA1E5310019C505 /* SceneDelegate.swift in Sources */,
+				4AAC06F22BCD82F600858F2F /* HomeInfoPresenter.swift in Sources */,
 				4A17033E2BADD19A0012CF46 /* Enums.swift in Sources */,
 				4A7AE27E2BBD871800632F8A /* CellFactory.swift in Sources */,
 				4A7AE27C2BBB126F00632F8A /* MoviesByKPListViewController.swift in Sources */,
+				4AAC06F42BCD878000858F2F /* HomeInfoInteractor.swift in Sources */,
 				4A943F702BA726600019C505 /* Movie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,19 +13,16 @@ final class KPItemCell: UICollectionViewCell {
     // MARK: - Properties
     static let reuseId = "KPItemCell"
     
-    private lazy var kpItemImageView: UIImageView = {
+    private let kpItemImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.frame = self.bounds
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.isSkeletonable = true
-        imageView.skeletonCornerRadius = 0
         return imageView
     }()
     
-    private let personNameLabel: UILabel = {
+    private let kpItemNameLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
         label.sizeToFit()
         return label
@@ -34,7 +31,6 @@ final class KPItemCell: UICollectionViewCell {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.isSkeletonable = true
         commonInit()
     }
     
@@ -47,26 +43,28 @@ final class KPItemCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
+        //stackView.distribution  = .equalSpacing
         stackView.axis = .vertical
         stackView.spacing = 8
         
         stackView.addArrangedSubview(kpItemImageView)
-        stackView.addArrangedSubview(personNameLabel)
+        stackView.addArrangedSubview(kpItemNameLabel)
         
         contentView.addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
+            make.edges.equalToSuperview()
         }
         
         kpItemImageView.snp.makeConstraints { make in
-            make.height.equalTo(180)
+            make.height.equalTo(180).priority(.medium)
         }
     }
     
     func configure(with person: Person) {
         guard let imageURL = URL(string: person.photo) else { return }
         let processor = DownsamplingImageProcessor(size: kpItemImageView.bounds.size)
+        kpItemImageView.kf.indicatorType = .activity
         kpItemImageView.kf.setImage(
             with: imageURL,
             options: [
@@ -75,23 +73,26 @@ final class KPItemCell: UICollectionViewCell {
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage
             ])
-        { [unowned self]
+        { //[unowned self]
             result in
             switch result {
             case .success(_):
-                kpItemImageView.hideSkeleton()
+                break
+                //kpItemImageView.hideSkeleton()
                 //print("Task done for: \(value.source.url?.absoluteString ?? "")")
             case .failure(let error):
-                print("Job failed: \(error.localizedDescription)")
+                let person = person
+                //break
+                print("Job failed for \(person.name) \(error)")
             }
         }
-        personNameLabel.text = person.name
+        kpItemNameLabel.text = person.name
     }
     
     func configure(with movie: Movie) {
-        kpItemImageView.showSkeleton()
         guard let imageURL = URL(string: movie.poster.url) else { return }
         let processor = DownsamplingImageProcessor(size: kpItemImageView.bounds.size)
+        kpItemImageView.kf.indicatorType = .activity
         kpItemImageView.kf.setImage(
             with: imageURL,
             options: [
@@ -100,17 +101,20 @@ final class KPItemCell: UICollectionViewCell {
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage
             ])
-        { [unowned self]
+        { //[unowned self]
             result in
             switch result {
             case .success(_):
-                kpItemImageView.hideSkeleton()
+                break
+                //kpItemImageView.hideSkeleton()
                 //print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            case .failure(let error):
-                print("Job failed: \(error.localizedDescription)")
+            case .failure(_):
+                //let movie = movie
+                break
+                //print("Job failed: \(error.localizedDescription)")
             }
         }
-        personNameLabel.text = movie.name
+        kpItemNameLabel.text = movie.name
     }
 }
 

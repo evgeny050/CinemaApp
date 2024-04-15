@@ -22,26 +22,11 @@ final class MoviesByKPListViewController: UIViewController {
         return label
     }()
     
-    var kpCollection: KPList!
-    private lazy var movies: [Movie] = []
+    private var movies: [Movie] = []
 
+    // MARK: - Overrided Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        navigationItem.backButtonTitle = "dkmbl"
-//        navigationItem.backButtonDisplayMode = .minimal
-        
-        //navigationItem.setHidesBackButton(true, animated: false)
-        //navigationItem.hidesBackButton = true
-        //navigationController?.navigationBar.backgroundColor = .red
-        //navigationController?.navigationBar.prefersLargeTitles = true
-        //navigationItem.title = kpCollection.name
-        //navigationItem.titleView = navTitleLabel
-        
-//        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
-        //navTitleLabel.text = kpCollection.name
-        
         setupTableView()
     }
     
@@ -50,11 +35,15 @@ final class MoviesByKPListViewController: UIViewController {
         addSkeletonAnimation()
     }
     
+    //Adjust Height of Table View Header
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tableView.updateHeaderViewHeight()
     }
-    
+}
+
+// MARK: - Private Methodds
+extension MoviesByKPListViewController {
     // MARK: - Setup the SkeletonView
     private func addSkeletonAnimation() {
         tableView.isSkeletonable = true
@@ -73,7 +62,6 @@ final class MoviesByKPListViewController: UIViewController {
         // Set Header For Table View
         let headerView = UIView()
         headerView.isSkeletonable = true
-        navTitleLabel.text = kpCollection.name
         navTitleLabel.numberOfLines = navTitleLabel.maxNumberOfLines
         headerView.addSubview(navTitleLabel)
         navTitleLabel.snp.makeConstraints { make in
@@ -107,7 +95,8 @@ extension MoviesByKPListViewController: SkeletonTableViewDelegate, SkeletonTable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: MovieTableViewCell.reuseId,
-            for: indexPath) as? MovieTableViewCell else { return UITableViewCell() }
+            for: indexPath
+        ) as? MovieTableViewCell else { return UITableViewCell() }
         cell.configure(with: movies[indexPath.item])
         return cell
     }
@@ -116,29 +105,41 @@ extension MoviesByKPListViewController: SkeletonTableViewDelegate, SkeletonTable
         return MovieTableViewCell.reuseId
     }
     
-    func collectionSkeletonView(_ skeletonView: UITableView, prepareCellForSkeleton cell: UITableViewCell, at indexPath: IndexPath) {
+    func collectionSkeletonView(_ skeletonView: UITableView, 
+                                prepareCellForSkeleton cell: UITableViewCell,
+                                at indexPath: IndexPath) {
         cell.isSkeletonable = true
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.reuseId) as? MovieTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: MovieTableViewCell.reuseId
+        ) as? MovieTableViewCell
         cell?.movieImageView.kf.cancelDownloadTask()
     }
 }
 
 // MARK: - Networking
 extension MoviesByKPListViewController {
-    func fetchMovies(from kpCollection: KPList) {
-        self.kpCollection = kpCollection
-        NetworkingManager.shared.fetchData(
-            type: Movie.self,
-            url: Links.moviesByCollectionUrl.rawValue + kpCollection.slug
+    func fetchMovies(from kpList: KPList) {
+        navTitleLabel.text = kpList.name
+        NetworkingManager.shared.fetchDataFaster(
+            type: KPMovieSection.self,
+            url: Links.moviesByKPListUrl.rawValue,
+            parameters: [
+                "notNullFields": ["poster.url"],
+                "lists" : [kpList.slug]
+            ]
+            
         ) { [weak self] result in
             switch result {
             case .success(let value):
-                self?.movies = value
+                self?.movies = value.docs
                 self?.tableView.stopSkeletonAnimation()
-                self?.tableView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+                self?.tableView.hideSkeleton(
+                    reloadDataAfter: true,
+                    transition: .crossDissolve(0.25)
+                )
             case .failure(let error):
                 print(error)
                 self?.showAlert(with: error)

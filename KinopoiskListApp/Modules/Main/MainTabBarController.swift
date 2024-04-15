@@ -10,7 +10,7 @@ import SkeletonView
 
 class MainTabBarController: UITabBarController {
     
-    private lazy var homeVC = UINavigationController(rootViewController: SearchViewController())
+    private lazy var homeVC = UINavigationController(rootViewController: HomeInfoViewController())
     private lazy var profileVC = ProfileViewController()
 
     
