@@ -30,7 +30,7 @@ struct Movie: Decodable {
     
     func convertArrayToString(from array: [GenreOrCountry]) -> String {
         array.map { $0.name }
-            .joined(separator: " ")
+            .joined(separator: ", ")
     }
 }
 

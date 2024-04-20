@@ -15,20 +15,18 @@ struct Person: Decodable {
     let death: String?
     let age: Int
     //let growth: Int?
-    let profession: [Profession]
-    let facts: [Profession]
+    let profession: [ProfessionOrFact]
+    let facts: [ProfessionOrFact]
     
     var fullName: String {
         return name.replacingOccurrences(of: " ", with: "\n")
     }
     
-//    var birthdayInFormat: String {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "MM-dd"
-//        return formatter.string(
-//            from: formatter.date(from: birthday) ?? Date()
-//        )
-//    }
+    var birthdayInDateFormat: Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YY-MM-dd"
+        return formatter.date(from: String(birthday.prefix(10))) ?? Date()
+    }
     
     var birthdayInFormat: String {
         let startIndex = birthday.index(birthday.startIndex, offsetBy: 5)
@@ -36,11 +34,19 @@ struct Person: Decodable {
         return String(birthday[startIndex...endIndex])
     }
     
+    var birthdayRUString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "d MMMM YYYY"
+        let stringDate = dateFormatter.string(from: birthdayInDateFormat)
+        return stringDate
+    }
+    
     var professionsInString: String {
         let profs = profession.map { prof in
             return prof.value
         }
-        return profs.joined(separator: " ")
+        return profs.prefix(3).joined(separator: ", ")
     }
     
     enum CodingKeys: CodingKey {
@@ -70,12 +76,12 @@ struct Person: Decodable {
         self.death = try container.decodeIfPresent(String.self, forKey: .death)
         self.age = try container.decode(Int.self, forKey: .age)
         //self.growth = try container.decode(Int.self, forKey: .growth)
-        self.profession = try container.decode([Profession].self, forKey: .profession)
-        self.facts = try container.decode([Profession].self, forKey: .facts)
+        self.profession = try container.decode([ProfessionOrFact].self, forKey: .profession)
+        self.facts = try container.decode([ProfessionOrFact].self, forKey: .facts)
     }
     
 }
 
-struct Profession: Decodable {
+struct ProfessionOrFact: Decodable {
     let value: String
 }

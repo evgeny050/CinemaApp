@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class SectionHeaderView: UICollectionReusableView {
-    static let reuseId = "SectionHeader"
+    
     let title: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -32,7 +32,9 @@ class SectionHeaderView: UICollectionReusableView {
         title.translatesAutoresizingMaskIntoConstraints = false
         addSubview(title)
         title.snp.makeConstraints { make in
-            make.edges.equalTo(self)
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
     }
     

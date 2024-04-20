@@ -9,12 +9,14 @@ import UIKit
 import Kingfisher
 import SkeletonView
 
-class MovieTableViewCell: UITableViewCell {
+class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
     
     // MARK: - Properties
-    static let reuseId = "MovieTableViewCell"
-
-    //private let imageCache = NSCache<AnyObject, UIImage>()
+    var viewModel: CellViewModelProtocol? {
+        didSet {
+            updateView()
+        }
+    }
     
     let movieImageView: UIImageView = {
         let imageView = UIImageView()
@@ -121,8 +123,9 @@ class MovieTableViewCell: UITableViewCell {
     
     }
     
-    func configure(with movie: Movie) {
-        guard let imageURL = URL(string: movie.poster.url) else { return }
+    private func updateView() {
+        guard let viewModel = viewModel as? CellViewModel else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         let processor = DownsamplingImageProcessor(size: CGSize(width: 80, height: self.bounds.height))
         movieImageView.kf.indicatorType = .activity
         movieImageView.kf.setImage(
@@ -133,30 +136,11 @@ class MovieTableViewCell: UITableViewCell {
                 .transition(.fade(1)),
                 .cacheOriginalImage
             ])
-        { //[unowned self]
-            result in
-            switch result {
-            case .success(_):
-                break
-                //completion("Image loaded succesfullly")
-                //print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            case .failure(_):
-                break
-                //print(error)
-                //completion("Image loading failed")
-                //print("Job failed")
-            }
-        }
         
-        rUNameLabel.text = movie.name
-        enNameAndPeriodLabel.text = "\(movie.year)"
-        let countries = movie.countries.map { country in
-            return country.name
+        rUNameLabel.text = viewModel.movie?.name
+        if let year = viewModel.movie?.year {
+            enNameAndPeriodLabel.text = String(year)
         }
-        let genres = movie.genres.map { genre in
-            return genre.name
-        }
-        countryAndGenreLabel.text = "\(countries.joined(separator: " ")) - \(genres.joined(separator: " "))"
+        countryAndGenreLabel.text = viewModel.movie?.countriesAndGenresString
     }
-    
 }

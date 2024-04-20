@@ -4,7 +4,6 @@
 //
 //  Created by Флоранс on 21.03.2024.
 //
-import Foundation
 
 struct KPList: Decodable {
     let category: String

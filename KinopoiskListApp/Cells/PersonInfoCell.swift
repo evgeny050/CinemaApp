@@ -9,11 +9,15 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class PersonInfoCell: UICollectionViewCell {
+class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Properties
-    static let reuseId = "PersonInfoCell"
+    var viewModel: CellViewModelProtocol? {
+        didSet {
+            updateView()
+        }
+    }
     
-    private lazy var avatarImageView: UIImageView = {
+    private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -23,7 +27,6 @@ class PersonInfoCell: UICollectionViewCell {
     
     private let personRUNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Default Ru Name"
         label.numberOfLines = 0
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         label.isSkeletonable = true
@@ -32,8 +35,7 @@ class PersonInfoCell: UICollectionViewCell {
     
     private let personENNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Default en name"
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.font = UIFont(name: "HelveticaNeue", size: 12)
         label.isSkeletonable = true
         return label
@@ -41,31 +43,11 @@ class PersonInfoCell: UICollectionViewCell {
     
     private let professionsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Default professions"
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.font = UIFont(name: "HelveticaNeue", size: 12)
         label.textColor = .lightGray
         label.isSkeletonable = true
-        return label
-    }()
-    
-    private let birthdayLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Default birthday"
-        label.numberOfLines = 1
-        label.font = UIFont(name: "HelveticaNeue", size: 12)
-        label.textColor = .lightGray
-        label.isSkeletonable = true
-        return label
-    }()
-    
-    private let ageAndGrowthLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Default age and growth"
-        label.numberOfLines = 1
-        label.font = UIFont(name: "HelveticaNeue", size: 12)
-        label.textColor = .lightGray
-        label.isSkeletonable = true
+        label.skeletonTextNumberOfLines = 3
         return label
     }()
     
@@ -92,10 +74,8 @@ class PersonInfoCell: UICollectionViewCell {
     
     // MARK: - Setup Layout Of Cell
     private func commonInit() {
-        let innerStackView = UIStackView(arrangedSubviews: [professionsLabel, birthdayLabel, ageAndGrowthLabel])
+        let innerStackView = UIStackView(arrangedSubviews: [professionsLabel])
         innerStackView.axis = .vertical
-        innerStackView.distribution = .fill
-        innerStackView.alignment = .leading
         innerStackView.spacing = 2
         innerStackView.isSkeletonable = true
         
@@ -108,14 +88,12 @@ class PersonInfoCell: UICollectionViewCell {
             ]
         )
         infoStackView.axis = .vertical
-        infoStackView.distribution = .fill
-        infoStackView.alignment = .leading
         infoStackView.spacing = 12
+        infoStackView.alignment = .fill
         infoStackView.isSkeletonable = true
         
         let mainStackView = UIStackView(arrangedSubviews: [avatarImageView, infoStackView])
         mainStackView.axis = .horizontal
-        mainStackView.distribution = .fill
         mainStackView.alignment = .top
         mainStackView.spacing = 10
         mainStackView.isSkeletonable = true
@@ -133,9 +111,9 @@ class PersonInfoCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Configure UI Data
-    func configure(with person: Person) {
-        guard let imageURL = URL(string: person.photo) else { return }
+    func updateView() {
+        guard let viewModel = viewModel as? CellViewModel else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         avatarImageView.kf.indicatorType = .activity
         let processor = DownsamplingImageProcessor(size: avatarImageView.bounds.size)
         avatarImageView.kf.setImage(
@@ -146,27 +124,16 @@ class PersonInfoCell: UICollectionViewCell {
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage
             ])
-        {
-            result in
-            switch result {
-            case .success(_):
-                //print("Task done for: \(value.source.url?.absoluteString ?? "")")
-                break
-            case .failure(let error):
-                //print("Job failed: \(error.localizedDescription)")
-                break
-            }
-        }
-        personRUNameLabel.text = person.name
-        personENNameLabel.text = person.enName
-        
-        let profs = person.profession.map { prof in
-            return prof.value
-        }
-        professionsLabel.text = profs.joined(separator: " ")
-        
-        birthdayLabel.text = person.birthdayInFormat
-        ageAndGrowthLabel.text = person.age.formatted()
+        personRUNameLabel.text = viewModel.person?.name
+        personENNameLabel.text = viewModel.person?.enName
+        let string =
+        """
+        \(viewModel.person?.professionsInString ?? "")
+        \(viewModel.person?.birthdayRUString ?? "")
+        \(viewModel.person?.age ?? 0)
+        """
+        let result = string.split(whereSeparator: \.isNewline).joined(separator: "\n")
+        professionsLabel.text = result
     }
 }
 

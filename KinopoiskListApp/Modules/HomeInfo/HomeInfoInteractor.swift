@@ -4,19 +4,7 @@
 //
 //  Created by Флоранс on 15.04.2024.
 //
-
-/// InteractorInput (Interactor conforms, Presenter contains)
-protocol HomeInfoInteractorInputProtocol: AnyObject {
-    init(presenter: HomeInfoInteractorOutputProtocol)
-    func fetchKPLists()
-    func fetchCategories() -> [String]
-    func fetchPersons()
-}
-
-/// InteractorOutput (Presenter confroms, Interactor contains)
-protocol HomeInfoInteractorOutputProtocol: AnyObject {
-    
-}
+import Foundation
 
 final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
     private unowned let presenter: HomeInfoInteractorOutputProtocol
@@ -25,31 +13,37 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         self.presenter = presenter
     }
     
-    func fetchKPLists() {
+    func fetchData() {
+        var dataStore = CommonDataStore()
+        let dispatchGroup = DispatchGroup()
+
+        dispatchGroup.enter()
+        let startDate = Date()
+        print("GetCollections starting...")
         NetworkingManager.shared.fetchDataFaster(
             type: KPListSection.self,
-            url: Links.kpListsUrl.rawValue,
-            parameters: ["notNullFields" : ["cover.url"]]
+            parameters: [
+                "limit": ["20"],
+                "notNullFields" : ["cover.url"]
+            ]
         ) { result in
             switch result {
             case .success(let value):
-                print("KPLists fetched")
+                dataStore.kpLists = value.docs
+                print("Collections fetched")
             case .failure(let error):
                 print(error)
             }
-            print("GetKPLists finishing...")
+            dispatchGroup.leave()
+            print("GetCollections finishing...")
         }
-    }
-    
-    func fetchCategories() -> [String] {
-        DataManager.shared.getCategories()
-    }
-    
-    func fetchPersons() {
+        
+        dispatchGroup.enter()
+        print("GetPersons starting...")
         NetworkingManager.shared.fetchDataFaster(
             type: KPPersonSection.self,
-            url: Links.personsURL.rawValue,
             parameters: [
+                "limit": ["250"],
                 "selectFields": [
                     "id", "name", "enName", "photo",
                     "birthday","death", "age",
@@ -65,11 +59,22 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         ) { result in
             switch result {
             case .success(let value):
+                dataStore.persons = value.docs
                 print("Persons fetched")
             case .failure(let error):
                 print(error)
             }
+            dispatchGroup.leave()
             print("GetPersons finishing...")
         }
+        
+        print("Notify starting...")
+        dispatchGroup.notify(queue: .main) { [unowned self] in
+            dataStore.categoryList = DataManager.shared.getCategories()
+            presenter.dataDidReceive(with: dataStore)
+            print(Date().timeIntervalSince(startDate))
+            print("Notify finishing...")
+        }
+        
     }
 }

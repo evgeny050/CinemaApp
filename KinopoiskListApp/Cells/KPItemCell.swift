@@ -9,9 +9,13 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-final class KPItemCell: UICollectionViewCell {
+final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Properties
-    static let reuseId = "KPItemCell"
+    var viewModel: CellViewModelProtocol? {
+        didSet {
+            updateView()
+        }
+    }
     
     private let kpItemImageView: UIImageView = {
         let imageView = UIImageView()
@@ -61,8 +65,9 @@ final class KPItemCell: UICollectionViewCell {
         }
     }
     
-    func configure(with person: Person) {
-        guard let imageURL = URL(string: person.photo) else { return }
+    private func updateView() {
+        guard let viewModel = viewModel as? CellViewModel else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         let processor = DownsamplingImageProcessor(size: kpItemImageView.bounds.size)
         kpItemImageView.kf.indicatorType = .activity
         kpItemImageView.kf.setImage(
@@ -73,48 +78,7 @@ final class KPItemCell: UICollectionViewCell {
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage
             ])
-        { //[unowned self]
-            result in
-            switch result {
-            case .success(_):
-                break
-                //kpItemImageView.hideSkeleton()
-                //print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            case .failure(let error):
-                let person = person
-                //break
-                print("Job failed for \(person.name) \(error)")
-            }
-        }
-        kpItemNameLabel.text = person.name
-    }
-    
-    func configure(with movie: Movie) {
-        guard let imageURL = URL(string: movie.poster.url) else { return }
-        let processor = DownsamplingImageProcessor(size: kpItemImageView.bounds.size)
-        kpItemImageView.kf.indicatorType = .activity
-        kpItemImageView.kf.setImage(
-            with: imageURL,
-            options: [
-                .processor(processor),
-                .transition(.fade(1)),
-                .scaleFactor(UIScreen.main.scale),
-                .cacheOriginalImage
-            ])
-        { //[unowned self]
-            result in
-            switch result {
-            case .success(_):
-                break
-                //kpItemImageView.hideSkeleton()
-                //print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            case .failure(_):
-                //let movie = movie
-                break
-                //print("Job failed: \(error.localizedDescription)")
-            }
-        }
-        kpItemNameLabel.text = movie.name
+        kpItemNameLabel.text = viewModel.cellItemName
     }
 }
 

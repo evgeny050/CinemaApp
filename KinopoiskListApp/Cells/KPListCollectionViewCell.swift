@@ -9,9 +9,18 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class KPListCollectionViewCell: UICollectionViewCell {
+protocol CellModelRepresanteble {
+    var viewModel: CellViewModelProtocol? { get }
+}
+
+class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteble {
+    
     // MARK: - Properties
-    static let reuseId = "KPListCollectionViewCell"
+    var viewModel: CellViewModelProtocol? {
+        didSet {
+            updateView()
+        }
+    }
     
     private let collectionImageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,9 +67,9 @@ class KPListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Configure UI Data with KPList
-    func configure(with collection: KPList) {
-        guard let imageURL = URL(string: collection.cover.url) else { return }
+    private func updateView() {
+        guard let viewModel = viewModel as? CellViewModel else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         collectionImageView.kf.indicatorType = .activity
         collectionImageView.kf.setImage(
             with: imageURL,
@@ -69,6 +78,6 @@ class KPListCollectionViewCell: UICollectionViewCell {
                 .cacheOriginalImage
             ]
         )
-        kpListNameLabel.text = collection.name
+        kpListNameLabel.text = viewModel.cellItemName
     }
 }
