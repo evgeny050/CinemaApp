@@ -28,6 +28,8 @@ final class CellViewModel: CellViewModelProtocol {
             return person.name
         } else if let kpList = kpList {
             return kpList.name
+        } else if let movie = movie {
+            return movie.name
         }
         return category ?? ""
     }

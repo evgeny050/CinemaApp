@@ -20,7 +20,7 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
     
     let movieImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.isSkeletonable = true
         imageView.skeletonCornerRadius = 5
@@ -68,6 +68,25 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         button.isHidden = true
         return button
     }()
+    
+    private let favoriteImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "bookmark.fill")
+        imageView.contentMode = .top
+        imageView.tintColor = .orange
+        imageView.sizeToFit()
+        //imageView.backgroundColor = .red
+        return imageView
+    }()
+    
+    private let mainStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.isSkeletonable = true
+        return stackView
+    }()
 
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -101,7 +120,7 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         infoStackView.spacing = 12
         infoStackView.isSkeletonable = true
         
-        let mainStackView = UIStackView(arrangedSubviews: [movieImageView, infoStackView])
+        let mainStackView = UIStackView(arrangedSubviews: [movieImageView, infoStackView, favoriteImageView])
         mainStackView.axis = .horizontal
         mainStackView.distribution = .fill
         mainStackView.spacing = 10
@@ -118,18 +137,21 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         }
         
         movieImageView.snp.makeConstraints { make in
-            make.width.equalTo(80)
+            make.width.equalTo(55)
+        }
+        
+        favoriteImageView.snp.makeConstraints { make in
+            make.width.equalTo(15)
         }
     
     }
     
     private func updateView() {
         guard let viewModel = viewModel as? CellViewModel else { return }
-        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
-        let processor = DownsamplingImageProcessor(size: CGSize(width: 80, height: self.bounds.height))
+        let processor = DownsamplingImageProcessor(size: CGSize(width: 55, height: mainStackView.bounds.height))
         movieImageView.kf.indicatorType = .activity
         movieImageView.kf.setImage(
-            with: imageURL,
+            with: URL(string: viewModel.imageUrl),
             options: [
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),

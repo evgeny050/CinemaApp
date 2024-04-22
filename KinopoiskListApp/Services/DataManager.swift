@@ -7,10 +7,12 @@
 
 import Foundation
 
-class DataManager {
+final class DataManager {
     static let shared = DataManager()
     
     private init() {}
+    
+    private let userDefaults = UserDefaults()
     
     func getCategories() -> [String] {
         return [
@@ -20,5 +22,13 @@ class DataManager {
             "Сборы",
             "Премии"
         ]
+    }
+    
+    func setFavoriteStatus(for movieId: Int, with status: Bool) {
+        userDefaults.set(status, forKey: String(movieId))
+    }
+    
+    func getFavoriteStatus(for movieId: Int) -> Bool {
+        userDefaults.bool(forKey: String(movieId))
     }
 }

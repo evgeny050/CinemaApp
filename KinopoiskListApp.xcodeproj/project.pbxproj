@@ -38,6 +38,7 @@
 		4A9CF44D2BD16E430030307B /* MoviesListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF4492BD16E430030307B /* MoviesListRouter.swift */; };
 		4A9CF44E2BD16E430030307B /* MoviesListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF44A2BD16E430030307B /* MoviesListInteractor.swift */; };
 		4A9CF4502BD175930030307B /* MoviesListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF44F2BD175930030307B /* MoviesListConfigurator.swift */; };
+		4AA498492BD6C9D400AA3BA0 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */; };
 		4AA667292BAAF9B800F093FF /* KPListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */; };
 		4AA6672E2BAB2E0D00F093FF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672D2BAB2E0D00F093FF /* Extensions.swift */; };
 		4AA667312BAC30DB00F093FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA667302BAC30DB00F093FF /* Kingfisher */; };
@@ -94,6 +95,7 @@
 		4A9CF4492BD16E430030307B /* MoviesListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListRouter.swift; sourceTree = "<group>"; };
 		4A9CF44A2BD16E430030307B /* MoviesListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListInteractor.swift; sourceTree = "<group>"; };
 		4A9CF44F2BD175930030307B /* MoviesListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListConfigurator.swift; sourceTree = "<group>"; };
+		4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA6672D2BAB2E0D00F093FF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4AA667322BAC901A00F093FF /* KPList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPList.swift; sourceTree = "<group>"; };
@@ -250,6 +252,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		4AA498472BD6C9B200AA3BA0 /* MoviesDetailPopup */ = {
+			isa = PBXGroup;
+			children = (
+				4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */,
+			);
+			path = MoviesDetailPopup;
+			sourceTree = "<group>";
+		};
 		4AA6672C2BAB2DA200F093FF /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +301,7 @@
 		4AB8938E2BCFD397001E5CDB /* MoviesList */ = {
 			isa = PBXGroup;
 			children = (
+				4AA498472BD6C9B200AA3BA0 /* MoviesDetailPopup */,
 				4A7AE27B2BBB126F00632F8A /* MoviesListViewController.swift */,
 				4A9CF4482BD16E430030307B /* MoviesListPresenter.swift */,
 				4A9CF44A2BD16E430030307B /* MoviesListInteractor.swift */,
@@ -453,6 +464,7 @@
 				4AB893B52BCFE717001E5CDB /* KPListsConfigurator.swift in Sources */,
 				4AAC06F42BCD878000858F2F /* HomeInfoInteractor.swift in Sources */,
 				4AB893B92BD0195F001E5CDB /* KPListsContract.swift in Sources */,
+				4AA498492BD6C9D400AA3BA0 /* MovieDetailViewController.swift in Sources */,
 				4A943F702BA726600019C505 /* Movie.swift in Sources */,
 				4A85820B2BD3E08B00EF453C /* AppCoordinator.swift in Sources */,
 			);

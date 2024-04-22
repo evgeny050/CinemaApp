@@ -34,6 +34,36 @@ final class MoviesListViewController: UIViewController {
     }
 }
 
+// MARK: - Private Methodds
+extension MoviesListViewController {
+    // MARK: - Setup the SkeletonView
+    private func addSkeletonAnimation() {
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton()
+    }
+    
+    // MARK: - Setup the Table View
+    private func setupTableView() {
+        tableView = UITableView(frame: view.bounds)
+        tableView.register(MovieTableViewCell.self)
+        tableView.rowHeight = 100
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.sectionHeaderTopPadding = 0
+        view.addSubview(tableView)
+    }
+    
+    
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        title = "MDKMKXKMKcmdm"
+    }
+    
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        title = ""
+    }
+}
+
 // MARK: - ViewToPresenterMoviesListProtocol
 extension MoviesListViewController: ViewToPresenterMoviesListProtocol {
     // MARK: - Set Table HeaderView
@@ -66,36 +96,6 @@ extension MoviesListViewController: ViewToPresenterMoviesListProtocol {
     }
 }
 
-// MARK: - Private Methodds
-extension MoviesListViewController {
-    // MARK: - Setup the SkeletonView
-    private func addSkeletonAnimation() {
-        tableView.isSkeletonable = true
-        tableView.showAnimatedGradientSkeleton()
-    }
-    
-    // MARK: - Setup the Table View
-    private func setupTableView() {
-        tableView = UITableView(frame: view.bounds)
-        tableView.register(MovieTableViewCell.self)
-        tableView.rowHeight = 140
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.sectionHeaderTopPadding = 0
-        view.addSubview(tableView)
-    }
-    
-    private func showAlert(with error: Error? = nil) {
-        let alert = UIAlertController(
-            title: "Error server response",
-            message: error?.localizedDescription,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
-        present(alert, animated: true)
-    }
-}
-
 // MARK: - SkeletonTableViewDataSource, SkeletonTableViewDelegate
 extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,5 +119,15 @@ extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableView
         prepareCellForSkeleton cell: UITableViewCell,
             at indexPath: IndexPath) {
         cell.isSkeletonable = true
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = MovieDetailViewController()
+        vc.viewModel = sectionViewModel.movieItems[indexPath.row]
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+        }
+        present(vc, animated: true)
     }
 }

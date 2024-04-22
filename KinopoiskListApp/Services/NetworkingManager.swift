@@ -17,7 +17,7 @@ final class NetworkingManager {
     static let shared = NetworkingManager()
     private let headers: HTTPHeaders = [
       "accept": "application/json",
-      "X-API-KEY": "H2BEHR2-ZP9MHW2-Q168Q5V-ARA0EGX"//"0DRDXYH-D2CM4R4-GEY083Z-N090K66"
+      "X-API-KEY": "0DRDXYH-D2CM4R4-GEY083Z-N090K66"//"H2BEHR2-ZP9MHW2-Q168Q5V-ARA0EGX"//"0DRDXYH-D2CM4R4-GEY083Z-N090K66"
     ]
     private let decoder = JSONDecoder()
     
