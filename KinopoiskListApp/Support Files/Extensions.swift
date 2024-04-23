@@ -34,6 +34,11 @@ extension UITableView {
 
 extension UILabel {
     var maxNumberOfLines: Int {
+        let lineHeight = font.lineHeight
+        return Int(ceil(self.textHeight / lineHeight))
+    }
+    
+    var textHeight: CGFloat {
         let maxSize = CGSize(
             width: (superview?.bounds.width ?? UIScreen.main.bounds.width) - 20,
             height: CGFloat(MAXFLOAT)
@@ -45,8 +50,7 @@ extension UILabel {
             attributes: [.font: font],
             context: nil
         ).height
-        let lineHeight = font.lineHeight
-        return Int(ceil(textHeight / lineHeight))
+        return textHeight
     }
 }
 

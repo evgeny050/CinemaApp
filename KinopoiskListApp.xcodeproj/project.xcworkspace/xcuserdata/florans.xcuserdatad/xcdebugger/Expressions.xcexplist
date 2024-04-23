@@ -3,13 +3,13 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in MovieTableViewCell.configure(with:):MovieTableViewCell.swift">
+         contextName = "PersonInfoCell.updateView():PersonInfoCell.swift">
       </ContextState>
       <ContextState
          contextName = "PersonDetailViewController.fetchMovies():PersonDetailViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "PersonInfoCell.updateView():PersonInfoCell.swift">
+         contextName = "closure #1 in MovieTableViewCell.configure(with:):MovieTableViewCell.swift">
       </ContextState>
       <ContextState
          contextName = "closure #1 in MoviesByKPListViewController.navTitleLabel.getter:MoviesByKPListViewController.swift">
@@ -44,6 +44,17 @@
          <PersistentStrings>
             <PersistentString
                value = "Date().formatString">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MoviesListViewController.tableView(_:heightForHeaderInSection:):MoviesListViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "navTitleLabel_dsc.textHeight">
+            </PersistentString>
+            <PersistentString
+               value = "navTitleLabel_dsc.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -112,6 +123,14 @@
          <PersistentStrings>
             <PersistentString
                value = "birthdayInDateFormat">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MoviesListViewController.scrollViewDidScroll(_:):MoviesListViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "lastYScrollOffset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

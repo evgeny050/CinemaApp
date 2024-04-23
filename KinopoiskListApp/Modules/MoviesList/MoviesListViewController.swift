@@ -13,6 +13,18 @@ final class MoviesListViewController: UIViewController {
     private var sectionViewModel: SectionViewModelProtocol = SectionViewModel()
     var presenter: PresenterToViewMoviesListProtocol!
     private var tableView: UITableView!
+    private var lastYScrollOffset: CGFloat = 0
+    
+    private lazy var navTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        label.sizeToFit()
+        label.isSkeletonable = true
+        label.skeletonCornerRadius = 3
+        label.numberOfLines = label.maxNumberOfLines
+        print(label.text ?? "")
+        return label
+    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -49,18 +61,7 @@ extension MoviesListViewController {
         tableView.rowHeight = 100
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.sectionHeaderTopPadding = 0
         view.addSubview(tableView)
-    }
-    
-    
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        title = "MDKMKXKMKcmdm"
-    }
-    
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        title = ""
     }
 }
 
@@ -68,17 +69,10 @@ extension MoviesListViewController {
 extension MoviesListViewController: ViewToPresenterMoviesListProtocol {
     // MARK: - Set Table HeaderView
     func reloadHeader(with title: String) {
+        navTitleLabel.text = title
+
         let headerView = UIView()
         headerView.isSkeletonable = true
-        
-        let navTitleLabel = UILabel()
-        navTitleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-        navTitleLabel.sizeToFit()
-        navTitleLabel.isSkeletonable = true
-        navTitleLabel.skeletonCornerRadius = 3
-        navTitleLabel.text = title
-        navTitleLabel.numberOfLines = navTitleLabel.maxNumberOfLines
-        
         headerView.addSubview(navTitleLabel)
         navTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -93,6 +87,27 @@ extension MoviesListViewController: ViewToPresenterMoviesListProtocol {
         sectionViewModel = section
         tableView.stopSkeletonAnimation()
         tableView.hideSkeleton()
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension MoviesListViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //static var lastY: CGFloat = 0
+        let currentY = scrollView.contentOffset.y
+        let headerHeight = tableView.tableHeaderView?.bounds.height ?? 0
+        
+        // header disappears
+        if (lastYScrollOffset <= headerHeight) && (currentY > headerHeight) {
+            title = navTitleLabel.text
+        }
+        
+        // header appears
+        if (lastYScrollOffset > headerHeight) && (currentY <= headerHeight) {
+            title = ""
+        }
+        
+        lastYScrollOffset = currentY
     }
 }
 
