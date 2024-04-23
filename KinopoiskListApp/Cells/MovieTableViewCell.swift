@@ -75,7 +75,7 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         imageView.contentMode = .top
         imageView.tintColor = .orange
         imageView.sizeToFit()
-        //imageView.backgroundColor = .red
+        imageView.isHidden = true
         return imageView
     }()
     
@@ -164,5 +164,6 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
             enNameAndPeriodLabel.text = String(year)
         }
         countryAndGenreLabel.text = viewModel.movie?.countriesAndGenresString
+        favoriteImageView.isHidden = !viewModel.favoriteStatus
     }
 }

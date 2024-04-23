@@ -12,6 +12,14 @@
          contextName = "closure #1 in MovieTableViewCell.configure(with:):MovieTableViewCell.swift">
       </ContextState>
       <ContextState
+         contextName = "MovieDetailViewController.setFavoriteStatus():MovieDetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "favoriteStatus">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in MoviesByKPListViewController.navTitleLabel.getter:MoviesByKPListViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -131,6 +139,17 @@
          <PersistentStrings>
             <PersistentString
                value = "lastYScrollOffset">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MovieDetailViewController.tableView(_:cellForRowAt:):MovieDetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "viewModel.watchedStatus">
+            </PersistentString>
+            <PersistentString
+               value = "viewModel.favoriteStatus">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

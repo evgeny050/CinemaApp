@@ -57,8 +57,10 @@ extension PersonDetailViewController: ViewToPresenterPersonDetailProtocol {
     func reloadData(with section: SectionViewModel) {
         sectionViewModel = section
         cellViewModel = section.singlePerson
-        collectionView.stopSkeletonAnimation()
-        collectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        collectionView.hideSkeleton(
+            reloadDataAfter: true,
+            transition: .crossDissolve(0.25)
+        )
     }
 }
 

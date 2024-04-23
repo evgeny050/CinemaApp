@@ -12,31 +12,25 @@ final class MoviesListViewController: UIViewController {
     // MARK: - Properties
     private var sectionViewModel: SectionViewModelProtocol = SectionViewModel()
     var presenter: PresenterToViewMoviesListProtocol!
-    private var tableView: UITableView!
+    var tableView: UITableView!
     private var lastYScrollOffset: CGFloat = 0
-    
+   
     private lazy var navTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         label.sizeToFit()
         label.isSkeletonable = true
         label.skeletonCornerRadius = 3
-        label.numberOfLines = label.maxNumberOfLines
-        print(label.text ?? "")
         return label
     }()
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         setupTableView()
-        presenter.viewDidLoad()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         addSkeletonAnimation()
+        presenter.viewDidLoad()
     }
     
     // MARK: - Adjust Height of Table HeaderView
@@ -46,7 +40,7 @@ final class MoviesListViewController: UIViewController {
     }
 }
 
-// MARK: - Private Methodds
+// MARK: - Extensions -  Private Methodds
 extension MoviesListViewController {
     // MARK: - Setup the SkeletonView
     private func addSkeletonAnimation() {
@@ -59,17 +53,19 @@ extension MoviesListViewController {
         tableView = UITableView(frame: view.bounds)
         tableView.register(MovieTableViewCell.self)
         tableView.rowHeight = 100
+        tableView.sectionHeaderTopPadding = 0
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
     }
 }
 
-// MARK: - ViewToPresenterMoviesListProtocol
+// MARK: - Extensions -  ViewToPresenterMoviesListProtocol
 extension MoviesListViewController: ViewToPresenterMoviesListProtocol {
     // MARK: - Set Table HeaderView
     func reloadHeader(with title: String) {
         navTitleLabel.text = title
+        navTitleLabel.numberOfLines = navTitleLabel.maxNumberOfLines
 
         let headerView = UIView()
         headerView.isSkeletonable = true
@@ -85,15 +81,13 @@ extension MoviesListViewController: ViewToPresenterMoviesListProtocol {
     
     func reloadData(with section: SectionViewModel) {
         sectionViewModel = section
-        tableView.stopSkeletonAnimation()
         tableView.hideSkeleton()
     }
 }
 
-// MARK: - UIScrollViewDelegate
+// MARK: - Extensions - UIScrollViewDelegate
 extension MoviesListViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //static var lastY: CGFloat = 0
         let currentY = scrollView.contentOffset.y
         let headerHeight = tableView.tableHeaderView?.bounds.height ?? 0
         
@@ -111,7 +105,7 @@ extension MoviesListViewController {
     }
 }
 
-// MARK: - SkeletonTableViewDataSource, SkeletonTableViewDelegate
+// MARK: - Extensions - SkeletonTableViewDataSource, SkeletonTableViewDelegate
 extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sectionViewModel.numberOfMovieItems
@@ -126,23 +120,45 @@ extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableView
         return cell
     }
     
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+    func collectionSkeletonView(
+        _ skeletonView: UITableView,
+        cellIdentifierForRowAt indexPath: IndexPath
+    ) -> ReusableCellIdentifier {
         return MovieTableViewCell.reuseId
     }
     
-    func collectionSkeletonView(_ skeletonView: UITableView, 
+    func collectionSkeletonView(
+        _ skeletonView: UITableView,
         prepareCellForSkeleton cell: UITableViewCell,
-            at indexPath: IndexPath) {
+            at indexPath: IndexPath
+    ) {
         cell.isSkeletonable = true
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MovieDetailViewController()
         vc.viewModel = sectionViewModel.movieItems[indexPath.row]
+        vc.delegate = self
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium()]
             sheet.prefersGrabberVisible = true
         }
         present(vc, animated: true)
     }
+    
+}
+
+// MARK: - Extensions - UpdateFavoriteStatusDelegate
+extension MoviesListViewController: UpdateFavoriteStatusDelegate {
+    func modalClosed(wasStatusChanged: Bool) {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            wasStatusChanged 
+            ? tableView.reloadRows(at: [indexPath], with: .automatic)
+            : tableView.deselectRow(at: indexPath, animated: false)
+        }
+    }
+}
+
+protocol UpdateFavoriteStatusDelegate: AnyObject {
+    func modalClosed(wasStatusChanged: Bool)
 }

@@ -8,6 +8,11 @@
 protocol CellViewModelProtocol: AnyObject {
     var cellItemName: String { get }
     var imageUrl: String { get }
+    var id: Int { get }
+    var favoriteStatus: Bool { get }
+    var watchedStatus: Bool { get }
+    func setFavoriteStatus()
+    func setWatchedStatus()
 }
 
 protocol SectionViewModelProtocol: AnyObject {
@@ -23,6 +28,31 @@ protocol SectionViewModelProtocol: AnyObject {
 }
 
 final class CellViewModel: CellViewModelProtocol {
+    var favoriteStatus: Bool {
+        DataManager.shared.getFavoriteStatus(for: id)
+    }
+    
+    var watchedStatus: Bool {
+        DataManager.shared.getWatchedStatus(for: id)
+    }
+    
+    func setFavoriteStatus() {
+        DataManager.shared.setFavoriteStatus(for: id, with: !favoriteStatus)
+    }
+    
+    func setWatchedStatus() {
+        DataManager.shared.setWatchedStatus(for: id, with: !watchedStatus)
+    }
+    
+    var id: Int {
+        if let person = person {
+            return person.id
+        } else if let movie = movie {
+            return movie.id
+        }
+        return 0
+    }
+    
     var cellItemName: String {
         if let person = person {
             return person.name

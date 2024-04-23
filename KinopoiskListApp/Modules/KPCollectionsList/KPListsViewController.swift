@@ -44,8 +44,10 @@ extension KPListsViewController: KPListsViewInputProtocol {
     func reloadData(section: SectionViewModel) {
         title = section.categoryName
         sectionViewModel = section
-        tableView.stopSkeletonAnimation()
-        tableView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        tableView.hideSkeleton(
+            reloadDataAfter: true,
+            transition: .crossDissolve(0.25)
+        )
     }
 }
 

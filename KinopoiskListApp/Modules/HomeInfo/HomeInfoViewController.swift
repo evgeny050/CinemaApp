@@ -43,7 +43,6 @@ final class HomeInfoViewController: UIViewController {
 extension HomeInfoViewController: HomeInfoViewInputProtocol {
     func reloadData(section: SectionViewModel) {
         sectionViewModel = section
-        collectionView.stopSkeletonAnimation()
         collectionView.hideSkeleton(
             reloadDataAfter: true,
             transition: .crossDissolve(0.25)
