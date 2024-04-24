@@ -5,7 +5,7 @@
 //  Created by Флоранс on 17.03.2024.
 //
 
-struct Movie: Decodable {
+struct Movie: Codable {
     let id: Int
     //let rating: Rating?
     //let votes: Vote?
@@ -17,38 +17,46 @@ struct Movie: Decodable {
     //let backdrop: UrlToImage
     //let description: String
     let year: Int
-    let genres: [GenreOrCountry]
-    let countries: [GenreOrCountry]
+    let genres: [GenreOrCountryOrCinemaPlatform]
+    let countries: [GenreOrCountryOrCinemaPlatform]
     //let shortDescription: String
     //let ticketsOnSale: Bool
-    let top10: Int?
-    let top250: Int?
+    let watchability: Watchability?
     
     var countriesAndGenresString: String {
         return "\(convertArrayToString(from: countries)) - \(convertArrayToString(from: genres))"
     }
     
-    func convertArrayToString(from array: [GenreOrCountry]) -> String {
+    var isOnline: Bool {
+        guard let watchability = watchability else { return false }
+        return !watchability.items.filter { $0.name == "Kinopoisk HD" }
+            .isEmpty
+    }
+    
+    func convertArrayToString(from array: [GenreOrCountryOrCinemaPlatform]) -> String {
         array.map { $0.name }
             .joined(separator: ", ")
     }
 }
 
-struct Rating: Decodable {
+struct Rating: Codable {
     let kp: Double
     let imdb: Double
 }
 
-struct Vote: Decodable {
+struct Vote: Codable {
     let kp: Int
     let imdb: Int
 }
 
-struct UrlToImage: Decodable {
+struct UrlToImage: Codable {
     let url: String
-    let previewUrl: String
 }
 
-struct GenreOrCountry: Decodable {
+struct GenreOrCountryOrCinemaPlatform: Codable {
     let name: String
+}
+
+struct Watchability: Codable {
+    let items: [GenreOrCountryOrCinemaPlatform]
 }

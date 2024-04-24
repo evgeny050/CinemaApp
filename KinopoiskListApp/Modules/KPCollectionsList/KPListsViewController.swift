@@ -66,6 +66,7 @@ extension KPListsViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         presenter.didTapCell(at: indexPath)
     }
     

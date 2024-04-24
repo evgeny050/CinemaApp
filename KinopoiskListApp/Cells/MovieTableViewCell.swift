@@ -33,38 +33,46 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
         label.isSkeletonable = true
         label.skeletonCornerRadius = 3
-        label.skeletonTextLineHeight = .relativeToFont
+        label.skeletonTextLineHeight = .fixed(15)
+        label.skeletonTextNumberOfLines = 3
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
     }()
     
-    private let enNameAndPeriodLabel: UILabel = {
+    private let periodLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont(name: "HelveticaNeue", size: 12)
-        label.isSkeletonable = true
-        label.skeletonCornerRadius = 3
-        label.skeletonTextLineHeight = .relativeToFont
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
     }()
     
     private let countryAndGenreLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.font = UIFont(name: "HelveticaNeue", size: 12)
         label.textColor = .lightGray
-        label.isSkeletonable = true
-        label.skeletonCornerRadius = 3
-        label.skeletonTextLineHeight = .relativeToFont
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
     }()
     
     private let watchOnlineButton: UIButton = {
         let button = UIButton()
-        button.imageView?.image = UIImage(systemName: "play.fill")
+        button.setImage(
+            UIImage(
+                systemName: "play.fill",
+                withConfiguration: UIImage.SymbolConfiguration(
+                    pointSize: 12, weight: .bold, scale: .small
+                )
+            ),
+            for: .normal
+        )
         button.setTitle("Смотреть", for: .normal)
         button.setTitleColor(UIColor.orange, for: .normal)
         button.tintColor = .orange
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 11)
+        button.contentHorizontalAlignment = .leading
+        button.setContentHuggingPriority(.defaultLow, for: .vertical)
         button.isHidden = true
         return button
     }()
@@ -87,6 +95,13 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         stackView.isSkeletonable = true
         return stackView
     }()
+    
+    private let emptyView: UIView = {
+        let view = UIView()
+        view.setContentHuggingPriority(.defaultLow, for: .vertical)
+        view.isHidden = true
+        return view
+    }()
 
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -104,25 +119,21 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
     
     // MARK: - Setup Layout
     private func commonInit() {
-        let innerStackView = UIStackView(arrangedSubviews: [rUNameLabel, enNameAndPeriodLabel, countryAndGenreLabel])
+        let innerStackView = UIStackView(
+            arrangedSubviews: [
+                rUNameLabel, periodLabel, 
+                countryAndGenreLabel,
+                watchOnlineButton, emptyView
+            ]
+        )
         innerStackView.axis = .vertical
-        innerStackView.distribution = .fill
-        innerStackView.alignment = .fill
-        innerStackView.spacing = 5
+        innerStackView.spacing = 2
         innerStackView.isSkeletonable = true
         
-        let emptyView = UIView()
-        
-        let infoStackView = UIStackView(arrangedSubviews: [innerStackView, emptyView, watchOnlineButton])
-        infoStackView.axis = .vertical
-        infoStackView.distribution = .fill
-        infoStackView.alignment = .fill
-        infoStackView.spacing = 12
-        infoStackView.isSkeletonable = true
-        
-        let mainStackView = UIStackView(arrangedSubviews: [movieImageView, infoStackView, favoriteImageView])
+        let mainStackView = UIStackView(
+            arrangedSubviews: [movieImageView, innerStackView, favoriteImageView]
+        )
         mainStackView.axis = .horizontal
-        mainStackView.distribution = .fill
         mainStackView.spacing = 10
         mainStackView.isSkeletonable = true
         
@@ -161,9 +172,12 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         
         rUNameLabel.text = viewModel.movie?.name
         if let year = viewModel.movie?.year {
-            enNameAndPeriodLabel.text = String(year)
+            periodLabel.text = String(year)
         }
-        countryAndGenreLabel.text = viewModel.movie?.countriesAndGenresString
+        guard let movie = viewModel.movie else { return }
+        countryAndGenreLabel.text = movie.countriesAndGenresString
+        watchOnlineButton.isHidden = !movie.isOnline
+        emptyView.isHidden = !watchOnlineButton.isHidden
         favoriteImageView.isHidden = !viewModel.favoriteStatus
     }
 }

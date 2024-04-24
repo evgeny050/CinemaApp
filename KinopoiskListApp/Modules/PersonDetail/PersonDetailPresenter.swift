@@ -6,9 +6,7 @@
 //  
 //
 
-import Foundation
-
-class PersonDetailPresenter: PresenterToViewPersonDetailProtocol {
+final class PersonDetailPresenter: PresenterToViewPersonDetailProtocol {
     // MARK: Properties
     private unowned let view: ViewToPresenterPersonDetailProtocol
     var interactor: PresenterToInteractorPersonDetailProtocol!

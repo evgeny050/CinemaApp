@@ -33,11 +33,12 @@ final class CellViewModel: CellViewModelProtocol {
     }
     
     var watchedStatus: Bool {
-        DataManager.shared.getWatchedStatus(for: id)
+        let movies = DataManager.shared.getFavoriteMovies()
+        return DataManager.shared.getWatchedStatus(for: id)
     }
     
     func setFavoriteStatus() {
-        DataManager.shared.setFavoriteStatus(for: id, with: !favoriteStatus)
+        DataManager.shared.setFavoriteStatus(for: movie, with: !favoriteStatus)
     }
     
     func setWatchedStatus() {

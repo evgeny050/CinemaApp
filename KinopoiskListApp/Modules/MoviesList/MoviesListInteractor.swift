@@ -22,14 +22,20 @@ final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
             type: KPMovieSection.self,
             parameters: [
                 "limit": ["250"],
+                "selectFields": [
+                    "id", "name", "enName", "poster",
+                    "year","genres", "countries",
+                    "watchability"
+                ],
                 "notNullFields": ["poster.url"],
                 "lists" : [kpList.slug]
             ]
             
-        ) { [unowned self] result in
+        ) { [weak self] result in
             switch result {
             case .success(let value):
-                presenter.didReceiveData(with: value.docs, and: kpList)
+                guard let self = self else { return }
+                self.presenter.didReceiveData(with: value.docs, and: kpList)
             case .failure(let error):
                 print(error)
             }

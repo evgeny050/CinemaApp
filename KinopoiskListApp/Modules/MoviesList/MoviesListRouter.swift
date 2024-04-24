@@ -6,9 +6,21 @@
 //  
 //
 
-import Foundation
-import UIKit
-
-class MoviesListRouter: PresenterToRouterMoviesListProtocol {
+final class MoviesListRouter: PresenterToRouterMoviesListProtocol {
+    private unowned let view: MoviesListViewController
     
+    required init(with view: MoviesListViewController) {
+        self.view = view
+    }
+    
+    func presentMovieDetail(with viewModel: CellViewModelProtocol) {
+        let vc = MovieDetailViewController()
+        vc.viewModel = viewModel
+        vc.delegate = view
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+        }
+        view.present(vc, animated: true)
+    }
 }

@@ -13,7 +13,7 @@ protocol CellModelRepresanteble {
     var viewModel: CellViewModelProtocol? { get }
 }
 
-class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteble {
+final class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteble {
     
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {

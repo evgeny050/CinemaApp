@@ -12,7 +12,7 @@ final class DataManager {
     
     private init() {}
     
-    private let userDefaults = UserDefaults()
+    private let userDefaults = UserDefaults.standard
     
     func getCategories() -> [String] {
         return [
@@ -24,8 +24,16 @@ final class DataManager {
         ]
     }
     
-    func setFavoriteStatus(for movieId: Int, with status: Bool) {
-        userDefaults.set(status, forKey: "\(movieId)/fav")
+    func setFavoriteStatus(for movie: Movie?, with status: Bool) {
+        guard let movie = movie else { return }
+        userDefaults.set(status, forKey: "\(movie.id)/fav")
+        guard let data = try? JSONEncoder().encode(movie) else { return }
+        guard var array = userDefaults.array(forKey: "favoriteMovies") else {
+            userDefaults.set([data], forKey: "favoriteMovies")
+            return
+        }
+        array.append(data)
+        userDefaults.set(array, forKey: "favoriteMovies")
     }
     
     func getFavoriteStatus(for movieId: Int) -> Bool {
@@ -40,33 +48,10 @@ final class DataManager {
         userDefaults.bool(forKey: "\(movieId)/watch")
     }
     
-//    func setFavoriteStatus(for movieId: Int, with newStatus: Bool) {
-//        var statusDict = getStatusDict(by: movieId)
-//        statusDict["favorite"] = newStatus
-//        userDefaults.set(statusDict, forKey: "\(movieId)")
-//    }
-//    
-//    func getFavoriteStatus(for movieId: Int) -> Bool {
-//        let dicitonary = userDefaults.dictionary(forKey: "\(movieId)")
-//        return dicitonary["favorite"] as? Bool
-//    }
-//    
-//    func setWatchedStatus(for movieId: Int, with newStatus: Bool) {
-//        var statusDict = getStatusDict(by: movieId)
-//        statusDict["watched"] = newStatus
-//        userDefaults.set(statusDict, forKey: "\(movieId)")
-//    }
-//    
-//    func getWatchedStatus(for movieId: Int) -> Bool {
-//        let dicitonary = userDefaults.dictionary(forKey: "\(movieId)")
-//        return dicitonary["watched"]
-//    }
-//    
-//    func getStatusDict(by movieId: Int) -> Dictionary<String, Any> {
-//        guard var statusDict = UserDefaults.standard.dictionary(forKey: "\(movieId)") else {
-//            let dictionary = ["favorite": false, "watched": false]
-//            userDefaults.set(dictionary, forKey: "\(movieId)")
-//            return dictionary
-//        }
-//        return statu
+    func getFavoriteMovies() -> [Movie]? {
+        userDefaults.array(forKey: "favoriteMovies")?.compactMap { data in
+            guard let data = data as? Data else { return nil }
+            return try? JSONDecoder().decode(Movie.self, from: data)
+        }
+    }
 }

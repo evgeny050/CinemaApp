@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
+final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {
         didSet {
@@ -48,6 +48,7 @@ class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
         label.textColor = .lightGray
         label.isSkeletonable = true
         label.skeletonTextNumberOfLines = 3
+        label.skeletonTextLineHeight = .relativeToFont
         return label
     }()
     

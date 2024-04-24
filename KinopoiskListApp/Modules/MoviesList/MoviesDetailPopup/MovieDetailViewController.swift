@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class MovieDetailViewController: UITableViewController {
+final class MovieDetailViewController: UITableViewController {
     
     // MARK: - Properties
     var viewModel: CellViewModelProtocol = CellViewModel() {

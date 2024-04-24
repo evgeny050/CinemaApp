@@ -130,20 +130,14 @@ extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableView
     func collectionSkeletonView(
         _ skeletonView: UITableView,
         prepareCellForSkeleton cell: UITableViewCell,
-            at indexPath: IndexPath
+        at indexPath: IndexPath
     ) {
         cell.isSkeletonable = true
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = MovieDetailViewController()
-        vc.viewModel = sectionViewModel.movieItems[indexPath.row]
-        vc.delegate = self
-        if let sheet = vc.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-        }
-        present(vc, animated: true)
+        presenter.didTapCell(at: indexPath.row)
+       
     }
     
 }

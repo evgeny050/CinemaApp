@@ -5,7 +5,7 @@
 //  Created by Флоранс on 16.04.2024.
 //
 
-class HomeInfoRouter: HomeInfoRouterInputProtocol {
+final class HomeInfoRouter: HomeInfoRouterInputProtocol {
     private unowned let view: HomeInfoViewController
     
     required init(view: HomeInfoViewController) {

@@ -39,6 +39,7 @@
 		4A9CF44E2BD16E430030307B /* MoviesListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF44A2BD16E430030307B /* MoviesListInteractor.swift */; };
 		4A9CF4502BD175930030307B /* MoviesListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF44F2BD175930030307B /* MoviesListConfigurator.swift */; };
 		4AA498492BD6C9D400AA3BA0 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */; };
+		4AA4984C2BD90FD900AA3BA0 /* DetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA4984B2BD90FD900AA3BA0 /* DetailImageViewController.swift */; };
 		4AA667292BAAF9B800F093FF /* KPListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */; };
 		4AA6672E2BAB2E0D00F093FF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672D2BAB2E0D00F093FF /* Extensions.swift */; };
 		4AA667312BAC30DB00F093FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA667302BAC30DB00F093FF /* Kingfisher */; };
@@ -50,7 +51,6 @@
 		4AB893852BCEA96B001E5CDB /* HomeInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB893842BCEA96B001E5CDB /* HomeInfoRouter.swift */; };
 		4AB893872BCEAE90001E5CDB /* HomeInfoConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB893862BCEAE90001E5CDB /* HomeInfoConfigurator.swift */; };
 		4AB893892BCEDB98001E5CDB /* ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB893882BCEDB98001E5CDB /* ReuseIdentifier.swift */; };
-		4AB8938B2BCFC72E001E5CDB /* KPItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8938A2BCFC72E001E5CDB /* KPItemView.swift */; };
 		4AB893AE2BCFD6EA001E5CDB /* KPListsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB893A92BCFD6EA001E5CDB /* KPListsPresenter.swift */; };
 		4AB893B02BCFD6EA001E5CDB /* KPLIstsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB893AB2BCFD6EA001E5CDB /* KPLIstsInteractor.swift */; };
 		4AB893B32BCFE704001E5CDB /* KPListsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB893B22BCFE704001E5CDB /* KPListsRouter.swift */; };
@@ -96,6 +96,7 @@
 		4A9CF44A2BD16E430030307B /* MoviesListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListInteractor.swift; sourceTree = "<group>"; };
 		4A9CF44F2BD175930030307B /* MoviesListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListConfigurator.swift; sourceTree = "<group>"; };
 		4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		4AA4984B2BD90FD900AA3BA0 /* DetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewController.swift; sourceTree = "<group>"; };
 		4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA6672D2BAB2E0D00F093FF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4AA667322BAC901A00F093FF /* KPList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPList.swift; sourceTree = "<group>"; };
@@ -106,7 +107,6 @@
 		4AB893842BCEA96B001E5CDB /* HomeInfoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoRouter.swift; sourceTree = "<group>"; };
 		4AB893862BCEAE90001E5CDB /* HomeInfoConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoConfigurator.swift; sourceTree = "<group>"; };
 		4AB893882BCEDB98001E5CDB /* ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifier.swift; sourceTree = "<group>"; };
-		4AB8938A2BCFC72E001E5CDB /* KPItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPItemView.swift; sourceTree = "<group>"; };
 		4AB893A92BCFD6EA001E5CDB /* KPListsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListsPresenter.swift; sourceTree = "<group>"; };
 		4AB893AB2BCFD6EA001E5CDB /* KPLIstsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPLIstsInteractor.swift; sourceTree = "<group>"; };
 		4AB893B22BCFE704001E5CDB /* KPListsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListsRouter.swift; sourceTree = "<group>"; };
@@ -183,8 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				4A943F452BA1E5310019C505 /* AppDelegate.swift */,
-				4A85820A2BD3E08B00EF453C /* AppCoordinator.swift */,
 				4A943F472BA1E5310019C505 /* SceneDelegate.swift */,
+				4A85820A2BD3E08B00EF453C /* AppCoordinator.swift */,
 				4A943F5B2BA1ED340019C505 /* LaunchScreen.storyboard */,
 			);
 			path = App;
@@ -222,6 +222,7 @@
 		4A943F602BA205BB0019C505 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4AA4984A2BD90FC200AA3BA0 /* DetailImage */,
 				4A7AE27F2BBD879300632F8A /* Main */,
 				4AB8938E2BCFD397001E5CDB /* MoviesList */,
 				4AB8938D2BCFD340001E5CDB /* KPCollectionsList */,
@@ -258,6 +259,14 @@
 				4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */,
 			);
 			path = MoviesDetailPopup;
+			sourceTree = "<group>";
+		};
+		4AA4984A2BD90FC200AA3BA0 /* DetailImage */ = {
+			isa = PBXGroup;
+			children = (
+				4AA4984B2BD90FD900AA3BA0 /* DetailImageViewController.swift */,
+			);
+			path = DetailImage;
 			sourceTree = "<group>";
 		};
 		4AA6672C2BAB2DA200F093FF /* Support Files */ = {
@@ -329,7 +338,6 @@
 			isa = PBXGroup;
 			children = (
 				4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */,
-				4AB8938A2BCFC72E001E5CDB /* KPItemView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -456,7 +464,6 @@
 				4A7AE27E2BBD871800632F8A /* CellFactory.swift in Sources */,
 				4A9CF44D2BD16E430030307B /* MoviesListRouter.swift in Sources */,
 				4A9CF44B2BD16E430030307B /* MoviesListContract.swift in Sources */,
-				4AB8938B2BCFC72E001E5CDB /* KPItemView.swift in Sources */,
 				4AB893852BCEA96B001E5CDB /* HomeInfoRouter.swift in Sources */,
 				4A7AE27C2BBB126F00632F8A /* MoviesListViewController.swift in Sources */,
 				4AB893872BCEAE90001E5CDB /* HomeInfoConfigurator.swift in Sources */,
@@ -467,6 +474,7 @@
 				4AA498492BD6C9D400AA3BA0 /* MovieDetailViewController.swift in Sources */,
 				4A943F702BA726600019C505 /* Movie.swift in Sources */,
 				4A85820B2BD3E08B00EF453C /* AppCoordinator.swift in Sources */,
+				4AA4984C2BD90FD900AA3BA0 /* DetailImageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

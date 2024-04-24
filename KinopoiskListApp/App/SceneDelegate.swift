@@ -16,6 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = AppCoordinator.createTabBarController()
         window?.makeKeyAndVisible()
+        if let bundleID = Bundle.main.bundleIdentifier {
+            //UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
     }
 
 }

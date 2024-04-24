@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AppCoordinator {
+final class AppCoordinator {
     static func createTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
         let homeVC = HomeInfoViewController()

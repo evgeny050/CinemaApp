@@ -18,6 +18,7 @@ protocol PresenterToViewMoviesListProtocol: AnyObject {
     var interactor: PresenterToInteractorMoviesListProtocol! { get set }
     var router: PresenterToRouterMoviesListProtocol! { get set }
     func viewDidLoad()
+    func didTapCell(at index: Int)
 }
 
 /// InteractorInputProtocol (Interactor confroms, Presenter contains)
@@ -34,5 +35,6 @@ protocol InteractorToPresenterMoviesListProtocol: AnyObject {
 
 /// RouterInputProtocol (Router conforms, Presenter contains)
 protocol PresenterToRouterMoviesListProtocol {
-    
+    init(with view: MoviesListViewController)
+    func presentMovieDetail(with viewModel: CellViewModelProtocol)
 }

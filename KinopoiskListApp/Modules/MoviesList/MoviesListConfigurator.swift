@@ -9,7 +9,7 @@ final class MoviesListConfigurator {
     static func configure(withView view: MoviesListViewController, and kpList: KPList) {
         let presenter = MoviesListPresenter(with: view)
         let interactor = MoviesListInteractor(with: presenter, and: kpList)
-        let router = MoviesListRouter()
+        let router = MoviesListRouter(with: view)
         
         view.presenter = presenter
         presenter.interactor = interactor
