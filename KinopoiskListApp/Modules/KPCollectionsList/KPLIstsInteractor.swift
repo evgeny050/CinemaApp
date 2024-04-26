@@ -18,7 +18,7 @@ final class KPListsInteractor: KPListsInteractorInputProtocol {
     
     func fetchData() {
         NetworkingManager.shared.fetchDataFaster(
-            type: KPListSection.self,
+            type: KPList.self,
             parameters: [
                 "limit": ["250"],
                 "notNullFields": ["cover.url"],
@@ -28,8 +28,8 @@ final class KPListsInteractor: KPListsInteractorInputProtocol {
         ) { [unowned self] result in
             switch result {
             case .success(let value):
-                let dataStore = CommonDataStore(kpLists: value.docs)
-                presenter.didReceiveData(with: dataStore, and: category)
+                //let dataStore = CommonDataStore(kpLists: value)
+                presenter.didReceiveData(with: value, and: category)
             case .failure(let error):
                 print(error)
             }

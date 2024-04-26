@@ -11,7 +11,7 @@ protocol CellViewModelProtocol: AnyObject {
     var id: Int { get }
     var favoriteStatus: Bool { get }
     var watchedStatus: Bool { get }
-    func setFavoriteStatus()
+    func setFavoriteStatus(completion: (Film) -> Void)
     func setWatchedStatus()
 }
 
@@ -20,25 +20,29 @@ protocol SectionViewModelProtocol: AnyObject {
     var kpListItems: [CellViewModelProtocol] { get }
     var categoryItems: [CellViewModelProtocol] { get }
     var movieItems: [CellViewModelProtocol] { get }
+    var favoriteFilms: [CellViewModelProtocol] { get set }
     var singlePerson: CellViewModelProtocol { get }
     var numberOfCategoryItems: Int { get }
     var numberOfPersonItems: Int { get }
     var numberOfKPListItems: Int { get }
     var numberOfMovieItems: Int { get }
+    var numberOfFavoriteItems: Int { get }
 }
 
 final class CellViewModel: CellViewModelProtocol {
     var favoriteStatus: Bool {
-        DataManager.shared.getFavoriteStatus(for: id)
+       DataManager.shared.getFavoriteStatus(for: id)
     }
     
     var watchedStatus: Bool {
-        let movies = DataManager.shared.getFavoriteMovies()
-        return DataManager.shared.getWatchedStatus(for: id)
+        DataManager.shared.getWatchedStatus(for: id)
     }
     
-    func setFavoriteStatus() {
-        DataManager.shared.setFavoriteStatus(for: movie, with: !favoriteStatus)
+    func setFavoriteStatus(completion: (Film) -> Void) {
+        DataManager.shared.setFavoriteStatus(for: movie, with: !favoriteStatus) { film in
+            completion(film)
+            print(film.name ?? "")
+        }
     }
     
     func setWatchedStatus() {
@@ -49,7 +53,7 @@ final class CellViewModel: CellViewModelProtocol {
         if let person = person {
             return person.id
         } else if let movie = movie {
-            return movie.id
+            return Int(movie.id)
         }
         return 0
     }
@@ -61,6 +65,8 @@ final class CellViewModel: CellViewModelProtocol {
             return kpList.name
         } else if let movie = movie {
             return movie.name
+        } else if let film = film {
+            return film.name ?? ""
         }
         return category ?? ""
     }
@@ -68,22 +74,26 @@ final class CellViewModel: CellViewModelProtocol {
     var imageUrl: String {
         if let movie = movie {
             return movie.poster.url
-        }
-        if let person = person {
+        } else if let person = person {
             return person.photo
         } else if let kpList = kpList {
             return kpList.cover.url
+        } else if let film = film {
+            return film.poster ?? ""
         }
+        
         return ""
     }
     
     var person: Person?
     
-    private var kpList: KPList?
+    var kpList: KPList?
         
     private var category: String?
     
-    var movie: Movie?
+    var movie: MovieServerModel?
+    
+    var film: Film?
     
     var isFact: Bool
     
@@ -91,13 +101,15 @@ final class CellViewModel: CellViewModelProtocol {
         kpList: KPList? = nil,
         person: Person? = nil,
         category: String? = nil,
-        movie: Movie? = nil,
+        movie: MovieServerModel? = nil,
+        film: Film? = nil,
         isFact: Bool = false
     ) {
         self.kpList = kpList
         self.person = person
         self.category = category
         self.movie = movie
+        self.film = film
         self.isFact = isFact
     }
 }
@@ -107,6 +119,7 @@ final class SectionViewModel: SectionViewModelProtocol {
     var kpListItems: [CellViewModelProtocol] = []
     var categoryItems: [CellViewModelProtocol] = []
     var movieItems: [CellViewModelProtocol] = []
+    var favoriteFilms: [CellViewModelProtocol] = []
     var singlePerson: CellViewModelProtocol = CellViewModel()
     
     var numberOfCategoryItems: Int {
@@ -123,6 +136,10 @@ final class SectionViewModel: SectionViewModelProtocol {
     
     var numberOfMovieItems: Int {
         movieItems.count
+    }
+    
+    var numberOfFavoriteItems: Int {
+        favoriteFilms.count
     }
     
     var categoryName = ""

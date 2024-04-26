@@ -27,7 +27,7 @@ final class HomeInfoViewController: UIViewController {
     private var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
-    
+        
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +41,14 @@ final class HomeInfoViewController: UIViewController {
 
 // MARK: - Extensions - HomeInfoViewInputProtocol
 extension HomeInfoViewController: HomeInfoViewInputProtocol {
-    func reloadData(section: SectionViewModel) {
+    func reloadData(section: SectionViewModel, forAllSections: Bool) {
         sectionViewModel = section
-        collectionView.hideSkeleton(
-            reloadDataAfter: true,
-            transition: .crossDissolve(0.25)
-        )
+        collectionView.hideSkeleton()
+        if forAllSections {
+            collectionView.reloadData()
+        } else {
+            collectionView.reloadSections(.init(integer: 3))
+        }
     }
 }
 
@@ -119,8 +121,10 @@ extension HomeInfoViewController {
                 return CellFactory.createSection(for: .collections)
             case 1:
                 return CellFactory.createSection(for: .categories)
-            default:
+            case 2:
                 return CellFactory.createSection(for: .collections)
+            default:
+                return CellFactory.createSection(for: .movies)
             }
         }
         return layout
@@ -130,7 +134,7 @@ extension HomeInfoViewController {
 // MARK: - Extensions - UICollectionViewDelegate, UICollectionViewDataSource
 extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonCollectionViewDelegate {
     func numSections(in collectionSkeletonView: UICollectionView) -> Int {
-        return 3
+        return 4
     }
     
     func collectionSkeletonView(_ skeletonView: UICollectionView,
@@ -169,7 +173,7 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -178,8 +182,10 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
             return sectionViewModel.numberOfKPListItems
         case 1:
             return sectionViewModel.numberOfCategoryItems
-        default:
+        case 2:
             return sectionViewModel.numberOfPersonItems
+        default:
+            return sectionViewModel.numberOfFavoriteItems
         }
     }
     
@@ -208,7 +214,10 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
             cell.viewModel = cellViewModel
             return cell
         default:
-            let cellViewModel = sectionViewModel.personItems[indexPath.item]
+            let cellViewModel = (indexPath.section == 2) ?
+            sectionViewModel.personItems[indexPath.item]
+            : sectionViewModel.favoriteFilms[indexPath.item]
+            
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "KPItemCell",//cellViewModel.reuseId,
                 for: indexPath
@@ -239,25 +248,34 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
             sectionHeaderView.title.text = "Советуем посмотреть"
         case 1:
             sectionHeaderView.title.text = "Категории"
-        default:
+        case 2:
             sectionHeaderView.title.text = "Родились сегодня"
+        default:
+            sectionHeaderView.title.text = "Буду смотреть"
         }
         
         return sectionHeaderView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            presenter.didTapCell(at: indexPath)
-        case 1:
-            presenter.didTapCell(at: indexPath)
-        default:
-            presenter.didTapCell(at: indexPath)
-        }
+        presenter.didTapCell(at: indexPath)
     }
 }
 
+extension HomeInfoViewController: MovieStatusChangedDelegate {
+    func reloadMoviesSection(film: Film) {
+        if !film.isFavorite {
+            sectionViewModel.favoriteFilms.removeAll { item in
+                item.id == film.id
+            }
+        } else {
+            print(film.name ?? "")
+            sectionViewModel.favoriteFilms.append(CellViewModel(film: film))
+        }
+        //presenter.updateFavoriteMovies()
+        collectionView.reloadSections(.init(integer: 3))
+    }
+}
 
 // MARK: - Extensions - UISearchBarDelegate, UISearchResultsUpdating
 extension HomeInfoViewController: UISearchBarDelegate, UISearchResultsUpdating {
@@ -268,4 +286,17 @@ extension HomeInfoViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         print("search started")
     }
+}
+
+// MARK: - Extensions - UpdateFavoriteStatusDelegate
+//extension HomeInfoViewController: UpdateFavoriteStatusDelegate {
+//    func modalClosed(wasStatusChanged: Bool) {
+//        if wasStatusChanged {
+//            collectionView.reloadSections(.init(integer: 4))
+//        }
+//    }
+//}
+
+protocol MovieStatusChangedDelegate: AnyObject {
+    func reloadMoviesSection(film: Film)
 }

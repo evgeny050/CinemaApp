@@ -27,7 +27,7 @@ protocol KPListsInteractorInputProtocol: AnyObject {
 
 /// InteractorOutputProtocol (Presenter conforms, Interactor contains)
 protocol KPListsInteractorOutputProtocol: AnyObject {
-    func didReceiveData(with dataStore: CommonDataStore, and category: String)
+    func didReceiveData(with kpLists: [KPList], and category: String)
 }
 
 /// RouterInputProtocol (Router conforms, Presenter contains)

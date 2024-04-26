@@ -1,32 +1,27 @@
 //
-//  Moview.swift
+//  MovieServerModel.swift
 //  KinopoiskListApp
 //
-//  Created by Флоранс on 17.03.2024.
+//  Created by Флоранс on 25.04.2024.
 //
 
-struct Movie: Codable {
+struct MovieServerModel: ResponseType {
     let id: Int
-    //let rating: Rating?
-    //let votes: Vote?
-    //let movieLength: Int
-    //let type: String
     let name: String
-    let enName: String?
     let poster: UrlToImage
-    //let backdrop: UrlToImage
-    //let description: String
     let year: Int
     let genres: [GenreOrCountryOrCinemaPlatform]
     let countries: [GenreOrCountryOrCinemaPlatform]
-    //let shortDescription: String
-    //let ticketsOnSale: Bool
     let watchability: Watchability?
+    
+    static var type = "movie?"
+    static let database = StorageManager.shared
     
     var countriesAndGenresString: String {
         return "\(convertArrayToString(from: countries)) - \(convertArrayToString(from: genres))"
     }
     
+    // Determine either movie is enabled to watch on KP
     var isOnline: Bool {
         guard let watchability = watchability else { return false }
         return !watchability.items.filter { $0.name == "Kinopoisk HD" }
@@ -37,16 +32,15 @@ struct Movie: Codable {
         array.map { $0.name }
             .joined(separator: ", ")
     }
-}
-
-struct Rating: Codable {
-    let kp: Double
-    let imdb: Double
-}
-
-struct Vote: Codable {
-    let kp: Int
-    let imdb: Int
+    
+    // Core Data Usage
+//    func store() {
+//        guard let movie = MovieServerModel.database.add(Film.self) else { return }
+//        movie.id = Int64(id)
+//        movie.name = name
+//        movie.poster = poster.url
+//        MovieServerModel.database.saveContext()
+//    }
 }
 
 struct UrlToImage: Codable {

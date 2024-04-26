@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		4A17033A2BAD9EE90012CF46 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4A1703392BAD9EE90012CF46 /* SnapKit */; };
 		4A17033C2BAD9EE90012CF46 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4A17033B2BAD9EE90012CF46 /* SnapKit-Dynamic */; };
-		4A17033E2BADD19A0012CF46 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17033D2BADD19A0012CF46 /* Enums.swift */; };
-		4A1703402BADEA2F0012CF46 /* KPSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17033F2BADEA2F0012CF46 /* KPSection.swift */; };
+		4A1703402BADEA2F0012CF46 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17033F2BADEA2F0012CF46 /* APIResponse.swift */; };
 		4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703412BAF1C530012CF46 /* DataManager.swift */; };
 		4A1703462BB1A9490012CF46 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */; };
 		4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703492BB3150E0012CF46 /* CategoryCell.swift */; };
@@ -32,7 +31,6 @@
 		4A943F662BA6F8D80019C505 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F652BA6F8D80019C505 /* NetworkingManager.swift */; };
 		4A943F692BA70A000019C505 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4A943F682BA70A000019C505 /* Alamofire */; };
 		4A943F6B2BA70A000019C505 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4A943F6A2BA70A000019C505 /* AlamofireDynamic */; };
-		4A943F702BA726600019C505 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A943F6F2BA726600019C505 /* Movie.swift */; };
 		4A9CF44B2BD16E430030307B /* MoviesListContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF4472BD16E430030307B /* MoviesListContract.swift */; };
 		4A9CF44C2BD16E430030307B /* MoviesListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF4482BD16E430030307B /* MoviesListPresenter.swift */; };
 		4A9CF44D2BD16E430030307B /* MoviesListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF4492BD16E430030307B /* MoviesListRouter.swift */; };
@@ -40,6 +38,9 @@
 		4A9CF4502BD175930030307B /* MoviesListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9CF44F2BD175930030307B /* MoviesListConfigurator.swift */; };
 		4AA498492BD6C9D400AA3BA0 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */; };
 		4AA4984C2BD90FD900AA3BA0 /* DetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA4984B2BD90FD900AA3BA0 /* DetailImageViewController.swift */; };
+		4AA4984E2BD96C2600AA3BA0 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA4984D2BD96C2600AA3BA0 /* StorageManager.swift */; };
+		4AA498512BDA4A2900AA3BA0 /* Film.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4AA4984F2BDA4A2900AA3BA0 /* Film.xcdatamodeld */; };
+		4AA498552BDA586800AA3BA0 /* MovieServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA498542BDA586800AA3BA0 /* MovieServerModel.swift */; };
 		4AA667292BAAF9B800F093FF /* KPListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */; };
 		4AA6672E2BAB2E0D00F093FF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6672D2BAB2E0D00F093FF /* Extensions.swift */; };
 		4AA667312BAC30DB00F093FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA667302BAC30DB00F093FF /* Kingfisher */; };
@@ -67,8 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4A17033D2BADD19A0012CF46 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
-		4A17033F2BADEA2F0012CF46 /* KPSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSection.swift; sourceTree = "<group>"; };
+		4A17033F2BADEA2F0012CF46 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		4A1703412BAF1C530012CF46 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		4A1703492BB3150E0012CF46 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
@@ -89,7 +89,6 @@
 		4A943F5B2BA1ED340019C505 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A943F632BA48DF40019C505 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4A943F652BA6F8D80019C505 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
-		4A943F6F2BA726600019C505 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		4A9CF4472BD16E430030307B /* MoviesListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListContract.swift; sourceTree = "<group>"; };
 		4A9CF4482BD16E430030307B /* MoviesListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListPresenter.swift; sourceTree = "<group>"; };
 		4A9CF4492BD16E430030307B /* MoviesListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListRouter.swift; sourceTree = "<group>"; };
@@ -97,6 +96,9 @@
 		4A9CF44F2BD175930030307B /* MoviesListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListConfigurator.swift; sourceTree = "<group>"; };
 		4AA498482BD6C9D400AA3BA0 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		4AA4984B2BD90FD900AA3BA0 /* DetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewController.swift; sourceTree = "<group>"; };
+		4AA4984D2BD96C2600AA3BA0 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		4AA498502BDA4A2900AA3BA0 /* FavoriteMovies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteMovies.xcdatamodel; sourceTree = "<group>"; };
+		4AA498542BDA586800AA3BA0 /* MovieServerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServerModel.swift; sourceTree = "<group>"; };
 		4AA667282BAAF9B800F093FF /* KPListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA6672D2BAB2E0D00F093FF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4AA667322BAC901A00F093FF /* KPList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPList.swift; sourceTree = "<group>"; };
@@ -202,10 +204,11 @@
 		4A943F5D2BA2057E0019C505 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				4A17033F2BADEA2F0012CF46 /* KPSection.swift */,
-				4A943F6F2BA726600019C505 /* Movie.swift */,
+				4A17033F2BADEA2F0012CF46 /* APIResponse.swift */,
+				4AA498542BDA586800AA3BA0 /* MovieServerModel.swift */,
 				4AA667322BAC901A00F093FF /* KPList.swift */,
 				4A17034B2BB32C9B0012CF46 /* Person.swift */,
+				4AA4984F2BDA4A2900AA3BA0 /* Film.xcdatamodeld */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			children = (
 				4A943F652BA6F8D80019C505 /* NetworkingManager.swift */,
 				4A1703412BAF1C530012CF46 /* DataManager.swift */,
+				4AA4984D2BD96C2600AA3BA0 /* StorageManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -273,7 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				4AA6672D2BAB2E0D00F093FF /* Extensions.swift */,
-				4A17033D2BADD19A0012CF46 /* Enums.swift */,
 				4AEBC8C82BB6E13D0035D46C /* Constants.swift */,
 				4A7AE27D2BBD871800632F8A /* CellFactory.swift */,
 				4AB893882BCEDB98001E5CDB /* ReuseIdentifier.swift */,
@@ -429,7 +432,7 @@
 				4A943F4A2BA1E5310019C505 /* HomeInfoViewController.swift in Sources */,
 				4A7AE2812BBEBED300632F8A /* MovieTableViewCell.swift in Sources */,
 				4AB893C82BD0212E001E5CDB /* PersonDetailRouter.swift in Sources */,
-				4A1703402BADEA2F0012CF46 /* KPSection.swift in Sources */,
+				4A1703402BADEA2F0012CF46 /* APIResponse.swift in Sources */,
 				4A17034E2BB5C2130012CF46 /* KPItemCell.swift in Sources */,
 				4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */,
 				4A9CF4502BD175930030307B /* MoviesListConfigurator.swift in Sources */,
@@ -440,9 +443,11 @@
 				4AA667292BAAF9B800F093FF /* KPListCollectionViewCell.swift in Sources */,
 				4A9CF44C2BD16E430030307B /* MoviesListPresenter.swift in Sources */,
 				4AB893832BCE8CFA001E5CDB /* CellViewModel.swift in Sources */,
+				4AA498552BDA586800AA3BA0 /* MovieServerModel.swift in Sources */,
 				4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */,
 				4AEBC8CD2BB85CF60035D46C /* PersonDetailViewController.swift in Sources */,
 				4AB893C92BD0212E001E5CDB /* PersonDetailInteractor.swift in Sources */,
+				4AA4984E2BD96C2600AA3BA0 /* StorageManager.swift in Sources */,
 				4AEBC8C92BB6E13D0035D46C /* Constants.swift in Sources */,
 				4AB893AE2BCFD6EA001E5CDB /* KPListsPresenter.swift in Sources */,
 				4A1703462BB1A9490012CF46 /* SectionHeaderView.swift in Sources */,
@@ -458,7 +463,6 @@
 				4AB893B02BCFD6EA001E5CDB /* KPLIstsInteractor.swift in Sources */,
 				4A943F482BA1E5310019C505 /* SceneDelegate.swift in Sources */,
 				4AAC06F22BCD82F600858F2F /* HomeInfoPresenter.swift in Sources */,
-				4A17033E2BADD19A0012CF46 /* Enums.swift in Sources */,
 				4AB893CB2BD023C4001E5CDB /* PersonDetailConfigurator.swift in Sources */,
 				4AB893C62BD0212E001E5CDB /* PersonDetailContract.swift in Sources */,
 				4A7AE27E2BBD871800632F8A /* CellFactory.swift in Sources */,
@@ -466,13 +470,13 @@
 				4A9CF44B2BD16E430030307B /* MoviesListContract.swift in Sources */,
 				4AB893852BCEA96B001E5CDB /* HomeInfoRouter.swift in Sources */,
 				4A7AE27C2BBB126F00632F8A /* MoviesListViewController.swift in Sources */,
+				4AA498512BDA4A2900AA3BA0 /* Film.xcdatamodeld in Sources */,
 				4AB893872BCEAE90001E5CDB /* HomeInfoConfigurator.swift in Sources */,
 				4AB893B32BCFE704001E5CDB /* KPListsRouter.swift in Sources */,
 				4AB893B52BCFE717001E5CDB /* KPListsConfigurator.swift in Sources */,
 				4AAC06F42BCD878000858F2F /* HomeInfoInteractor.swift in Sources */,
 				4AB893B92BD0195F001E5CDB /* KPListsContract.swift in Sources */,
 				4AA498492BD6C9D400AA3BA0 /* MovieDetailViewController.swift in Sources */,
-				4A943F702BA726600019C505 /* Movie.swift in Sources */,
 				4A85820B2BD3E08B00EF453C /* AppCoordinator.swift in Sources */,
 				4AA4984C2BD90FD900AA3BA0 /* DetailImageViewController.swift in Sources */,
 			);
@@ -752,6 +756,19 @@
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		4AA4984F2BDA4A2900AA3BA0 /* Film.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4AA498502BDA4A2900AA3BA0 /* FavoriteMovies.xcdatamodel */,
+			);
+			currentVersion = 4AA498502BDA4A2900AA3BA0 /* FavoriteMovies.xcdatamodel */;
+			path = Film.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4A943F3A2BA1E5310019C505 /* Project object */;
 }

@@ -3,27 +3,37 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "PersonInfoCell.updateView():PersonInfoCell.swift">
-      </ContextState>
-      <ContextState
-         contextName = "PersonDetailViewController.fetchMovies():PersonDetailViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in MovieTableViewCell.configure(with:):MovieTableViewCell.swift">
-      </ContextState>
-      <ContextState
-         contextName = "MovieDetailViewController.setFavoriteStatus():MovieDetailViewController.swift">
+         contextName = "Session.RequestEncodableConvertible.asURLRequest():Session.swift">
          <PersistentStrings>
             <PersistentString
-               value = "favoriteStatus">
+               value = "parameters.map { try encoder.encode($0, into: request) }">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in MoviesByKPListViewController.navTitleLabel.getter:MoviesByKPListViewController.swift">
+         contextName = "HomeViewController.collectionView(_:cellForItemAt:):HomeViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "label.maxNumberOfLines">
+               value = "indexPath.section">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in NetworkingManager.fetchData&lt;&#x3c4;_0_0&gt;(type:url:completion:):NetworkingManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Date().formatString">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in SearchViewController.getBirthdayPersons(of:):SearchViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "person.birthdayInFormat">
+            </PersistentString>
+            <PersistentString
+               value = "Date().formatString()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -31,27 +41,7 @@
          contextName = "HomeInfoViewController.collectionView(_:cellForItemAt:):HomeInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "indexPath.item">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "PersonDetailViewController.collectionView(_:numberOfItemsInSection:):PersonDetailViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "PersonDetailViewController.viewDidLayoutSubviews():PersonDetailViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "MoviesInCollectionViewController.fetchMovies(from:):MoviesInCollectionViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "Session.request&lt;&#x3c4;_0_0&gt;(_:method:parameters:encoder:headers:interceptor:requestModifier:):Session.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in NetworkingManager.fetchData&lt;&#x3c4;_0_0&gt;(type:url:completion:):NetworkingManager.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Date().formatString">
+               value = "indexPath.section">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -67,64 +57,47 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PersonDetailViewController.viewDidLoad():PersonDetailViewController.swift">
+         contextName = "StorageManager.fetchFavorites():StorageManager.swift">
       </ContextState>
       <ContextState
-         contextName = "PersonDetailViewController.setupPersonInfo(with:):PersonDetailViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "PersonDetailViewController.numberOfSections(in:):PersonDetailViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "HomeViewController.collectionView(_:numberOfItemsInSection:):HomeViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in SearchViewController.getBirthdayPersons(of:):SearchViewController.swift">
+         contextName = "MoviesListViewController.scrollViewDidScroll(_:):MoviesListViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "person.birthdayInFormat">
-            </PersistentString>
-            <PersistentString
-               value = "Date().formatString()">
+               value = "lastYScrollOffset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "CategoryCell.setupLabelConstraints():CategoryCell.swift">
-      </ContextState>
-      <ContextState
-         contextName = "HomeViewController.collectionView(_:cellForItemAt:):HomeViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "indexPath.section">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "KPSearchCell.configure&lt;&#x3c4;_0_0&gt;(with:):KPSearchCell.swift">
+         contextName = "PersonInfoCell.updateView():PersonInfoCell.swift">
       </ContextState>
       <ContextState
          contextName = "closure #3 in HomeInfoInteractor.fetchData():HomeInfoInteractor.swift">
       </ContextState>
       <ContextState
-         contextName = "Person.init(from:):Person.swift">
+         contextName = "PersonDetailViewController.viewDidLayoutSubviews():PersonDetailViewController.swift">
       </ContextState>
       <ContextState
          contextName = "PersonDetailViewController.init(nibName:bundle:):PersonDetailViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "HomeInfoPresenter.dataDidReceive(with:):HomeInfoPresenter.swift">
-      </ContextState>
-      <ContextState
-         contextName = "HomeInfoViewController.collectionView(_:numberOfItemsInSection:):HomeInfoViewController.swift">
+         contextName = "StorageManager.update(_:):StorageManager.swift">
          <PersistentStrings>
             <PersistentString
-               value = "sectionViewModel.numberOfCategoryItems">
+               value = "film.isFavorite">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "KPItemCell.updateView():KPItemCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in MovieTableViewCell.configure(with:):MovieTableViewCell.swift">
+      </ContextState>
+      <ContextState
          contextName = "MoviesByKPListViewController.reloadData(with:):MoviesByKPListViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PersonDetailViewController.setupPersonInfo(with:):PersonDetailViewController.swift">
       </ContextState>
       <ContextState
          contextName = "Person.birthdayRUString.getter:Person.swift">
@@ -135,10 +108,33 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "MoviesListViewController.scrollViewDidScroll(_:):MoviesListViewController.swift">
+         contextName = "PersonDetailViewController.fetchMovies():PersonDetailViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MovieDetailViewController.setFavoriteStatus():MovieDetailViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "lastYScrollOffset">
+               value = "favoriteStatus">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PersonDetailViewController.collectionView(_:numberOfItemsInSection:):PersonDetailViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "HomeViewController.collectionView(_:numberOfItemsInSection:):HomeViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "HomeInfoPresenter.dataDidReceive(with:):HomeInfoPresenter.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MoviesInCollectionViewController.fetchMovies(from:):MoviesInCollectionViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "HomeInfoViewController.collectionView(_:numberOfItemsInSection:):HomeInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sectionViewModel.numberOfCategoryItems">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -154,14 +150,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Session.RequestEncodableConvertible.asURLRequest():Session.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "parameters.map { try encoder.encode($0, into: request) }">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "MoviesByKPListViewController.reloadHeader(with:):MoviesByKPListViewController.swift">
       </ContextState>
       <ContextState
@@ -171,6 +159,38 @@
                value = "viewModel.cellItemName">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HomeInfoPresenter.favoritesDidUpdate(with:):HomeInfoPresenter.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Person.init(from:):Person.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Session.request&lt;&#x3c4;_0_0&gt;(_:method:parameters:encoder:headers:interceptor:requestModifier:):Session.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PersonDetailViewController.viewDidLoad():PersonDetailViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "CategoryCell.setupLabelConstraints():CategoryCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "KPSearchCell.configure&lt;&#x3c4;_0_0&gt;(with:):KPSearchCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in MoviesByKPListViewController.navTitleLabel.getter:MoviesByKPListViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "label.maxNumberOfLines">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PersonDetailViewController.numberOfSections(in:):PersonDetailViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "HomeInfoViewController.reloadData(section:forAllSections:):HomeInfoViewController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

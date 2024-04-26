@@ -69,7 +69,7 @@ final class MovieDetailViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        delegate.modalClosed(wasStatusChanged: wasStatusChanged)
+        //delegate.modalClosed(wasStatusChanged: wasStatusChanged)
     }
 }
 
@@ -180,7 +180,10 @@ extension MovieDetailViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            viewModel.setFavoriteStatus()
+            viewModel.setFavoriteStatus() { film in
+                let filmStatus = viewModel.favoriteStatus ? FilmStatus.added : FilmStatus.deleted
+                delegate.modalClosed(filmStatus: filmStatus, film: film)
+            }
         default:
             viewModel.setWatchedStatus()
         }

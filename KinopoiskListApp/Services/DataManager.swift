@@ -13,6 +13,7 @@ final class DataManager {
     private init() {}
     
     private let userDefaults = UserDefaults.standard
+    private let storageManager = StorageManager.shared
     
     func getCategories() -> [String] {
         return [
@@ -24,16 +25,17 @@ final class DataManager {
         ]
     }
     
-    func setFavoriteStatus(for movie: Movie?, with status: Bool) {
+    func setFavoriteStatus(for movie: MovieServerModel?, with status: Bool, completion: (Film) -> Void) {
         guard let movie = movie else { return }
         userDefaults.set(status, forKey: "\(movie.id)/fav")
-        guard let data = try? JSONEncoder().encode(movie) else { return }
-        guard var array = userDefaults.array(forKey: "favoriteMovies") else {
-            userDefaults.set([data], forKey: "favoriteMovies")
-            return
+        if status {
+            let film = storageManager.create(movie)
+            completion(film)
+            //movie.store()
+        } else {
+            guard let film = storageManager.deleteFilmById(by: Int64(movie.id)) else { return }
+            completion(film)
         }
-        array.append(data)
-        userDefaults.set(array, forKey: "favoriteMovies")
     }
     
     func getFavoriteStatus(for movieId: Int) -> Bool {
@@ -48,10 +50,11 @@ final class DataManager {
         userDefaults.bool(forKey: "\(movieId)/watch")
     }
     
-    func getFavoriteMovies() -> [Movie]? {
+    func getFavoriteMovies() -> [MovieServerModel]? {
         userDefaults.array(forKey: "favoriteMovies")?.compactMap { data in
             guard let data = data as? Data else { return nil }
-            return try? JSONDecoder().decode(Movie.self, from: data)
+            return try? JSONDecoder().decode(MovieServerModel.self, from: data)
         }
     }
+    
 }

@@ -18,7 +18,7 @@ final class PersonDetailInteractor: PresenterToInteractorPersonDetailProtocol {
     
     func fetchData() {
         NetworkingManager.shared.fetchDataFaster(
-            type: KPMovieSection.self,
+            type: MovieServerModel.self,
             parameters: [
                 "limit": ["20"],
                 "notNullFields": ["name", "poster.url"],
@@ -28,7 +28,7 @@ final class PersonDetailInteractor: PresenterToInteractorPersonDetailProtocol {
             switch result {
             case .success(let value):
                 guard let self = self else { return }
-                self.presenter.didReceiveData(with: value.docs, and: self.person)
+                self.presenter.didReceiveData(with: value, and: self.person)
             case .failure(let error):
                 print(error)
             }

@@ -13,6 +13,12 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         self.presenter = presenter
     }
     
+    func getFavorites() {
+        presenter.favoritesDidUpdate(
+            with: StorageManager.shared.fetchFavorites()
+        )
+    }
+    
     func fetchData() {
         var dataStore = CommonDataStore()
         let dispatchGroup = DispatchGroup()
@@ -21,7 +27,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         let startDate = Date()
         print("GetCollections starting...")
         NetworkingManager.shared.fetchDataFaster(
-            type: KPListSection.self,
+            type: KPList.self,
             parameters: [
                 "limit": ["20"],
                 "notNullFields" : ["cover.url"]
@@ -29,7 +35,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         ) { result in
             switch result {
             case .success(let value):
-                dataStore.kpLists = value.docs
+                dataStore.kpLists = value
                 print("Collections fetched")
             case .failure(let error):
                 print(error)
@@ -41,7 +47,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         dispatchGroup.enter()
         print("GetPersons starting...")
         NetworkingManager.shared.fetchDataFaster(
-            type: KPPersonSection.self,
+            type: Person.self,
             parameters: [
                 "limit": ["250"],
                 "selectFields": [
@@ -59,7 +65,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         ) { result in
             switch result {
             case .success(let value):
-                dataStore.persons = value.docs
+                dataStore.persons = value
                 print("Persons fetched")
             case .failure(let error):
                 print(error)
@@ -71,6 +77,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         print("Notify starting...")
         dispatchGroup.notify(queue: .main) { [unowned self] in
             dataStore.categoryList = DataManager.shared.getCategories()
+            StorageManager.shared.fetchFavorites().forEach { dataStore.movies.append($0) }
             presenter.dataDidReceive(with: dataStore)
             print(Date().timeIntervalSince(startDate))
             print("Notify finishing...")

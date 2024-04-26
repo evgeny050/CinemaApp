@@ -11,6 +11,7 @@ struct CommonDataStore {
     var kpLists: [KPList] = []
     var persons: [Person] = []
     var categoryList: [String] = []
+    var movies: [Film] = []
     
     func getBirthdayPersons() -> [Person] {
         let personBirthdayList = persons.filter({ person in
@@ -26,6 +27,7 @@ final class HomeInfoPresenter {
     var router: HomeInfoRouterInputProtocol!
     private unowned let view: HomeInfoViewInputProtocol
     private var dataStore: CommonDataStore?
+    private var section = SectionViewModel()
     
     // MARK: - Initialization
     required init(view: HomeInfoViewInputProtocol) {
@@ -39,6 +41,10 @@ extension HomeInfoPresenter: HomeInfoViewOutputProtocol {
         interactor.fetchData()
     }
     
+    func updateFavoriteMovies() {
+        interactor.getFavorites()
+    }
+    
     func didTapCell(at indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
@@ -47,9 +53,11 @@ extension HomeInfoPresenter: HomeInfoViewOutputProtocol {
         case 1:
             guard let category = dataStore?.categoryList[indexPath.item] else { return }
             router.routeToKPListsVC(of: category)
-        default:
+        case 2:
             guard let person = dataStore?.getBirthdayPersons()[indexPath.item] else { return }
             router.routeToPersonDetailVC(of: person)
+        default:
+            router.presentMovieDetail(with: section.movieItems[indexPath.item])
         }
     }
 }
@@ -58,16 +66,22 @@ extension HomeInfoPresenter: HomeInfoViewOutputProtocol {
 extension HomeInfoPresenter: HomeInfoInteractorOutputProtocol {
     func dataDidReceive(with dataStore: CommonDataStore) {
         self.dataStore = dataStore
-        let section = SectionViewModel()
-        dataStore.kpLists.forEach { item in
-            section.kpListItems.append(CellViewModel(kpList: item))
+        dataStore.kpLists
+            .forEach { section.kpListItems.append(CellViewModel(kpList: $0)) }
+        dataStore.categoryList
+            .forEach { section.categoryItems.append(CellViewModel(category: $0)) }
+        dataStore.getBirthdayPersons()
+            .forEach { section.personItems.append(CellViewModel(person: $0)) }
+        dataStore.movies
+            .forEach { section.movieItems.append(CellViewModel(film: $0)) }
+        view.reloadData(section: section, forAllSections: false)
+    }
+    
+    func favoritesDidUpdate(with movies: [Film]) {
+        section.favoriteFilms.removeAll()
+        movies.forEach { movie in
+            section.favoriteFilms.append(CellViewModel(film: movie))
         }
-        dataStore.categoryList.forEach { item in
-            section.categoryItems.append(CellViewModel(category: item))
-        }
-        dataStore.getBirthdayPersons().forEach { item in
-            section.personItems.append(CellViewModel(person: item))
-        }
-        view.reloadData(section: section)
+        view.reloadData(section: section, forAllSections: false)
     }
 }

@@ -29,7 +29,7 @@ protocol PresenterToInteractorMoviesListProtocol {
 
 /// InteractorOutputProtocol (Presenter conforms, Interactor contains)
 protocol InteractorToPresenterMoviesListProtocol: AnyObject {
-    func didReceiveData(with movies: [Movie], and kpList: KPList)
+    func didReceiveData(with movies: [MovieServerModel], and kpList: KPList)
     func setHeader(with title: String)
 }
 

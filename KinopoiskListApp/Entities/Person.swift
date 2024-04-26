@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct Person: Decodable {
+struct Person: ResponseType {
     let id: Int
     let name: String
     let enName: String?
@@ -14,7 +14,6 @@ struct Person: Decodable {
     let birthday: String
     let death: String?
     let age: Int
-    //let growth: Int?
     let profession: [ProfessionOrFact]
     let facts: [ProfessionOrFact]
     
@@ -49,6 +48,8 @@ struct Person: Decodable {
         return profs.prefix(3).joined(separator: ", ")
     }
     
+    static var type = "person?"
+    
     enum CodingKeys: CodingKey {
         case id
         case name
@@ -80,8 +81,11 @@ struct Person: Decodable {
         self.facts = try container.decode([ProfessionOrFact].self, forKey: .facts)
     }
     
+    func store() {
+        print("")
+    }
 }
 
-struct ProfessionOrFact: Decodable {
+struct ProfessionOrFact: Codable {
     let value: String
 }

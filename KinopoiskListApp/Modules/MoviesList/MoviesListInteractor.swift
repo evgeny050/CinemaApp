@@ -19,7 +19,7 @@ final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
     func fetchData() {
         presenter.setHeader(with: kpList.name)
         NetworkingManager.shared.fetchDataFaster(
-            type: KPMovieSection.self,
+            type: MovieServerModel.self,
             parameters: [
                 "limit": ["250"],
                 "selectFields": [
@@ -35,7 +35,7 @@ final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
             switch result {
             case .success(let value):
                 guard let self = self else { return }
-                self.presenter.didReceiveData(with: value.docs, and: kpList)
+                self.presenter.didReceiveData(with: value, and: self.kpList)
             case .failure(let error):
                 print(error)
             }

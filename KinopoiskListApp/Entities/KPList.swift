@@ -5,11 +5,15 @@
 //  Created by Флоранс on 21.03.2024.
 //
 
-struct KPList: Decodable {
+struct KPList: ResponseType {
     let category: String
     let name: String
     let slug: String
-    //let moviesCount: Int
     let cover: UrlToImage
-    //let id: String
+    
+    static var type = "list?"
+    
+    func store() {
+        print("")
+    }
 }

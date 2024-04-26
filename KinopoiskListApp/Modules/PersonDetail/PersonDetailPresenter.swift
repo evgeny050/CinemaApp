@@ -22,7 +22,7 @@ final class PersonDetailPresenter: PresenterToViewPersonDetailProtocol {
 }
 
 extension PersonDetailPresenter: InteractorToPresenterPersonDetailProtocol {
-    func didReceiveData(with movies: [Movie], and person: Person) {
+    func didReceiveData(with movies: [MovieServerModel], and person: Person) {
         let section = SectionViewModel()
         section.singlePerson = CellViewModel(person: person)
         movies.forEach { section.movieItems.append(CellViewModel(movie: $0)) }

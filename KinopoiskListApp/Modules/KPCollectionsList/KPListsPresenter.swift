@@ -14,7 +14,7 @@ final class KPListsPresenter: KPListsViewOutputProtocol {
     private unowned let view: KPListsViewInputProtocol
     var interactor: KPListsInteractorInputProtocol!
     var router: KPListsRouterProtocol!
-    private var dataStore: CommonDataStore?
+    private let section = SectionViewModel()
 
     // MARK: - Initialization
     required init(with view: KPListsViewInputProtocol) {
@@ -26,18 +26,18 @@ final class KPListsPresenter: KPListsViewOutputProtocol {
     }
     
     func didTapCell(at indexPath: IndexPath) {
-        guard let kpList = dataStore?.kpLists[indexPath.item] else { return }
+        guard 
+            let viewModel = section.kpListItems[indexPath.item] as? CellViewModel,
+            let kpList = viewModel.kpList else { return }
         router.routeToMoviesListVC(of: kpList)
     }
 }
 
 // MARK: - Extensions - KPListsInteractorOutputProtocol
 extension KPListsPresenter: KPListsInteractorOutputProtocol {
-    func didReceiveData(with dataStore: CommonDataStore, and category: String) {
-        self.dataStore = dataStore
-        let section = SectionViewModel()
+    func didReceiveData(with kpLists: [KPList], and category: String) {
         section.categoryName = category
-        dataStore.kpLists.forEach { item in
+        kpLists.forEach { item in
             section.kpListItems.append(CellViewModel(kpList: item))
         }
         view.reloadData(section: section)
