@@ -80,10 +80,6 @@ struct Person: ResponseType {
         self.profession = try container.decode([ProfessionOrFact].self, forKey: .profession)
         self.facts = try container.decode([ProfessionOrFact].self, forKey: .facts)
     }
-    
-    func store() {
-        print("")
-    }
 }
 
 struct ProfessionOrFact: Codable {

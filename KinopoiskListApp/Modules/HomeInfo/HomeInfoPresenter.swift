@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CommonDataStore {
+struct HomeInfoDataStore {
     var kpLists: [KPList] = []
     var persons: [Person] = []
     var categoryList: [String] = []
@@ -26,7 +26,7 @@ final class HomeInfoPresenter {
     var interactor: HomeInfoInteractorInputProtocol!
     var router: HomeInfoRouterInputProtocol!
     private unowned let view: HomeInfoViewInputProtocol
-    private var dataStore: CommonDataStore?
+    private var dataStore: HomeInfoDataStore?
     private var section = SectionViewModel()
     
     // MARK: - Initialization
@@ -64,7 +64,7 @@ extension HomeInfoPresenter: HomeInfoViewOutputProtocol {
 
 // MARK: - HomeInfoInteractorOutputProtocol
 extension HomeInfoPresenter: HomeInfoInteractorOutputProtocol {
-    func dataDidReceive(with dataStore: CommonDataStore) {
+    func dataDidReceive(with dataStore: HomeInfoDataStore) {
         self.dataStore = dataStore
         dataStore.kpLists
             .forEach { section.kpListItems.append(CellViewModel(kpList: $0)) }
@@ -78,9 +78,9 @@ extension HomeInfoPresenter: HomeInfoInteractorOutputProtocol {
     }
     
     func favoritesDidUpdate(with movies: [Film]) {
-        section.favoriteFilms.removeAll()
+        section.movieItems.removeAll()
         movies.forEach { movie in
-            section.favoriteFilms.append(CellViewModel(film: movie))
+            section.movieItems.append(CellViewModel(film: movie))
         }
         view.reloadData(section: section, forAllSections: false)
     }

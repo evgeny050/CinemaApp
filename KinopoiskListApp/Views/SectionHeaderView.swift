@@ -27,7 +27,6 @@ class SectionHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Setup Layout
     private func setupConstraints() {
         title.translatesAutoresizingMaskIntoConstraints = false
         addSubview(title)

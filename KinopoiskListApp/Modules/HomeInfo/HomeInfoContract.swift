@@ -28,7 +28,7 @@ protocol HomeInfoInteractorInputProtocol: AnyObject {
 
 /// InteractorOutput (Presenter confroms, Interactor contains)
 protocol HomeInfoInteractorOutputProtocol: AnyObject {
-    func dataDidReceive(with dataStore: CommonDataStore)
+    func dataDidReceive(with dataStore: HomeInfoDataStore)
     func favoritesDidUpdate(with movies: [Film])
 }
 

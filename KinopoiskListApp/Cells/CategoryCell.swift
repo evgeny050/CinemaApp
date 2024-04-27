@@ -11,7 +11,7 @@ final class CategoryCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {
         didSet {
-            updateView()
+            configure()
         }
     }
     
@@ -36,7 +36,7 @@ final class CategoryCell: UICollectionViewCell, CellModelRepresanteble {
     }
 
     // MARK: - Setup Layout
-    private func updateView() {
+    private func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
         
         categoryNameLabel.snp.makeConstraints { make in

@@ -5,18 +5,11 @@
 //  Created by Флоранс on 24.04.2024.
 //
 
-import Foundation
 import CoreData
-
-enum FilmStatus {
-    case added
-    case deleted
-    case none
-}
 
 final class StorageManager {
     static let shared = StorageManager()
-    
+
     // MARK: - Core Data stack
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Film")
@@ -47,33 +40,19 @@ final class StorageManager {
         return object
     }
     
-    func create(_ movie: MovieServerModel) -> Film {
-        let film = Film(context: viewContext)
-        film.id = Int64(movie.id)
-        film.name = movie.name
-        film.poster = movie.poster.url
-        film.isFavorite = true
-        saveContext()
-        return film
-    }
+//    func create(_ movie: MovieServerModel) -> Film {
+//        let film = Film(context: viewContext)
+//        film.id = Int64(movie.id)
+//        film.name = movie.name
+//        film.poster = movie.poster.url
+//        film.isFavorite = true
+//        saveContext()
+//        return film
+//    }
     
     func update(_ film: Film) {
-        //let favoriteMovies = FavoriteMovies(context: viewContext)
-        //film.isFavorite.toggle()
-        //favoriteMovies.addToFavorites(film)
-        //completion(movie)
+        film.isFavorite.toggle()
         saveContext()
-    }
-    
-    func fetchData(completion: (Result<[Film], Error>) -> Void) {
-        let fetchRequest = Film.fetchRequest()
-        //NSPredicate(format: "isFavorite == %@", argumentArray: [true])
-        do {
-            let movies = try viewContext.fetch(fetchRequest)
-            completion(.success(movies))
-        } catch let error {
-            completion(.failure(error))
-        }
     }
     
     func deleteFilmById(by id: Int64) -> Film? {
@@ -89,21 +68,8 @@ final class StorageManager {
         return nil
     }
     
-    func fetchFavorites() -> [Film] {
-        let fetchRequest = Film.fetchRequest()
-        //fetchRequest.predicate = NSPredicate(format: "isFavorite = true")
-        //NSPredicate(format: "isFavorite == %@", argumentArray: [true])
-        do {
-           let results = try viewContext.fetch(fetchRequest)
-           return results
-        } catch(let error) {
-            print(error)
-        }
-        return []
-    }
-    
-    func delete(_ movie: Film) {
-        viewContext.delete(movie)
+    func delete(_ film: Film) {
+        viewContext.delete(film)
         saveContext()
     }
 
@@ -120,6 +86,7 @@ final class StorageManager {
         }
     }
     
+    // MARK: - Clear Database
     func deleteAllData(_ entity:String) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
@@ -134,4 +101,38 @@ final class StorageManager {
         }
     }
     
+    // MARK: - Fetching Data From Database
+    func fetchData(predicate: NSPredicate, completion: (Result<[Film], Error>) -> Void) {
+        let fetchRequest = Film.fetchRequest()
+        fetchRequest.predicate = predicate
+        do {
+            let movies = try viewContext.fetch(fetchRequest)
+            completion(.success(movies))
+        } catch let error {
+            completion(.failure(error))
+        }
+    }
+    
+    func fetchFavorites() -> [Film] {
+        let fetchRequest = Film.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isFavorite = true")
+        do {
+           let results = try viewContext.fetch(fetchRequest)
+           return results
+        } catch(let error) {
+            print(error)
+        }
+        return []
+    }
+    
+    // MARK: - Categories of KPLists
+    func getCategories() -> [String] {
+        return [
+            "Фильмы",
+            "Онлайн-кинотеатр",
+            "Сериалы",
+            "Сборы",
+            "Премии"
+        ]
+    }
 }

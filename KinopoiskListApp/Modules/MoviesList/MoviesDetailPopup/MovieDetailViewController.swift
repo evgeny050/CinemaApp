@@ -17,8 +17,6 @@ final class MovieDetailViewController: UITableViewController {
             updateView()
         }
     }
-    private var wasStatusChanged = false
-    
     weak var delegate: UpdateFavoriteStatusDelegate!
         
     private let movieImageView: UIImageView = {
@@ -69,7 +67,9 @@ final class MovieDetailViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //delegate.modalClosed(wasStatusChanged: wasStatusChanged)
+        if let delegate = delegate {
+            delegate.modalClosed()
+        }
     }
 }
 
@@ -109,9 +109,8 @@ extension MovieDetailViewController {
                 break
             }
         }
-        ruNameLabel.text = viewModel.movie?.name
-        guard let year = viewModel.movie?.year else { return }
-        periodLabel.text = "\(year)"
+        ruNameLabel.text = viewModel.film?.name
+        periodLabel.text = viewModel.film?.year
     }
 }
 
@@ -130,7 +129,7 @@ extension MovieDetailViewController {
         content.textProperties.font = UIFont(name: "HelveticaNeue-Bold", size: 12)!
         switch indexPath.row {
         case 0:
-            content.text = "Просмотрен"
+            content.text = "Буду смотреть"
             if viewModel.favoriteStatus {
                 content.image = UIImage(
                     systemName: "bookmark.fill",
@@ -145,7 +144,7 @@ extension MovieDetailViewController {
                 content.imageProperties.tintColor = .black
             }
         default:
-            content.text = "Буду смотреть"
+            content.text = "Просмотрен"
             if viewModel.watchedStatus {
                 content.image = UIImage(
                     systemName: "eye.fill",
@@ -180,14 +179,10 @@ extension MovieDetailViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            viewModel.setFavoriteStatus() { film in
-                let filmStatus = viewModel.favoriteStatus ? FilmStatus.added : FilmStatus.deleted
-                delegate.modalClosed(filmStatus: filmStatus, film: film)
-            }
+            viewModel.setFavoriteStatus()
         default:
             viewModel.setWatchedStatus()
         }
-        wasStatusChanged = true
         self.dismiss(animated: true)//tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

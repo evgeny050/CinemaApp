@@ -6,6 +6,8 @@
 //  
 //
 
+import Foundation
+
 final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
     // MARK: Properties
     private unowned let presenter: InteractorToPresenterMoviesListProtocol
@@ -16,8 +18,28 @@ final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
         self.kpList = kpList
     }
     
-    func fetchData() {
+    func getHeader() {
         presenter.setHeader(with: kpList.name)
+    }
+    
+    func fetchData() {
+        StorageManager.shared.fetchData(
+            predicate: NSPredicate(format: "slug == %@", argumentArray: [kpList.slug])
+        ) { result in
+            switch result {
+            case .success(let films):
+                if films.isEmpty {
+                    fetchFromNetwork()
+                } else {
+                    self.presenter.didReceiveData(with: films, and: self.kpList)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchFromNetwork() {
         NetworkingManager.shared.fetchDataFaster(
             type: MovieServerModel.self,
             parameters: [
@@ -30,15 +52,15 @@ final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
                 "notNullFields": ["poster.url"],
                 "lists" : [kpList.slug]
             ]
-            
-        ) { [weak self] result in
+        ) { result in
             switch result {
             case .success(let value):
-                guard let self = self else { return }
-                self.presenter.didReceiveData(with: value, and: self.kpList)
+                value.forEach { $0.store(with: self.kpList.slug) }
+                self.fetchData()
             case .failure(let error):
                 print(error)
             }
         }
     }
+    
 }

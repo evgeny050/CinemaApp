@@ -13,6 +13,7 @@ final class KPListsViewController: UIViewController {
     var presenter: KPListsViewOutputProtocol!
     private var tableView: UITableView!
     private var sectionViewModel: SectionViewModelProtocol = SectionViewModel()
+    private var wasAnyStatusChanged = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,3 +85,4 @@ extension KPListsViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         cell.isSkeletonable = true
     }
 }
+

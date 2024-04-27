@@ -10,7 +10,6 @@
 		4A17033A2BAD9EE90012CF46 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4A1703392BAD9EE90012CF46 /* SnapKit */; };
 		4A17033C2BAD9EE90012CF46 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4A17033B2BAD9EE90012CF46 /* SnapKit-Dynamic */; };
 		4A1703402BADEA2F0012CF46 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17033F2BADEA2F0012CF46 /* APIResponse.swift */; };
-		4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703412BAF1C530012CF46 /* DataManager.swift */; };
 		4A1703462BB1A9490012CF46 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */; };
 		4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703492BB3150E0012CF46 /* CategoryCell.swift */; };
 		4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17034B2BB32C9B0012CF46 /* Person.swift */; };
@@ -69,7 +68,6 @@
 
 /* Begin PBXFileReference section */
 		4A17033F2BADEA2F0012CF46 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
-		4A1703412BAF1C530012CF46 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4A1703452BB1A9480012CF46 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		4A1703492BB3150E0012CF46 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		4A17034B2BB32C9B0012CF46 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 			isa = PBXGroup;
 			children = (
 				4A943F652BA6F8D80019C505 /* NetworkingManager.swift */,
-				4A1703412BAF1C530012CF46 /* DataManager.swift */,
 				4AA4984D2BD96C2600AA3BA0 /* StorageManager.swift */,
 			);
 			path = Services;
@@ -288,8 +285,8 @@
 			isa = PBXGroup;
 			children = (
 				4AEBC8CC2BB85CF60035D46C /* PersonDetailViewController.swift */,
-				4AB893C32BD0212E001E5CDB /* PersonDetailPresenter.swift */,
 				4AB893C52BD0212E001E5CDB /* PersonDetailInteractor.swift */,
+				4AB893C32BD0212E001E5CDB /* PersonDetailPresenter.swift */,
 				4AB893C42BD0212E001E5CDB /* PersonDetailRouter.swift */,
 				4AB893CA2BD023C4001E5CDB /* PersonDetailConfigurator.swift */,
 				4AB893C22BD0212E001E5CDB /* PersonDetailContract.swift */,
@@ -301,8 +298,8 @@
 			isa = PBXGroup;
 			children = (
 				4A7AE2892BC950A000632F8A /* KPListsViewController.swift */,
-				4AB893A92BCFD6EA001E5CDB /* KPListsPresenter.swift */,
 				4AB893AB2BCFD6EA001E5CDB /* KPLIstsInteractor.swift */,
+				4AB893A92BCFD6EA001E5CDB /* KPListsPresenter.swift */,
 				4AB893B22BCFE704001E5CDB /* KPListsRouter.swift */,
 				4AB893B42BCFE717001E5CDB /* KPListsConfigurator.swift */,
 				4AB893B82BD0195F001E5CDB /* KPListsContract.swift */,
@@ -315,8 +312,8 @@
 			children = (
 				4AA498472BD6C9B200AA3BA0 /* MoviesDetailPopup */,
 				4A7AE27B2BBB126F00632F8A /* MoviesListViewController.swift */,
-				4A9CF4482BD16E430030307B /* MoviesListPresenter.swift */,
 				4A9CF44A2BD16E430030307B /* MoviesListInteractor.swift */,
+				4A9CF4482BD16E430030307B /* MoviesListPresenter.swift */,
 				4A9CF4492BD16E430030307B /* MoviesListRouter.swift */,
 				4A9CF44F2BD175930030307B /* MoviesListConfigurator.swift */,
 				4A9CF4472BD16E430030307B /* MoviesListContract.swift */,
@@ -328,8 +325,8 @@
 			isa = PBXGroup;
 			children = (
 				4A943F492BA1E5310019C505 /* HomeInfoViewController.swift */,
-				4AAC06F12BCD82F600858F2F /* HomeInfoPresenter.swift */,
 				4AAC06F32BCD878000858F2F /* HomeInfoInteractor.swift */,
+				4AAC06F12BCD82F600858F2F /* HomeInfoPresenter.swift */,
 				4AB893842BCEA96B001E5CDB /* HomeInfoRouter.swift */,
 				4AB893862BCEAE90001E5CDB /* HomeInfoConfigurator.swift */,
 				4AAC06EF2BCD7C2300858F2F /* HomeInfoContract.swift */,
@@ -436,7 +433,6 @@
 				4A17034E2BB5C2130012CF46 /* KPItemCell.swift in Sources */,
 				4A943F462BA1E5310019C505 /* AppDelegate.swift in Sources */,
 				4A9CF4502BD175930030307B /* MoviesListConfigurator.swift in Sources */,
-				4A1703422BAF1C530012CF46 /* DataManager.swift in Sources */,
 				4AA667332BAC901A00F093FF /* KPList.swift in Sources */,
 				4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */,
 				4AEBC8CF2BBAC15B0035D46C /* PersonInfoCell.swift in Sources */,

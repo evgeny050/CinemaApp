@@ -12,8 +12,4 @@ struct KPList: ResponseType {
     let cover: UrlToImage
     
     static var type = "list?"
-    
-    func store() {
-        print("")
-    }
 }

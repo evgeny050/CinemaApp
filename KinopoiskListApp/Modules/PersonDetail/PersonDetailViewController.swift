@@ -53,17 +53,6 @@ final class PersonDetailViewController: UIViewController {
     }
 }
 
-extension PersonDetailViewController: ViewToPresenterPersonDetailProtocol {
-    func reloadData(with section: SectionViewModel) {
-        sectionViewModel = section
-        cellViewModel = section.singlePerson
-        collectionView.hideSkeleton(
-            reloadDataAfter: true,
-            transition: .crossDissolve(0.25)
-        )
-    }
-}
-
 // MARK: - Setup UICVCompositionalLayout
 extension PersonDetailViewController {
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -128,7 +117,7 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sectionViewModel.movieItems.isEmpty ? 0 : 3
+        return 3//sectionViewModel.movieItems.isEmpty ? 0 : 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -182,7 +171,9 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //collectionView.reloadData()
+        if indexPath.section == 1 {
+            presenter.didTapCell(at: indexPath)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -207,3 +198,14 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
     }
 }
 
+// MARK: - Extensions - ViewToPresenterPersonDetailProtocol
+extension PersonDetailViewController: ViewToPresenterPersonDetailProtocol {
+    func reloadData(with section: SectionViewModel) {
+        sectionViewModel = section
+        cellViewModel = section.singlePerson
+        collectionView.hideSkeleton(
+            reloadDataAfter: true,
+            transition: .crossDissolve(0.25)
+        )
+    }
+}

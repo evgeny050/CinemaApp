@@ -169,15 +169,12 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
                 .transition(.fade(1)),
                 .cacheOriginalImage
             ])
-        
-        rUNameLabel.text = viewModel.movie?.name
-        if let year = viewModel.movie?.year {
-            periodLabel.text = String(year)
-        }
-        guard let movie = viewModel.movie else { return }
-        countryAndGenreLabel.text = movie.countriesAndGenresString
-        watchOnlineButton.isHidden = !movie.isOnline
+        guard let film = viewModel.film else { return }
+        rUNameLabel.text = film.name
+        periodLabel.text = film.year
+        countryAndGenreLabel.text = film.genres
+        watchOnlineButton.isHidden = !film.watchability
         emptyView.isHidden = !watchOnlineButton.isHidden
-        favoriteImageView.isHidden = !viewModel.favoriteStatus
+        favoriteImageView.isHidden = !film.isFavorite
     }
 }

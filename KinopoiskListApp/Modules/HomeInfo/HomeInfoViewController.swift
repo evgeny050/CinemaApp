@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AlamofireImage
 import SkeletonView
 
 final class HomeInfoViewController: UIViewController {
@@ -36,6 +35,14 @@ final class HomeInfoViewController: UIViewController {
         setupCollectionView()
         addSkeletonAnimation()
         presenter.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.bool(forKey: "wasAnyStatusChanged") {
+            presenter.updateFavoriteMovies()
+            UserDefaults.standard.set(false, forKey: "wasAnyStatusChanged")
+        }
     }
 }
 
@@ -89,7 +96,7 @@ extension HomeInfoViewController {
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
+                
         searchController.searchBar.scopeButtonTitles = [
             "Все результаты",
             "Онлайн-кинотеатр"
@@ -99,6 +106,7 @@ extension HomeInfoViewController {
     
     // MARK: - Setup the Navigation Bar
     private func setupNavigationBar() {
+        navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.tintColor = .black
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
@@ -185,11 +193,14 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
         case 2:
             return sectionViewModel.numberOfPersonItems
         default:
-            return sectionViewModel.numberOfFavoriteItems
+            return sectionViewModel.numberOfMovieItems
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
             let cellViewModel = sectionViewModel.kpListItems[indexPath.item]
@@ -216,7 +227,7 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
         default:
             let cellViewModel = (indexPath.section == 2) ?
             sectionViewModel.personItems[indexPath.item]
-            : sectionViewModel.favoriteFilms[indexPath.item]
+            : sectionViewModel.movieItems[indexPath.item]
             
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "KPItemCell",//cellViewModel.reuseId,
@@ -262,18 +273,20 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
     }
 }
 
-extension HomeInfoViewController: MovieStatusChangedDelegate {
-    func reloadMoviesSection(film: Film) {
-        if !film.isFavorite {
-            sectionViewModel.favoriteFilms.removeAll { item in
-                item.id == film.id
-            }
-        } else {
-            print(film.name ?? "")
-            sectionViewModel.favoriteFilms.append(CellViewModel(film: film))
+// MARK: - Extensions - UpdateFavoriteStatusDelegate
+extension HomeInfoViewController: UpdateFavoriteStatusDelegate {
+    func modalClosed() {
+        guard let indexPath = collectionView
+            .indexPathsForSelectedItems else { return }
+        
+        indexPath
+            .forEach { collectionView.deselectItem(at: $0, animated: true) }
+        
+        if UserDefaults.standard.bool(forKey: "wasAnyStatusChanged") {
+            indexPath
+                .forEach { sectionViewModel.movieItems.remove(at: $0.item) }
+            collectionView.deleteItems(at: indexPath)
         }
-        //presenter.updateFavoriteMovies()
-        collectionView.reloadSections(.init(integer: 3))
     }
 }
 
@@ -286,17 +299,4 @@ extension HomeInfoViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         print("search started")
     }
-}
-
-// MARK: - Extensions - UpdateFavoriteStatusDelegate
-//extension HomeInfoViewController: UpdateFavoriteStatusDelegate {
-//    func modalClosed(wasStatusChanged: Bool) {
-//        if wasStatusChanged {
-//            collectionView.reloadSections(.init(integer: 4))
-//        }
-//    }
-//}
-
-protocol MovieStatusChangedDelegate: AnyObject {
-    func reloadMoviesSection(film: Film)
 }

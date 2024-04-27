@@ -5,13 +5,15 @@
 //  Created by Флоранс on 16.04.2024.
 //
 
+import Foundation
+
 protocol CellViewModelProtocol: AnyObject {
     var cellItemName: String { get }
     var imageUrl: String { get }
     var id: Int { get }
     var favoriteStatus: Bool { get }
     var watchedStatus: Bool { get }
-    func setFavoriteStatus(completion: (Film) -> Void)
+    func setFavoriteStatus()
     func setWatchedStatus()
 }
 
@@ -19,34 +21,34 @@ protocol SectionViewModelProtocol: AnyObject {
     var personItems: [CellViewModelProtocol] { get }
     var kpListItems: [CellViewModelProtocol] { get }
     var categoryItems: [CellViewModelProtocol] { get }
-    var movieItems: [CellViewModelProtocol] { get }
-    var favoriteFilms: [CellViewModelProtocol] { get set }
+    var movieItems: [CellViewModelProtocol] { get set }
     var singlePerson: CellViewModelProtocol { get }
     var numberOfCategoryItems: Int { get }
     var numberOfPersonItems: Int { get }
     var numberOfKPListItems: Int { get }
     var numberOfMovieItems: Int { get }
-    var numberOfFavoriteItems: Int { get }
 }
 
 final class CellViewModel: CellViewModelProtocol {
     var favoriteStatus: Bool {
-       DataManager.shared.getFavoriteStatus(for: id)
+        film?.isFavorite ?? false
     }
     
     var watchedStatus: Bool {
-        DataManager.shared.getWatchedStatus(for: id)
+        film?.isWatched ?? false
     }
     
-    func setFavoriteStatus(completion: (Film) -> Void) {
-        DataManager.shared.setFavoriteStatus(for: movie, with: !favoriteStatus) { film in
-            completion(film)
-            print(film.name ?? "")
-        }
+    func setFavoriteStatus() {
+        UserDefaults.standard.set(true, forKey: "wasAnyStatusChanged")
+        guard let film = film else { return }
+        film.isFavorite.toggle()
+        StorageManager.shared.saveContext()
     }
     
     func setWatchedStatus() {
-        DataManager.shared.setWatchedStatus(for: id, with: !watchedStatus)
+        guard let film = film else { return }
+        film.isWatched.toggle()
+        StorageManager.shared.saveContext()
     }
     
     var id: Int {
@@ -119,7 +121,6 @@ final class SectionViewModel: SectionViewModelProtocol {
     var kpListItems: [CellViewModelProtocol] = []
     var categoryItems: [CellViewModelProtocol] = []
     var movieItems: [CellViewModelProtocol] = []
-    var favoriteFilms: [CellViewModelProtocol] = []
     var singlePerson: CellViewModelProtocol = CellViewModel()
     
     var numberOfCategoryItems: Int {
@@ -136,10 +137,6 @@ final class SectionViewModel: SectionViewModelProtocol {
     
     var numberOfMovieItems: Int {
         movieItems.count
-    }
-    
-    var numberOfFavoriteItems: Int {
-        favoriteFilms.count
     }
     
     var categoryName = ""

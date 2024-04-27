@@ -20,6 +20,7 @@ final class MoviesListPresenter: PresenterToViewMoviesListProtocol {
     }
     
     func viewDidLoad() {
+        interactor.getHeader()
         interactor.fetchData()
     }
     
@@ -34,9 +35,9 @@ extension MoviesListPresenter: InteractorToPresenterMoviesListProtocol {
         view.reloadHeader(with: title)
     }
     
-    func didReceiveData(with movies: [MovieServerModel], and kpList: KPList) {
+    func didReceiveData(with films: [Film], and kpList: KPList) {
         section.categoryName = kpList.name
-         movies.forEach { section.movieItems.append(CellViewModel(movie: $0))}
+        films.forEach { section.movieItems.append(CellViewModel(film: $0)) }
         view.reloadData(with: section)
     }
 }

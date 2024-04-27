@@ -15,14 +15,10 @@ final class MoviesListViewController: UIViewController {
     var tableView: UITableView!
     private var lastYScrollOffset: CGFloat = 0
     private var wasAnyStatusChanged = false
-    private var editedFilm: Film?
-    
-    weak var delegate: MovieStatusChangedDelegate!
-   
+       
     private lazy var navTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-        label.sizeToFit()
         label.isSkeletonable = true
         label.skeletonCornerRadius = 3
         return label
@@ -41,14 +37,6 @@ final class MoviesListViewController: UIViewController {
         super.viewWillLayoutSubviews()
         // Adjust Height of Table HeaderView
         tableView.updateHeaderViewHeight()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        guard let editedFilm = editedFilm else { return }
-        if wasAnyStatusChanged {
-            delegate.reloadMoviesSection(film: editedFilm)
-        }
     }
 }
 
@@ -78,8 +66,9 @@ extension MoviesListViewController: ViewToPresenterMoviesListProtocol {
     func reloadHeader(with title: String) {
         navTitleLabel.text = title
         navTitleLabel.numberOfLines = navTitleLabel.maxNumberOfLines
+        navTitleLabel.sizeToFit()
 
-        let headerView = UIView()
+        let headerView = UIView(frame: navTitleLabel.bounds)
         headerView.isSkeletonable = true
         headerView.addSubview(navTitleLabel)
         navTitleLabel.snp.makeConstraints { make in
@@ -155,25 +144,16 @@ extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableView
 
 // MARK: - Extensions - UpdateFavoriteStatusDelegate
 extension MoviesListViewController: UpdateFavoriteStatusDelegate {
-    func modalClosed(filmStatus: FilmStatus, film: Film) {
-        editedFilm = film
-        sectionViewModel.favoriteFilms.append(CellViewModel(film: film))
+    func modalClosed() {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
-        switch filmStatus {
-        case .none:
-            tableView.deselectRow(at: indexPath, animated: false)
-        default:
-            wasAnyStatusChanged = true
+        if UserDefaults.standard.bool(forKey: "wasAnyStatusChanged") {
             tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: false)
         }
-//        if let indexPath = tableView.indexPathForSelectedRow {
-//            wasStatusChanged 
-//            ? tableView.reloadRows(at: [indexPath], with: .automatic)
-//            : tableView.deselectRow(at: indexPath, animated: false)
-//        }
     }
 }
 
 protocol UpdateFavoriteStatusDelegate: AnyObject {
-    func modalClosed(filmStatus: FilmStatus, film: Film)
+    func modalClosed()
 }

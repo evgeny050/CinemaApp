@@ -6,6 +6,8 @@
 //  
 //
 
+import Foundation
+
 final class PersonDetailInteractor: PresenterToInteractorPersonDetailProtocol {
     // MARK: Properties
     private unowned let presenter: InteractorToPresenterPersonDetailProtocol
@@ -16,7 +18,7 @@ final class PersonDetailInteractor: PresenterToInteractorPersonDetailProtocol {
         self.person = person
     }
     
-    func fetchData() {
+    func fetchFromNetwork() {
         NetworkingManager.shared.fetchDataFaster(
             type: MovieServerModel.self,
             parameters: [
@@ -28,7 +30,25 @@ final class PersonDetailInteractor: PresenterToInteractorPersonDetailProtocol {
             switch result {
             case .success(let value):
                 guard let self = self else { return }
-                self.presenter.didReceiveData(with: value, and: self.person)
+                value.forEach { $0.store(personId: self.person.id) }
+                fetchData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchData() {
+        StorageManager.shared.fetchData(
+            predicate: NSPredicate(format: "personId == %@", argumentArray: [person.id])
+        ) { result in
+            switch result {
+            case .success(let films):
+                if films.isEmpty {
+                    fetchFromNetwork()
+                } else {
+                    presenter.didReceiveData(with: films, and: person)
+                }
             case .failure(let error):
                 print(error)
             }

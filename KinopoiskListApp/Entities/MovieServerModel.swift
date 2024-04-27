@@ -34,13 +34,22 @@ struct MovieServerModel: ResponseType {
     }
     
     // Core Data Usage
-//    func store() {
-//        guard let movie = MovieServerModel.database.add(Film.self) else { return }
-//        movie.id = Int64(id)
-//        movie.name = name
-//        movie.poster = poster.url
-//        MovieServerModel.database.saveContext()
-//    }
+    func store(with kpListSlug: String = "", personId: Int? = nil) {
+        guard let film = MovieServerModel.database.add(Film.self) else { return }
+        film.id = Int64(id)
+        film.name = name
+        film.poster = poster.url
+        film.isFavorite = false
+        film.watchability = isOnline
+        film.genres = countriesAndGenresString
+        film.slug = kpListSlug
+        film.year = String(year)
+        film.isWatched = false
+        if let personId = personId {
+            film.personId = Int64(personId)
+        }
+        MovieServerModel.database.saveContext()
+    }
 }
 
 struct UrlToImage: Codable {

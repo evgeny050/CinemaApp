@@ -91,13 +91,15 @@
          contextName = "KPItemCell.updateView():KPItemCell.swift">
       </ContextState>
       <ContextState
+         contextName = "MovieDetailViewController.viewWillDisappear(_:):MovieDetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in MovieTableViewCell.configure(with:):MovieTableViewCell.swift">
-      </ContextState>
-      <ContextState
-         contextName = "MoviesByKPListViewController.reloadData(with:):MoviesByKPListViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "PersonDetailViewController.setupPersonInfo(with:):PersonDetailViewController.swift">
       </ContextState>
       <ContextState
          contextName = "Person.birthdayRUString.getter:Person.swift">
@@ -106,6 +108,12 @@
                value = "birthdayInDateFormat">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PersonDetailViewController.setupPersonInfo(with:):PersonDetailViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MoviesByKPListViewController.reloadData(with:):MoviesByKPListViewController.swift">
       </ContextState>
       <ContextState
          contextName = "PersonDetailViewController.fetchMovies():PersonDetailViewController.swift">
@@ -119,16 +127,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "HomeInfoPresenter.favoritesDidUpdate(with:):HomeInfoPresenter.swift">
+      </ContextState>
+      <ContextState
          contextName = "PersonDetailViewController.collectionView(_:numberOfItemsInSection:):PersonDetailViewController.swift">
       </ContextState>
       <ContextState
          contextName = "HomeViewController.collectionView(_:numberOfItemsInSection:):HomeViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "HomeInfoPresenter.dataDidReceive(with:):HomeInfoPresenter.swift">
+         contextName = "MoviesInCollectionViewController.fetchMovies(from:):MoviesInCollectionViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "MoviesInCollectionViewController.fetchMovies(from:):MoviesInCollectionViewController.swift">
+         contextName = "HomeInfoPresenter.dataDidReceive(with:):HomeInfoPresenter.swift">
       </ContextState>
       <ContextState
          contextName = "HomeInfoViewController.collectionView(_:numberOfItemsInSection:):HomeInfoViewController.swift">
@@ -159,9 +170,6 @@
                value = "viewModel.cellItemName">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HomeInfoPresenter.favoritesDidUpdate(with:):HomeInfoPresenter.swift">
       </ContextState>
       <ContextState
          contextName = "Person.init(from:):Person.swift">

@@ -26,7 +26,7 @@ final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
     
     private let kpItemNameLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
         label.sizeToFit()
         return label
@@ -61,8 +61,10 @@ final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
         }
         
         kpItemImageView.snp.makeConstraints { make in
-            make.height.equalTo(180).priority(.medium)
+            make.height.equalTo(180)
         }
+        
+        layoutIfNeeded()
     }
     
     private func updateView() {

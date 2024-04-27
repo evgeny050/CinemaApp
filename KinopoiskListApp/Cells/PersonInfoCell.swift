@@ -110,6 +110,8 @@ final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
             make.width.equalTo(130)
             make.height.equalTo(contentView)
         }
+        
+        layoutIfNeeded()
     }
     
     func updateView() {

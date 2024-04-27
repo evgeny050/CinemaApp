@@ -20,7 +20,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
     }
     
     func fetchData() {
-        var dataStore = CommonDataStore()
+        var dataStore = HomeInfoDataStore()
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter()
@@ -76,7 +76,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         
         print("Notify starting...")
         dispatchGroup.notify(queue: .main) { [unowned self] in
-            dataStore.categoryList = DataManager.shared.getCategories()
+            dataStore.categoryList = StorageManager.shared.getCategories()
             StorageManager.shared.fetchFavorites().forEach { dataStore.movies.append($0) }
             presenter.dataDidReceive(with: dataStore)
             print(Date().timeIntervalSince(startDate))

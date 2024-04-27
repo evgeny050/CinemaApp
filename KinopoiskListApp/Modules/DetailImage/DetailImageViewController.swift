@@ -11,7 +11,6 @@ class DetailImageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
 }

@@ -15,10 +15,8 @@ enum SectionKind: Int, CaseIterable {
     
     var itemHeight: NSCollectionLayoutDimension {
         switch self {
-        case .collections:
+        case .collections, .movies:
             return .estimated(190)
-        case .movies:
-            return .estimated(180)
         default:
             return .fractionalHeight(1.0)
         }

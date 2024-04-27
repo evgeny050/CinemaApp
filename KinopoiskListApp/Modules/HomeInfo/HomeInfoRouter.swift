@@ -14,7 +14,6 @@ final class HomeInfoRouter: HomeInfoRouterInputProtocol {
     
     func routeToMoviesListVC(of kpList: KPList) {
         let vc = MoviesListViewController()
-        vc.delegate = view
         MoviesListConfigurator.configure(withView: vc, and: kpList)
         view.navigationController?.pushViewController(vc, animated: false)
     }
@@ -33,7 +32,7 @@ final class HomeInfoRouter: HomeInfoRouterInputProtocol {
     
     func presentMovieDetail(with viewModel: CellViewModelProtocol) {
         let vc = MovieDetailViewController()
-        //vc.delegate = view
+        vc.delegate = view
         vc.viewModel = viewModel
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium()]

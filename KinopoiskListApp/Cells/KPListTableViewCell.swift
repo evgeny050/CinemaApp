@@ -13,7 +13,7 @@ final class KPListTableViewCell: UITableViewCell, CellModelRepresanteble {
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {
         didSet {
-            updateView()
+            configure()
         }
     }
     
@@ -45,19 +45,7 @@ final class KPListTableViewCell: UITableViewCell, CellModelRepresanteble {
         return label
     }()
     
-    //MARK: - Initialization
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        //self.backgroundColor = .red
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Setup Layout
-    private func commonInit() {
+    private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
@@ -65,18 +53,15 @@ final class KPListTableViewCell: UITableViewCell, CellModelRepresanteble {
         stackView.axis = .horizontal
         stackView.spacing = 15
         stackView.isSkeletonable = true
+        return stackView
+    }()
+    
+    // MARK: - Setup Layout
+    private func setupLayout() {
         //stackView.backgroundColor = .orange
         stackView.addArrangedSubview(labelRowId)
         stackView.addArrangedSubview(kpListImageView)
         stackView.addArrangedSubview(kpListNameLabel)
-        
-        contentView.addSubview(stackView)
-        
-        //Setup Constraints
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-                .inset(UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
-        }
         
         labelRowId.snp.makeConstraints { make in
             make.centerY.equalToSuperview().offset(-15)
@@ -90,15 +75,18 @@ final class KPListTableViewCell: UITableViewCell, CellModelRepresanteble {
         kpListNameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
         }
+        
+        contentView.addSubview(stackView)
+
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+                .inset(UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
+        }
     }
     
-    private func updateView() {
-        guard
-            let viewModel = viewModel as? CellViewModel
-        else { return }
-        guard
-            let imageURL = URL(string: viewModel.imageUrl)
-        else { return }
+    private func configure() {
+        guard let viewModel = viewModel as? CellViewModel else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         kpListImageView.kf.indicatorType = .activity
         kpListImageView.kf.setImage(
             with: imageURL,
@@ -108,5 +96,6 @@ final class KPListTableViewCell: UITableViewCell, CellModelRepresanteble {
             ]
         )
         kpListNameLabel.text = viewModel.cellItemName
+        setupLayout()
     }
 }

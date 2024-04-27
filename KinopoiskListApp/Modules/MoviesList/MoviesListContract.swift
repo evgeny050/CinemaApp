@@ -24,12 +24,13 @@ protocol PresenterToViewMoviesListProtocol: AnyObject {
 /// InteractorInputProtocol (Interactor confroms, Presenter contains)
 protocol PresenterToInteractorMoviesListProtocol {
     init(with presenter: InteractorToPresenterMoviesListProtocol, and kpList: KPList)
+    func getHeader()
     func fetchData()
 }
 
 /// InteractorOutputProtocol (Presenter conforms, Interactor contains)
 protocol InteractorToPresenterMoviesListProtocol: AnyObject {
-    func didReceiveData(with movies: [MovieServerModel], and kpList: KPList)
+    func didReceiveData(with films: [Film], and kpList: KPList)
     func setHeader(with title: String)
 }
 
