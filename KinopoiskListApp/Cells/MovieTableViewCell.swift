@@ -106,6 +106,7 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         commonInit()
     }
     

@@ -17,6 +17,10 @@ struct Person: ResponseType {
     let profession: [ProfessionOrFact]
     let facts: [ProfessionOrFact]
     
+    var ageInRU: String {
+        age.years()
+    }
+    
     var fullName: String {
         return name.replacingOccurrences(of: " ", with: "\n")
     }

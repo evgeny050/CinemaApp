@@ -70,15 +70,6 @@ enum SectionKind: Int, CaseIterable {
             return NSDirectionalEdgeInsets(top: 12, leading: 10, bottom: 10, trailing: 10)
         }
     }
-    
-    var headerHeight: NSCollectionLayoutDimension {
-        switch self {
-        case .movies, .facts:
-            return .absolute(40)
-        default:
-            return .absolute(20)
-        }
-    }
 }
 
 final class CellFactory {
@@ -94,7 +85,7 @@ final class CellFactory {
     }
     
     static func createSection(for sectionKind: SectionKind) -> NSCollectionLayoutSection {
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: sectionKind.headerHeight)
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(20))
         let headerElement = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: UICollectionView.elementKindSectionHeader,

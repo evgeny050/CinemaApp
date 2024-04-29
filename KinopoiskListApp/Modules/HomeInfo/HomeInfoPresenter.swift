@@ -74,13 +74,15 @@ extension HomeInfoPresenter: HomeInfoInteractorOutputProtocol {
             .forEach { section.personItems.append(CellViewModel(person: $0)) }
         dataStore.movies
             .forEach { section.movieItems.append(CellViewModel(film: $0)) }
-        view.reloadData(section: section, forAllSections: false)
+        view.reloadData(section: section, forAllSections: true)
     }
     
     func favoritesDidUpdate(with movies: [Film]) {
         section.movieItems.removeAll()
-        movies.forEach { movie in
-            section.movieItems.append(CellViewModel(film: movie))
+        if !movies.isEmpty {
+            movies.forEach { movie in
+                section.movieItems.append(CellViewModel(film: movie))
+            }
         }
         view.reloadData(section: section, forAllSections: false)
     }

@@ -54,4 +54,34 @@ extension UILabel {
     }
 }
 
+extension Int {
+     func years() -> String {
+         var dayString: String!
+         if "1".contains("\(self % 10)")      {dayString = "лет"}
+         if "234".contains("\(self % 10)")    {dayString = "года" }
+         if "567890".contains("\(self % 10)") {dayString = "лет"}
+         if 11...14 ~= self % 100                   {dayString = "лет"}
+         return "\(self) " + dayString
+    }
+}
 
+extension Data {
+    var html2AttributedString: NSAttributedString? {
+        do {
+            return try NSAttributedString(data: self, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+        } catch {
+            print("error:", error)
+            return  nil
+        }
+    }
+    var html2String: String { html2AttributedString?.string ?? "" }
+}
+
+extension StringProtocol {
+    var html2AttributedString: NSAttributedString? {
+        Data(utf8).html2AttributedString
+    }
+    var html2String: String {
+        html2AttributedString?.string ?? ""
+    }
+}

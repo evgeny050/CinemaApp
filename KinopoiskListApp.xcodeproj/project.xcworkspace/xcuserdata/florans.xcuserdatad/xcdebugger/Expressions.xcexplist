@@ -172,6 +172,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "HomeInfoViewController.viewWillAppear(_:):HomeInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserDefaults.standard.bool(forKey: &quot;wasAnyStatusChanged&quot;) ">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Person.init(from:):Person.swift">
       </ContextState>
       <ContextState

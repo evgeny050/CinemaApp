@@ -88,7 +88,6 @@ extension MovieDetailViewController {
     
     private func updateView() {
         guard let viewModel = viewModel as? CellViewModel else { return }
-        //movieImageView.showAnimatedGradientSkeleton()
         let imageURL  = URL(string: viewModel.imageUrl)
         let processor = DownsamplingImageProcessor(size: CGSize(width: 55, height: 80))
         movieImageView.kf.indicatorType = .activity
@@ -97,13 +96,11 @@ extension MovieDetailViewController {
             options: [
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),
-                //.transition(.fade(1)),
                 .cacheOriginalImage
             ])
         { [weak self] result in
             switch result {
             case .success(_):
-                //self?.movieImageView.hideSkeleton(reloadDataAfter: true)
                 self?.tableView.reloadData()
             case .failure(_):
                 break
@@ -183,6 +180,6 @@ extension MovieDetailViewController {
         default:
             viewModel.setWatchedStatus()
         }
-        self.dismiss(animated: true)//tableView.reloadRows(at: [indexPath], with: .automatic)
+        dismiss(animated: true)
     }
 }

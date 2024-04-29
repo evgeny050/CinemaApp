@@ -60,15 +60,16 @@ extension PersonDetailViewController {
             -> NSCollectionLayoutSection? in
             switch sectionIndex {
             case 0:
-                return CellFactory.createSection(for: .personInfo) //self.createSectionForPersonInfo()
+                return CellFactory.createSection(for: .personInfo)
             case 1:
                 return CellFactory.createSection(for: .movies)
             default:
                 return CellFactory.createSection(for: .facts)
             }
         }
-        layout.configuration.interSectionSpacing = 40
-        //layout.collectionView?.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0)
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 20
+        layout.configuration = config
         return layout
     }
 }
@@ -102,12 +103,6 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
         }
     }
     
-    func collectionSkeletonView(_ skeletonView: UICollectionView,
-        prepareCellForSkeleton cell: UICollectionViewCell,
-        at indexPath: IndexPath) {
-        cell.isSkeletonable = true
-    }
-    
     func collectionSkeletonView(
         _ skeletonView: UICollectionView,
         supplementaryViewIdentifierOfKind: String,
@@ -117,7 +112,7 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3//sectionViewModel.movieItems.isEmpty ? 0 : 3
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -135,35 +130,19 @@ extension PersonDetailViewController: SkeletonCollectionViewDataSource, Skeleton
         switch indexPath.section {
         case 0:
             let cellViewModel = sectionViewModel.singlePerson
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: PersonInfoCell.reuseId,
-                for: indexPath
-            ) as? PersonInfoCell
-            else {
-                return UICollectionViewCell()
-            }
+            let cell = collectionView.dequeueCell(cellType: PersonInfoCell.self, for: indexPath)
             cell.hideSkeleton()
             cell.viewModel = cellViewModel
             return cell
         case 1:
             let cellViewModel = sectionViewModel.movieItems[indexPath.item]
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: KPItemCell.reuseId,
-                for: indexPath
-            ) as? KPItemCell else {
-                return UICollectionViewCell()
-            }
+            let cell = collectionView.dequeueCell(cellType: KPItemCell.self, for: indexPath)
             cell.hideSkeleton()
             cell.viewModel = cellViewModel
             return cell
         default:
             let cellViewModel = sectionViewModel.categoryItems[indexPath.item]
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CategoryCell.reuseId,
-                for: indexPath
-            ) as? CategoryCell else {
-                return UICollectionViewCell()
-            }
+            let cell = collectionView.dequeueCell(cellType: CategoryCell.self, for: indexPath)
             cell.hideSkeleton()
             cell.viewModel = cellViewModel
             return cell

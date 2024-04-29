@@ -12,12 +12,12 @@ final class HomeInfoViewController: UIViewController {
     // MARK: - Properties
     var presenter: HomeInfoViewOutputProtocol!
     
-    //UICV Properties
+    // UICV Properties
     private var collectionView: UICollectionView!
     private var sectionViewModel: SectionViewModelProtocol = SectionViewModel()
     private let sectionHeaderView = SectionHeaderView()
     
-    //SearchBar Properties
+    // SearchBar Properties
     private var searchController: UISearchController!
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
@@ -26,10 +26,16 @@ final class HomeInfoViewController: UIViewController {
     private var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
+    
+    // Favorites Changed
+    private var wasAnyStatusChanged: Bool {
+        UserDefaults.standard.bool(forKey: "wasAnyStatusChanged")
+    }
         
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.9725490196, blue: 0.9921568627, alpha: 1)
         setupNavigationBar()
         setupSearchController()
         setupCollectionView()
@@ -42,19 +48,6 @@ final class HomeInfoViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: "wasAnyStatusChanged") {
             presenter.updateFavoriteMovies()
             UserDefaults.standard.set(false, forKey: "wasAnyStatusChanged")
-        }
-    }
-}
-
-// MARK: - Extensions - HomeInfoViewInputProtocol
-extension HomeInfoViewController: HomeInfoViewInputProtocol {
-    func reloadData(section: SectionViewModel, forAllSections: Bool) {
-        sectionViewModel = section
-        collectionView.hideSkeleton()
-        if forAllSections {
-            collectionView.reloadData()
-        } else {
-            collectionView.reloadSections(.init(integer: 3))
         }
     }
 }
@@ -135,6 +128,10 @@ extension HomeInfoViewController {
                 return CellFactory.createSection(for: .movies)
             }
         }
+
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 20
+        layout.configuration = config
         return layout
     }
 }
@@ -142,20 +139,12 @@ extension HomeInfoViewController {
 // MARK: - Extensions - UICollectionViewDelegate, UICollectionViewDataSource
 extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonCollectionViewDelegate {
     func numSections(in collectionSkeletonView: UICollectionView) -> Int {
-        return 4
+        sectionViewModel.numberOfSections
     }
     
     func collectionSkeletonView(_ skeletonView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
         return 10
-    }
-    
-    func collectionSkeletonView(
-        _ skeletonView: UICollectionView,
-        prepareCellForSkeleton cell: UICollectionViewCell,
-        at indexPath: IndexPath
-    ) {
-        cell.isSkeletonable = true
     }
     
     func collectionSkeletonView(
@@ -181,7 +170,7 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        sectionViewModel.numberOfSections
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -204,37 +193,22 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
         switch indexPath.section {
         case 0:
             let cellViewModel = sectionViewModel.kpListItems[indexPath.item]
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "KPListCollectionViewCell",//cellViewModel.reuseId,
-                for: indexPath
-            ) as? KPListCollectionViewCell else {
-                return UICollectionViewCell()
-            }
+            let cell = collectionView.dequeueCell(cellType: KPListCollectionViewCell.self, for: indexPath)
             cell.hideSkeleton()
             cell.viewModel = cellViewModel
             return cell
         case 1:
             let cellViewModel = sectionViewModel.categoryItems[indexPath.item]
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "CategoryCell",//CategoryCell.reuseId,
-                for: indexPath
-            ) as? CategoryCell else {
-                return UICollectionViewCell()
-            }
+            let cell = collectionView.dequeueCell(cellType: CategoryCell.self, for: indexPath)
             cell.hideSkeleton()
             cell.viewModel = cellViewModel
             return cell
         default:
             let cellViewModel = (indexPath.section == 2) ?
-            sectionViewModel.personItems[indexPath.item]
-            : sectionViewModel.movieItems[indexPath.item]
+                sectionViewModel.personItems[indexPath.item] :
+                sectionViewModel.movieItems[indexPath.item]
             
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "KPItemCell",//cellViewModel.reuseId,
-                for: indexPath
-            ) as? KPItemCell else {
-                return UICollectionViewCell()
-            }
+            let cell = collectionView.dequeueCell(cellType: KPItemCell.self, for: indexPath)
             cell.hideSkeleton()
             cell.viewModel = cellViewModel
             return cell
@@ -273,19 +247,41 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
     }
 }
 
+// MARK: - Extensions - HomeInfoViewInputProtocol
+extension HomeInfoViewController: HomeInfoViewInputProtocol {
+    func reloadData(section: SectionViewModel, forAllSections: Bool) {
+        sectionViewModel = section
+        collectionView.hideSkeleton()
+        if forAllSections {
+            collectionView.reloadData()
+        } else {
+            if collectionView.numberOfSections == 3 {
+                collectionView.insertSections(.init(integer: 3))
+            } else {
+                if sectionViewModel.movieItems.isEmpty {
+                    collectionView.deleteSections(.init(integer: 3))
+                } else {
+                    collectionView.reloadSections(.init(integer: 3))
+                }
+            }
+        }
+    }
+}
+
 // MARK: - Extensions - UpdateFavoriteStatusDelegate
 extension HomeInfoViewController: UpdateFavoriteStatusDelegate {
     func modalClosed() {
         guard let indexPath = collectionView
             .indexPathsForSelectedItems else { return }
         
-        indexPath
-            .forEach { collectionView.deselectItem(at: $0, animated: true) }
-        
-        if UserDefaults.standard.bool(forKey: "wasAnyStatusChanged") {
+        if wasAnyStatusChanged {
             indexPath
                 .forEach { sectionViewModel.movieItems.remove(at: $0.item) }
-            collectionView.deleteItems(at: indexPath)
+            if sectionViewModel.numberOfMovieItems == 0 {
+                collectionView.deleteSections(.init(integer: 3))
+            } else {
+                collectionView.deleteItems(at: indexPath)
+            }
         }
     }
 }

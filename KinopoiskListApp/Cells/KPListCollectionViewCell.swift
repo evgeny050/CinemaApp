@@ -18,7 +18,7 @@ final class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteb
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {
         didSet {
-            updateView()
+            configure()
         }
     }
     
@@ -40,6 +40,7 @@ final class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteb
     //MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSkeletonable = true
         commonInit()
     }
     
@@ -67,7 +68,7 @@ final class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteb
         }
     }
     
-    private func updateView() {
+    private func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
         guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         collectionImageView.kf.indicatorType = .activity

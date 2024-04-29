@@ -14,6 +14,7 @@
 		4A17034A2BB3150E0012CF46 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1703492BB3150E0012CF46 /* CategoryCell.swift */; };
 		4A17034C2BB32C9B0012CF46 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17034B2BB32C9B0012CF46 /* Person.swift */; };
 		4A17034E2BB5C2130012CF46 /* KPItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17034D2BB5C2130012CF46 /* KPItemCell.swift */; };
+		4A2432D12BDFC7F400BC1872 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2432D02BDFC7F400BC1872 /* SearchViewController.swift */; };
 		4A7AE27C2BBB126F00632F8A /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE27B2BBB126F00632F8A /* MoviesListViewController.swift */; };
 		4A7AE27E2BBD871800632F8A /* CellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE27D2BBD871800632F8A /* CellFactory.swift */; };
 		4A7AE2812BBEBED300632F8A /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7AE2802BBEBED300632F8A /* MovieTableViewCell.swift */; };
@@ -72,6 +73,7 @@
 		4A1703492BB3150E0012CF46 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		4A17034B2BB32C9B0012CF46 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		4A17034D2BB5C2130012CF46 /* KPItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPItemCell.swift; sourceTree = "<group>"; };
+		4A2432D02BDFC7F400BC1872 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		4A7AE27B2BBB126F00632F8A /* MoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
 		4A7AE27D2BBD871800632F8A /* CellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellFactory.swift; sourceTree = "<group>"; };
 		4A7AE2802BBEBED300632F8A /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A2432CF2BDFC7DF00BC1872 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				4A2432D02BDFC7F400BC1872 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		4A7AE27F2BBD879300632F8A /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +233,7 @@
 		4A943F602BA205BB0019C505 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4A2432CF2BDFC7DF00BC1872 /* Search */,
 				4AA4984A2BD90FC200AA3BA0 /* DetailImage */,
 				4A7AE27F2BBD879300632F8A /* Main */,
 				4AB8938E2BCFD397001E5CDB /* MoviesList */,
@@ -466,6 +477,7 @@
 				4A9CF44B2BD16E430030307B /* MoviesListContract.swift in Sources */,
 				4AB893852BCEA96B001E5CDB /* HomeInfoRouter.swift in Sources */,
 				4A7AE27C2BBB126F00632F8A /* MoviesListViewController.swift in Sources */,
+				4A2432D12BDFC7F400BC1872 /* SearchViewController.swift in Sources */,
 				4AA498512BDA4A2900AA3BA0 /* Film.xcdatamodeld in Sources */,
 				4AB893872BCEAE90001E5CDB /* HomeInfoConfigurator.swift in Sources */,
 				4AB893B32BCFE704001E5CDB /* KPListsRouter.swift in Sources */,

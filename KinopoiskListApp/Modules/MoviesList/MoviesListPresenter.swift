@@ -5,11 +5,12 @@
 //  Created by Флоранс on 18.04.2024.
 //  
 //
+import Foundation
 
 // MARK: - PresenterToViewMoviesListProtocol
 final class MoviesListPresenter: PresenterToViewMoviesListProtocol {
     // MARK: Properties
-    private unowned let view: ViewToPresenterMoviesListProtocol
+    private weak var view: (ViewToPresenterMoviesListProtocol)?
     var interactor: PresenterToInteractorMoviesListProtocol!
     var router: PresenterToRouterMoviesListProtocol!
     
@@ -32,12 +33,12 @@ final class MoviesListPresenter: PresenterToViewMoviesListProtocol {
 // MARK: - Extensions - InteractorToPresenterMoviesListProtocol
 extension MoviesListPresenter: InteractorToPresenterMoviesListProtocol {
     func setHeader(with title: String) {
-        view.reloadHeader(with: title)
+        view?.reloadHeader(with: title)
     }
     
     func didReceiveData(with films: [Film], and kpList: KPList) {
         section.categoryName = kpList.name
         films.forEach { section.movieItems.append(CellViewModel(film: $0)) }
-        view.reloadData(with: section)
+        view?.reloadData(with: section)
     }
 }

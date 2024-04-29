@@ -13,7 +13,7 @@ final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {
         didSet {
-            updateView()
+            configure()
         }
     }
     
@@ -65,7 +65,7 @@ final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
     //MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.isSkeletonable = true
+        isSkeletonable = true
         commonInit()
     }
     
@@ -114,7 +114,7 @@ final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
         layoutIfNeeded()
     }
     
-    func updateView() {
+    func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
         guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         avatarImageView.kf.indicatorType = .activity
@@ -133,7 +133,7 @@ final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
         """
         \(viewModel.person?.professionsInString ?? "")
         \(viewModel.person?.birthdayRUString ?? "")
-        \(viewModel.person?.age ?? 0)
+        \(viewModel.person?.ageInRU ?? "")
         """
         let result = string.split(whereSeparator: \.isNewline).joined(separator: "\n")
         professionsLabel.text = result

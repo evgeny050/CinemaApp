@@ -9,6 +9,14 @@ import CoreData
 
 final class StorageManager {
     static let shared = StorageManager()
+    
+    var wasAnyStatusChanged: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "wasAnyStatusChanged")
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "wasAnyStatusChanged")
+        }
+    }
 
     // MARK: - Core Data stack
     private let persistentContainer: NSPersistentContainer = {

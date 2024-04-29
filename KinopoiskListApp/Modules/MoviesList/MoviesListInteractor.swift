@@ -10,7 +10,7 @@ import Foundation
 
 final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
     // MARK: Properties
-    private unowned let presenter: InteractorToPresenterMoviesListProtocol
+    private let presenter: InteractorToPresenterMoviesListProtocol
     private let kpList: KPList
     
     required init(with presenter: InteractorToPresenterMoviesListProtocol, and kpList: KPList) {
@@ -25,13 +25,13 @@ final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
     func fetchData() {
         StorageManager.shared.fetchData(
             predicate: NSPredicate(format: "slug == %@", argumentArray: [kpList.slug])
-        ) { result in
+        ) { [unowned self] result in
             switch result {
             case .success(let films):
                 if films.isEmpty {
                     fetchFromNetwork()
                 } else {
-                    self.presenter.didReceiveData(with: films, and: self.kpList)
+                    presenter.didReceiveData(with: films, and: kpList)
                 }
             case .failure(let error):
                 print(error)

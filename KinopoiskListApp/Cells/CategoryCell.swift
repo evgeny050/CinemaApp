@@ -28,6 +28,7 @@ final class CategoryCell: UICollectionViewCell, CellModelRepresanteble {
         backgroundColor = #colorLiteral(red: 0.9205616117, green: 0.9205616117, blue: 0.9205616117, alpha: 1)
         self.layer.cornerRadius = 10
         self.clipsToBounds = true
+        isSkeletonable = true
         contentView.addSubview(categoryNameLabel)
     }
     
@@ -50,7 +51,7 @@ final class CategoryCell: UICollectionViewCell, CellModelRepresanteble {
             make.left.equalTo(contentView).offset(20)
             make.right.equalTo(contentView).offset(-20)
         }
-        categoryNameLabel.text = viewModel.cellItemName
+        categoryNameLabel.text = viewModel.cellItemName.html2String
         self.hideSkeleton()
     }
 }

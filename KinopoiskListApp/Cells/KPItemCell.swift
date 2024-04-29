@@ -13,7 +13,7 @@ final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {
         didSet {
-            updateView()
+            configure()
         }
     }
     
@@ -35,6 +35,7 @@ final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSkeletonable = true
         commonInit()
     }
     
@@ -67,7 +68,7 @@ final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
         layoutIfNeeded()
     }
     
-    private func updateView() {
+    private func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
         guard let imageURL = URL(string: viewModel.imageUrl) else { return }
         let processor = DownsamplingImageProcessor(size: kpItemImageView.bounds.size)

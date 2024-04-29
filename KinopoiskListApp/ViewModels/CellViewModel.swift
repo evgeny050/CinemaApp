@@ -27,9 +27,20 @@ protocol SectionViewModelProtocol: AnyObject {
     var numberOfPersonItems: Int { get }
     var numberOfKPListItems: Int { get }
     var numberOfMovieItems: Int { get }
+    var numberOfSections: Int { get }
 }
 
 final class CellViewModel: CellViewModelProtocol {
+    private let storageManager = StorageManager.shared
+    
+    var person: Person?
+    var kpList: KPList?
+    var film: Film?
+    private var category: String?
+    
+    ///Detect which kind of section is (facts or categories)
+    var isFact: Bool
+    
     var favoriteStatus: Bool {
         film?.isFavorite ?? false
     }
@@ -38,26 +49,13 @@ final class CellViewModel: CellViewModelProtocol {
         film?.isWatched ?? false
     }
     
-    func setFavoriteStatus() {
-        UserDefaults.standard.set(true, forKey: "wasAnyStatusChanged")
-        guard let film = film else { return }
-        film.isFavorite.toggle()
-        StorageManager.shared.saveContext()
-    }
-    
-    func setWatchedStatus() {
-        guard let film = film else { return }
-        film.isWatched.toggle()
-        StorageManager.shared.saveContext()
-    }
-    
     var id: Int {
         if let person = person {
             return person.id
-        } else if let movie = movie {
-            return Int(movie.id)
+        } else if let film = film {
+            return Int(film.id)
         }
-        return 0
+        fatalError("no model exists")
     }
     
     var cellItemName: String {
@@ -65,8 +63,6 @@ final class CellViewModel: CellViewModelProtocol {
             return person.name
         } else if let kpList = kpList {
             return kpList.name
-        } else if let movie = movie {
-            return movie.name
         } else if let film = film {
             return film.name ?? ""
         }
@@ -74,30 +70,15 @@ final class CellViewModel: CellViewModelProtocol {
     }
     
     var imageUrl: String {
-        if let movie = movie {
-            return movie.poster.url
-        } else if let person = person {
+        if let person = person {
             return person.photo
         } else if let kpList = kpList {
             return kpList.cover.url
         } else if let film = film {
             return film.poster ?? ""
         }
-        
         return ""
     }
-    
-    var person: Person?
-    
-    var kpList: KPList?
-        
-    private var category: String?
-    
-    var movie: MovieServerModel?
-    
-    var film: Film?
-    
-    var isFact: Bool
     
     init(
         kpList: KPList? = nil,
@@ -110,9 +91,23 @@ final class CellViewModel: CellViewModelProtocol {
         self.kpList = kpList
         self.person = person
         self.category = category
-        self.movie = movie
         self.film = film
         self.isFact = isFact
+    }
+    
+    // MARK: - Favorite status of film was changed
+    func setFavoriteStatus() {
+        storageManager.wasAnyStatusChanged = true
+        guard let film = film else { return }
+        film.isFavorite.toggle()
+        storageManager.saveContext()
+    }
+    
+    // MARK: - Watched status of film was changed
+    func setWatchedStatus() {
+        guard let film = film else { return }
+        film.isWatched.toggle()
+        storageManager.saveContext()
     }
 }
 
@@ -137,6 +132,10 @@ final class SectionViewModel: SectionViewModelProtocol {
     
     var numberOfMovieItems: Int {
         movieItems.count
+    }
+    
+    var numberOfSections: Int {
+        (numberOfMovieItems > 0) ? 4 : 3
     }
     
     var categoryName = ""

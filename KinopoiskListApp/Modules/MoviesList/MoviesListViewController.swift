@@ -91,17 +91,14 @@ extension MoviesListViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentY = scrollView.contentOffset.y
         let headerHeight = tableView.tableHeaderView?.bounds.height ?? 0
-        
         // header disappears
         if (lastYScrollOffset <= headerHeight) && (currentY > headerHeight) {
             title = navTitleLabel.text
         }
-        
         // header appears
         if (lastYScrollOffset > headerHeight) && (currentY <= headerHeight) {
             title = ""
         }
-        
         lastYScrollOffset = currentY
     }
 }
@@ -128,18 +125,9 @@ extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableView
         return MovieTableViewCell.reuseId
     }
     
-    func collectionSkeletonView(
-        _ skeletonView: UITableView,
-        prepareCellForSkeleton cell: UITableViewCell,
-        at indexPath: IndexPath
-    ) {
-        cell.isSkeletonable = true
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter.didTapCell(at: indexPath.row)
     }
-    
 }
 
 // MARK: - Extensions - UpdateFavoriteStatusDelegate
