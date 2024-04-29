@@ -37,6 +37,15 @@ final class HomeInfoPresenter {
 
 // MARK: - HomeInfoViewOutputProtocol
 extension HomeInfoPresenter: HomeInfoViewOutputProtocol {
+    var wasAnyStatusChanged: Bool {
+        get {
+            interactor.wasAnyStatusChanged
+        }
+        set {
+            interactor.wasAnyStatusChanged = newValue
+        }
+    }
+    
     func viewDidLoad() {
         interactor.fetchData()
     }

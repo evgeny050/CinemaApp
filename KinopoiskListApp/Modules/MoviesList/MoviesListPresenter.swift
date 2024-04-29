@@ -16,6 +16,16 @@ final class MoviesListPresenter: PresenterToViewMoviesListProtocol {
     
     private let section = SectionViewModel()
     
+    private let storageManager = StorageManager.shared
+    var wasAnyStatusChanged: Bool {
+        get {
+            storageManager.wasAnyStatusChanged
+        } set {
+            storageManager.wasAnyStatusChanged = newValue
+        }
+    }
+    
+    // MARK: - Initialization
     required init(with view: ViewToPresenterMoviesListProtocol) {
         self.view = view
     }

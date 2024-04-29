@@ -149,6 +149,16 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		4A2432D22BDFDCE200BC1872 /* NotRealized */ = {
+			isa = PBXGroup;
+			children = (
+				4AA4984A2BD90FC200AA3BA0 /* DetailImage */,
+				4A2432CF2BDFC7DF00BC1872 /* Search */,
+				4A7AE27F2BBD879300632F8A /* Main */,
+			);
+			path = NotRealized;
+			sourceTree = "<group>";
+		};
 		4A7AE27F2BBD879300632F8A /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,9 +243,7 @@
 		4A943F602BA205BB0019C505 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4A2432CF2BDFC7DF00BC1872 /* Search */,
-				4AA4984A2BD90FC200AA3BA0 /* DetailImage */,
-				4A7AE27F2BBD879300632F8A /* Main */,
+				4A2432D22BDFDCE200BC1872 /* NotRealized */,
 				4AB8938E2BCFD397001E5CDB /* MoviesList */,
 				4AB8938D2BCFD340001E5CDB /* KPCollectionsList */,
 				4AB8938C2BCFD331001E5CDB /* PersonDetail */,

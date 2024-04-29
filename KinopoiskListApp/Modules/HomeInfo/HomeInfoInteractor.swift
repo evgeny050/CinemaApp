@@ -8,6 +8,15 @@ import Foundation
 
 final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
     private unowned let presenter: HomeInfoInteractorOutputProtocol
+    private let storangeManager = StorageManager.shared
+    
+    var wasAnyStatusChanged: Bool {
+        get {
+            storangeManager.wasAnyStatusChanged
+        } set {
+            storangeManager.wasAnyStatusChanged = newValue
+        }
+    }
 
     required init(presenter: HomeInfoInteractorOutputProtocol) {
         self.presenter = presenter
@@ -15,8 +24,9 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
     
     func getFavorites() {
         presenter.favoritesDidUpdate(
-            with: StorageManager.shared.fetchFavorites()
+            with: storangeManager.fetchFavorites()
         )
+        wasAnyStatusChanged = false
     }
     
     func fetchData() {
@@ -77,7 +87,7 @@ final class HomeInfoInteractor: HomeInfoInteractorInputProtocol {
         print("Notify starting...")
         dispatchGroup.notify(queue: .main) { [unowned self] in
             dataStore.categoryList = StorageManager.shared.getCategories()
-            StorageManager.shared.fetchFavorites().forEach { dataStore.movies.append($0) }
+            storangeManager.fetchFavorites().forEach { dataStore.movies.append($0) }
             presenter.dataDidReceive(with: dataStore)
             print(Date().timeIntervalSince(startDate))
             print("Notify finishing...")

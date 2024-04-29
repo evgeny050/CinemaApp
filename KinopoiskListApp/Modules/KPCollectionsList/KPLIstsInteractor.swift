@@ -8,14 +8,17 @@
 //
 
 final class KPListsInteractor: KPListsInteractorInputProtocol {
+    // MARK: - Properties
     private unowned let presenter: KPListsInteractorOutputProtocol
     private let category: String
-    
+
+    // MARK: - Initialization
     required init(presenter: KPListsInteractorOutputProtocol, and category: String) {
         self.presenter = presenter
         self.category = category
     }
     
+    // MARK: - Networking
     func fetchData() {
         NetworkingManager.shared.fetchDataFaster(
             type: KPList.self,

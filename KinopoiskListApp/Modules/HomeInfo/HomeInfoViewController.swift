@@ -26,11 +26,6 @@ final class HomeInfoViewController: UIViewController {
     private var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
-    
-    // Favorites Changed
-    private var wasAnyStatusChanged: Bool {
-        UserDefaults.standard.bool(forKey: "wasAnyStatusChanged")
-    }
         
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -45,9 +40,8 @@ final class HomeInfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UserDefaults.standard.bool(forKey: "wasAnyStatusChanged") {
+        if presenter.wasAnyStatusChanged {
             presenter.updateFavoriteMovies()
-            UserDefaults.standard.set(false, forKey: "wasAnyStatusChanged")
         }
     }
 }
@@ -274,7 +268,7 @@ extension HomeInfoViewController: UpdateFavoriteStatusDelegate {
         guard let indexPath = collectionView
             .indexPathsForSelectedItems else { return }
         
-        if wasAnyStatusChanged {
+        if presenter.wasAnyStatusChanged  {
             indexPath
                 .forEach { sectionViewModel.movieItems.remove(at: $0.item) }
             if sectionViewModel.numberOfMovieItems == 0 {

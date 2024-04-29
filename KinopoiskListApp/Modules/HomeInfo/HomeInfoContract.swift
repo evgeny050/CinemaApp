@@ -6,13 +6,18 @@
 //
 import Foundation
 
+protocol FavoriteStatusProtocol: AnyObject {
+    var wasAnyStatusChanged: Bool { get set }
+}
+
 /// ViewInputProtocol (VC conforms, Presenter contains)
 protocol HomeInfoViewInputProtocol: AnyObject {
     func reloadData(section: SectionViewModel, forAllSections: Bool)
 }
 
 /// ViewOutputProtocol (Presenter conforms, VC contains
-protocol HomeInfoViewOutputProtocol: AnyObject {
+protocol HomeInfoViewOutputProtocol: FavoriteStatusProtocol {
+    var wasAnyStatusChanged: Bool { get set }
     init(view: HomeInfoViewInputProtocol)
     func viewDidLoad()
     func didTapCell(at indexPath: IndexPath)
@@ -20,7 +25,8 @@ protocol HomeInfoViewOutputProtocol: AnyObject {
 }
 
 /// InteractorInput (Interactor conforms, Presenter contains)
-protocol HomeInfoInteractorInputProtocol: AnyObject {
+protocol HomeInfoInteractorInputProtocol: FavoriteStatusProtocol {
+    var wasAnyStatusChanged: Bool { get set }
     init(presenter: HomeInfoInteractorOutputProtocol)
     func fetchData()
     func getFavorites()

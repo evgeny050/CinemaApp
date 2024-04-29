@@ -14,7 +14,6 @@ final class MoviesListViewController: UIViewController {
     var presenter: PresenterToViewMoviesListProtocol!
     var tableView: UITableView!
     private var lastYScrollOffset: CGFloat = 0
-    private var wasAnyStatusChanged = false
        
     private lazy var navTitleLabel: UILabel = {
         let label = UILabel()
@@ -134,7 +133,7 @@ extension MoviesListViewController: SkeletonTableViewDelegate, SkeletonTableView
 extension MoviesListViewController: UpdateFavoriteStatusDelegate {
     func modalClosed() {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
-        if UserDefaults.standard.bool(forKey: "wasAnyStatusChanged") {
+        if presenter.wasAnyStatusChanged {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         } else {
             tableView.deselectRow(at: indexPath, animated: false)
@@ -142,6 +141,7 @@ extension MoviesListViewController: UpdateFavoriteStatusDelegate {
     }
 }
 
+///Modal VC Closing Delegate
 protocol UpdateFavoriteStatusDelegate: AnyObject {
     func modalClosed()
 }

@@ -13,7 +13,7 @@ protocol ViewToPresenterMoviesListProtocol: AnyObject {
 }
 
 /// ViewOutputProtocol (Presenter conforms, VC contains)
-protocol PresenterToViewMoviesListProtocol: AnyObject {
+protocol PresenterToViewMoviesListProtocol: FavoriteStatusProtocol {
     init(with view: ViewToPresenterMoviesListProtocol)
     var interactor: PresenterToInteractorMoviesListProtocol! { get set }
     var router: PresenterToRouterMoviesListProtocol! { get set }
@@ -22,7 +22,7 @@ protocol PresenterToViewMoviesListProtocol: AnyObject {
 }
 
 /// InteractorInputProtocol (Interactor confroms, Presenter contains)
-protocol PresenterToInteractorMoviesListProtocol {
+protocol PresenterToInteractorMoviesListProtocol: FavoriteStatusProtocol {
     init(with presenter: InteractorToPresenterMoviesListProtocol, and kpList: KPList)
     func getHeader()
     func fetchData()

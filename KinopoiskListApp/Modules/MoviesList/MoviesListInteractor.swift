@@ -13,6 +13,15 @@ final class MoviesListInteractor: PresenterToInteractorMoviesListProtocol {
     private let presenter: InteractorToPresenterMoviesListProtocol
     private let kpList: KPList
     
+    private let storageManager = StorageManager.shared
+    var wasAnyStatusChanged: Bool {
+        get {
+            storageManager.wasAnyStatusChanged
+        } set {
+            storageManager.wasAnyStatusChanged = newValue
+        }
+    }
+    
     required init(with presenter: InteractorToPresenterMoviesListProtocol, and kpList: KPList) {
         self.presenter = presenter
         self.kpList = kpList
