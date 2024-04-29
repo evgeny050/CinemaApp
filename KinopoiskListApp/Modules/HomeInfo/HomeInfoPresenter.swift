@@ -83,7 +83,7 @@ extension HomeInfoPresenter: HomeInfoInteractorOutputProtocol {
             .forEach { section.personItems.append(CellViewModel(person: $0)) }
         dataStore.movies
             .forEach { section.movieItems.append(CellViewModel(film: $0)) }
-        view.reloadData(section: section, forAllSections: true)
+        view.reloadData(section: section)
     }
     
     func favoritesDidUpdate(with movies: [Film]) {
@@ -93,6 +93,6 @@ extension HomeInfoPresenter: HomeInfoInteractorOutputProtocol {
                 section.movieItems.append(CellViewModel(film: movie))
             }
         }
-        view.reloadData(section: section, forAllSections: false)
+        view.reloadDataAfterFavoritesUpdate(section: section)
     }
 }

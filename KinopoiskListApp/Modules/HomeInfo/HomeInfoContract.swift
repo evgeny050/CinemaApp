@@ -12,7 +12,8 @@ protocol FavoriteStatusProtocol: AnyObject {
 
 /// ViewInputProtocol (VC conforms, Presenter contains)
 protocol HomeInfoViewInputProtocol: AnyObject {
-    func reloadData(section: SectionViewModel, forAllSections: Bool)
+    func reloadData(section: SectionViewModel)
+    func reloadDataAfterFavoritesUpdate(section: SectionViewModel)
 }
 
 /// ViewOutputProtocol (Presenter conforms, VC contains

@@ -243,20 +243,20 @@ extension HomeInfoViewController: SkeletonCollectionViewDataSource, SkeletonColl
 
 // MARK: - Extensions - HomeInfoViewInputProtocol
 extension HomeInfoViewController: HomeInfoViewInputProtocol {
-    func reloadData(section: SectionViewModel, forAllSections: Bool) {
+    func reloadData(section: SectionViewModel) {
         sectionViewModel = section
         collectionView.hideSkeleton()
-        if forAllSections {
-            collectionView.reloadData()
+    }
+    
+    func reloadDataAfterFavoritesUpdate(section: SectionViewModel) {
+        sectionViewModel = section
+        if collectionView.numberOfSections == 3 {
+            collectionView.insertSections(.init(integer: 3))
         } else {
-            if collectionView.numberOfSections == 3 {
-                collectionView.insertSections(.init(integer: 3))
+            if sectionViewModel.movieItems.isEmpty {
+                collectionView.deleteSections(.init(integer: 3))
             } else {
-                if sectionViewModel.movieItems.isEmpty {
-                    collectionView.deleteSections(.init(integer: 3))
-                } else {
-                    collectionView.reloadSections(.init(integer: 3))
-                }
+                collectionView.reloadSections(.init(integer: 3))
             }
         }
     }
