@@ -25,31 +25,35 @@ struct Person: ResponseType {
         return name.replacingOccurrences(of: " ", with: "\n")
     }
     
-    var birthdayInDateFormat: Date {
+    var allProfs: String {
+        let profs = profession.map { prof in
+            return prof.value
+        }
+        return profs.prefix(3).joined(separator: ", ")
+    }
+    
+    var dateBirth: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "YY-MM-dd"
         return formatter.date(from: String(birthday.prefix(10))) ?? Date()
     }
     
-    var birthdayInFormat: String {
+    var stringBirth: String {
         let startIndex = birthday.index(birthday.startIndex, offsetBy: 5)
         let endIndex =  birthday.index(birthday.startIndex, offsetBy: 6)
         return String(birthday[startIndex...endIndex])
     }
     
-    var birthdayRUString: String {
+    var birthRU: String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "d MMMM YYYY"
-        let stringDate = dateFormatter.string(from: birthdayInDateFormat)
+        let stringDate = dateFormatter.string(from: dateBirth)
         return stringDate
     }
     
-    var professionsInString: String {
-        let profs = profession.map { prof in
-            return prof.value
-        }
-        return profs.prefix(3).joined(separator: ", ")
+    var thisMonthBirth: Bool {
+        stringBirth == Date().formatString() && death == nil
     }
     
     static var type = "person?"
@@ -80,7 +84,6 @@ struct Person: ResponseType {
         self.birthday = try container.decode(String.self, forKey: .birthday)
         self.death = try container.decodeIfPresent(String.self, forKey: .death)
         self.age = try container.decode(Int.self, forKey: .age)
-        //self.growth = try container.decode(Int.self, forKey: .growth)
         self.profession = try container.decode([ProfessionOrFact].self, forKey: .profession)
         self.facts = try container.decode([ProfessionOrFact].self, forKey: .facts)
     }

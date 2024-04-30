@@ -14,10 +14,7 @@ struct HomeInfoDataStore {
     var movies: [Film] = []
     
     func getBirthdayPersons() -> [Person] {
-        let personBirthdayList = persons.filter({ person in
-            person.birthdayInFormat == Date().formatString() && person.death == nil
-        })
-        return personBirthdayList//.shuffled() //Array(personBirthdayList.prefix(10))
+        return persons.filter { $0.thisMonthBirth }
     }
 }
 

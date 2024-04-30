@@ -131,8 +131,8 @@ final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
         personENNameLabel.text = viewModel.person?.enName
         let string =
         """
-        \(viewModel.person?.professionsInString ?? "")
-        \(viewModel.person?.birthdayRUString ?? "")
+        \(viewModel.person?.allProfs ?? "")
+        \(viewModel.person?.birthRU ?? "")
         \(viewModel.person?.ageInRU ?? "")
         """
         let result = string.split(whereSeparator: \.isNewline).joined(separator: "\n")

@@ -8,8 +8,10 @@
 import CoreData
 
 final class StorageManager {
+    // MARK: - Properties
     static let shared = StorageManager()
     
+    ///status changing flag
     var wasAnyStatusChanged: Bool {
         get {
             UserDefaults.standard.bool(forKey: "wasAnyStatusChanged")
