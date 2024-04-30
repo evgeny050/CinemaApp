@@ -116,7 +116,7 @@ final class PersonInfoCell: UICollectionViewCell, CellModelRepresanteble {
     
     func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
-        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl ?? "") else { return }
         avatarImageView.kf.indicatorType = .activity
         let processor = DownsamplingImageProcessor(size: avatarImageView.bounds.size)
         avatarImageView.kf.setImage(

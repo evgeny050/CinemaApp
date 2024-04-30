@@ -39,7 +39,6 @@ final class CategoryCell: UICollectionViewCell, CellModelRepresanteble {
     // MARK: - Setup Layout
     private func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
-        
         categoryNameLabel.snp.makeConstraints { make in
             if viewModel.isFact {
                 make.top.equalTo(contentView).offset(15)

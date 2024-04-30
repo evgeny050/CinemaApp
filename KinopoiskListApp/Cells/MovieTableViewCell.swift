@@ -14,7 +14,7 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
     // MARK: - Properties
     var viewModel: CellViewModelProtocol? {
         didSet {
-            updateView()
+            configure()
         }
     }
     
@@ -114,25 +114,21 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        movieImageView.hideSkeleton()
-    }
-    
     // MARK: - Setup Layout
     private func commonInit() {
-        let innerStackView = UIStackView(
+        let infoStackView = UIStackView(
             arrangedSubviews: [
                 rUNameLabel, periodLabel, 
                 countryAndGenreLabel,
                 watchOnlineButton, emptyView
             ]
         )
-        innerStackView.axis = .vertical
-        innerStackView.spacing = 2
-        innerStackView.isSkeletonable = true
+        infoStackView.axis = .vertical
+        infoStackView.spacing = 2
+        infoStackView.isSkeletonable = true
         
         let mainStackView = UIStackView(
-            arrangedSubviews: [movieImageView, innerStackView, favoriteImageView]
+            arrangedSubviews: [movieImageView, infoStackView, favoriteImageView]
         )
         mainStackView.axis = .horizontal
         mainStackView.spacing = 10
@@ -158,12 +154,13 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
     
     }
     
-    private func updateView() {
+    // MARK: - Display And Configure Data
+    private func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
         let processor = DownsamplingImageProcessor(size: CGSize(width: 55, height: mainStackView.bounds.height))
         movieImageView.kf.indicatorType = .activity
         movieImageView.kf.setImage(
-            with: URL(string: viewModel.imageUrl),
+            with: URL(string: viewModel.imageUrl ?? ""),
             options: [
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),

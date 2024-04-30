@@ -86,7 +86,7 @@ final class KPListTableViewCell: UITableViewCell, CellModelRepresanteble {
     
     private func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
-        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl ?? "") else { return }
         kpListImageView.kf.indicatorType = .activity
         kpListImageView.kf.setImage(
             with: imageURL,

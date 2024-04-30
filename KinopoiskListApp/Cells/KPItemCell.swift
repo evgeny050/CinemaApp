@@ -48,7 +48,6 @@ final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
-        //stackView.distribution  = .equalSpacing
         stackView.axis = .vertical
         stackView.spacing = 8
         
@@ -70,7 +69,7 @@ final class KPItemCell: UICollectionViewCell, CellModelRepresanteble {
     
     private func configure() {
         guard let viewModel = viewModel as? CellViewModel else { return }
-        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
+        guard let imageURL = URL(string: viewModel.imageUrl ?? "") else { return }
         let processor = DownsamplingImageProcessor(size: kpItemImageView.bounds.size)
         kpItemImageView.kf.indicatorType = .activity
         kpItemImageView.kf.setImage(

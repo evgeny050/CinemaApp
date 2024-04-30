@@ -69,8 +69,7 @@ final class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteb
     }
     
     private func configure() {
-        guard let viewModel = viewModel as? CellViewModel else { return }
-        guard let imageURL = URL(string: viewModel.imageUrl) else { return }
+        guard let imageURL = URL(string: viewModel?.imageUrl ?? "") else { return }
         collectionImageView.kf.indicatorType = .activity
         collectionImageView.kf.setImage(
             with: imageURL,
@@ -79,6 +78,6 @@ final class KPListCollectionViewCell: UICollectionViewCell, CellModelRepresanteb
                 .cacheOriginalImage
             ]
         )
-        kpListNameLabel.text = viewModel.cellItemName
+        kpListNameLabel.text = viewModel?.cellItemName
     }
 }

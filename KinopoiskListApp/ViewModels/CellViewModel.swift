@@ -9,7 +9,7 @@ import Foundation
 
 protocol CellViewModelProtocol: AnyObject {
     var cellItemName: String { get }
-    var imageUrl: String { get }
+    var imageUrl: String? { get }
     var id: Int { get }
     var favoriteStatus: Bool { get }
     var watchedStatus: Bool { get }
@@ -33,6 +33,7 @@ protocol SectionViewModelProtocol: AnyObject {
 final class CellViewModel: CellViewModelProtocol {
     private let storageManager = StorageManager.shared
     
+    ///Items for each cell
     var person: Person?
     var kpList: KPList?
     var film: Film?
@@ -69,7 +70,7 @@ final class CellViewModel: CellViewModelProtocol {
         return category ?? ""
     }
     
-    var imageUrl: String {
+    var imageUrl: String? {
         if let person = person {
             return person.photo
         } else if let kpList = kpList {
@@ -112,6 +113,7 @@ final class CellViewModel: CellViewModelProtocol {
 }
 
 final class SectionViewModel: SectionViewModelProtocol {
+    // MARK: - Section Items
     var personItems: [CellViewModelProtocol] = []
     var kpListItems: [CellViewModelProtocol] = []
     var categoryItems: [CellViewModelProtocol] = []

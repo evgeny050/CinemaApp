@@ -88,7 +88,7 @@ extension MovieDetailViewController {
     
     private func updateView() {
         guard let viewModel = viewModel as? CellViewModel else { return }
-        let imageURL  = URL(string: viewModel.imageUrl)
+        let imageURL  = URL(string: viewModel.imageUrl ?? "")
         let processor = DownsamplingImageProcessor(size: CGSize(width: 55, height: 80))
         movieImageView.kf.indicatorType = .activity
         movieImageView.kf.setImage(
