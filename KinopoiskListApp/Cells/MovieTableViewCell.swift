@@ -72,8 +72,9 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         button.tintColor = .orange
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 11)
         button.contentHorizontalAlignment = .leading
-        button.setContentHuggingPriority(.defaultLow, for: .vertical)
+        button.setContentHuggingPriority(.defaultHigh, for: .vertical)
         button.isHidden = true
+        //button.backgroundColor = .green
         return button
     }()
     
@@ -100,6 +101,7 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         let view = UIView()
         view.setContentHuggingPriority(.defaultLow, for: .vertical)
         view.isHidden = true
+        //view.backgroundColor = .red
         return view
     }()
 
@@ -118,9 +120,11 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
     private func commonInit() {
         let infoStackView = UIStackView(
             arrangedSubviews: [
-                rUNameLabel, periodLabel, 
+                rUNameLabel, 
+                periodLabel,
                 countryAndGenreLabel,
-                watchOnlineButton, emptyView
+                emptyView,
+                watchOnlineButton
             ]
         )
         infoStackView.axis = .vertical
@@ -172,7 +176,7 @@ class MovieTableViewCell: UITableViewCell, CellModelRepresanteble {
         periodLabel.text = film.year
         countryAndGenreLabel.text = film.genres
         watchOnlineButton.isHidden = !film.watchability
-        emptyView.isHidden = !watchOnlineButton.isHidden
+        emptyView.isHidden = false//!watchOnlineButton.isHidden
         favoriteImageView.isHidden = !film.isFavorite
     }
 }
