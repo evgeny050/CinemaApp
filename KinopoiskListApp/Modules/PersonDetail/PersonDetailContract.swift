@@ -5,7 +5,6 @@
 //  Created by Флоранс on 17.04.2024.
 //  
 //
-
 import Foundation
 
 /// ViewInputProtocol (VC conforms, Presenter contains)

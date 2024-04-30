@@ -4,8 +4,11 @@
 //
 //  Created by Флоранс on 17.04.2024.
 //
+protocol PersonDetailConfiguratorProtocol {
+    static func configure(withView view: PersonDetailViewController, and person: Person)
+}
 
-final class PersonDetailConfigurator {
+final class PersonDetailConfigurator: PersonDetailConfiguratorProtocol {
     static func configure(withView view: PersonDetailViewController, and person: Person) {
         let presenter = PersonDetailPresenter(with: view)
         let interactor = PersonDetailInteractor(with: presenter, and: person)
